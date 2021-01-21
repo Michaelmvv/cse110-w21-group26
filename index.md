@@ -21,7 +21,7 @@
 - Year: 4th Year
 - Position: TBD
 - Description: I've been programming on and off for the past decade or so, mostly in Python and C++. In my spare time, I read books by sad Russians and run D&D.
-- [github link](https://github.com/AndrewMiBoyd/)
+- [GitHub link](https://github.com/AndrewMiBoyd/)
 
 ### Michael Maddy
 - Major: Computer Engineering
@@ -38,14 +38,14 @@
 - Year: 4th
 - Position: TBD
 - Description: Lori doesn't like talking about herself really
-- [github link](https://github.com/LoriRongrong)
+- [GitHub link](https://github.com/LoriRongrong)
 
 ### Kim Tien Vu
 - Major: Computer Science
 - Year: 3rd Year
 - Position: TBD
 - Description: I am an undergraduate student at UCSD. My favorite programming language is Java. Some of my hobbies include listening to Broadway Musicals, cooking and eating food, and participating in hackathons.
-- [github link](https://github.com/kimtienvu)
+- [GitHub link](https://github.com/kimtienvu)
 
 
 ### Ronak Vyas
@@ -53,25 +53,25 @@
 - Year: Sophomore
 - Position: TBD
 - Description: I got my start programming through making simple meme webpages in my early pre-teens, and competing in cyber-security competitions. I am currently a tutor for CSE 12! My favorite language is Java but Python is catching up. A fun fact about me is that I was actually at the first virtual NBA game in the NBA Playoffs! (virtually). 	- Position:
-- [Github link](https://github.com/LiLronV)	- Description:
+- [GitHub link](https://github.com/LiLronV)	- Description:
 
 ### Sally Lei
 - Major: Computer Science
 - Year: 2nd
 - Position: TBD
 - Description: I like spicy food and tetris! 
-- [Github link](https://github.com/Slei03)
+- [GitHub link](https://github.com/Slei03)
 
 ### Laurence Kuo
 - Major: Computer Science
 - Year: Sophomore
 - Position: 
 - Description: I found a passion in computer science after being dragged to a hackathon by my friends in high school. I recently started an internship for a big data company in Taiwan and in my free time I love playing guitar and surfing. 
-- [github link](https://github.com/lakuo)
+- [GitHub link](https://github.com/lakuo)
 
 ### Emily Wu
 - Major: Computer Science
 - Year: 3rd Year
 - Position: TBD
 - Description: My favorite programming language is C++. In my free time I like to do arts and crafts. 
-- [github link](https://github.com/yiw036) 
+- [GitHub link](https://github.com/yiw036) 
