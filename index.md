@@ -75,3 +75,7 @@
 - Position: TBD
 - Description: My favorite programming language is C++. In my free time I like to do arts and crafts. 
 - [GitHub link](https://github.com/yiw036) 
+
+# Video
+---
+{% include_relative youtube-video.html %}
