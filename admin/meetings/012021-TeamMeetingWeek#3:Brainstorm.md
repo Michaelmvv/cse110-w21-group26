@@ -3,7 +3,7 @@ Meeting Time: 4PM <br />
 Meeting Location: https://ucsd.zoom.us/j/3608763195 <br />
 Type of Meeting: Assignments To-Do, Team Roles, Open Forum <br />
 
-Attendees: <br /> 
+Attendees: Andrew, Parth, Laurence, Lori, Sally, Emily, Kim, Ronak, and Michael <br /> 
 
 Agenda: Assignments, Website Discussion, Team Roles, Closing Notes <br />
 
@@ -23,7 +23,7 @@ Team Roles: We have coordinator, designer, builder, programmer, documentation, t
 First Preference: Name <br />
 Coordinator: Parth <br />
 Git: Michael <br />
-Testing: Kim <br /> 
+Testing: Kim <br />
 Documentation: Laurence <br />
 Builder: Andrew <br />
 Designers: Lori, Sally <br />
@@ -36,9 +36,9 @@ Meeting Times: Waiting for Sims requirements. <br />
 To Do: <br />
 Parth - Submit Assignments <br />
 Michael - Re-Do GitHub Repo's <br />
-Everyone - Submit rough sketches 
+Everyone - Submit rough sketches
 <br />
-Next Meeting: <br /> 
+Next Meeting: <br />
 Prioritize which aspects need to get finished (aka Milestones) <br />
 Database implementation? <br />
 Design: <br />
