@@ -4,8 +4,6 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  push:
-    branches: [ github-pages ]
   pull_request:
     branches: [ github-pages ]
 
