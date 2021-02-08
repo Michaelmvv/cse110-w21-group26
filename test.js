@@ -9,12 +9,12 @@ window.onload = () => {
   // document.get
   setInterval(update, 1000);
 };
-;
-;
-;
-;
-;
-;
+
+
+
+
+
+
 
 // Exit Prompt... Only works if you have interacted with site...
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
