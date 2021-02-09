@@ -10,9 +10,6 @@ window.onload = () => {
   setInterval(update, 1000);
 };
 
-;
-;
-;
 
 
 
