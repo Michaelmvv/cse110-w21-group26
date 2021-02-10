@@ -41,7 +41,8 @@ function update() {
     } else {
       if(sessionCount !=0){
         sessionCount--;
-        input = 0.5;
+        input = 0.2;
+        endAt = Date.now() + (60000 * Number(input));
       }
       else{
         countingDown = false;
@@ -76,7 +77,7 @@ function toHuman(ms) {
 
 // button click turns on timer/ restarts timer.
 function startTimer() {
-  input = 0.5;
+  input = 0.2;
   endAt = Date.now() + (60000 * Number(input));  // 60000 min to ms
   countingDown = true;
   sessionCount = 2;
