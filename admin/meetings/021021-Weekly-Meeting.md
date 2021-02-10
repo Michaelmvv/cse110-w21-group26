@@ -1,4 +1,4 @@
-Meeting Date: 2/10/2021 <br />
+# Meeting Date: 2-10-2021
 Meeting Time: 4PM <br />
 Meeting Location: https://ucsd.zoom.us/j/3608763195 <br />
 Type of Meeting: Weekly Meeting <br />
