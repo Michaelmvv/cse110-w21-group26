@@ -13,7 +13,7 @@ Notes from Sim: <br />
   Need to start using project board (Get more team members) <br />
   Have more documented artifacts <br />
   
-  TO-DO: <br />
+  List of Topics: <br />
     Local storage API still needs to be investigated and tested. (Lab 6 covers this) <br />
     Michael demos how to use GitHub Projects and everyone start adding every single task on there. <br />
     Design Team - Next meeting: Work on more user-centered thinking in terms of lists and design task list. <br />
