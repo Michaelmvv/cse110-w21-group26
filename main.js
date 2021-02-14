@@ -15,15 +15,7 @@ window.onload = () => {
 
 
 
-<<<<<<< HEAD:test.js
-
-
-
-
-// 
-=======
 // Exit Prompt... Only works if you have interacted with site...
->>>>>>> github-pages:main.js
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
 /**
  * @description Exit Prompt... Only works if you have interacted with site...
@@ -41,14 +33,15 @@ function toggleUnloadPrompt() {
 function update() {
   if (countingDown) {
     if (Date.now() < endAt) {
-      timerText.innerHTML = toHuman((endAt - Date.now()));//sets timer text on HTML page (not sure what this does)
+      timerText.innerHTML =
+          toHuman((endAt - Date.now()));  // sets timer text on HTML page (not
+                                          // sure what this does)
     } else {
-      if(sessionCount !=0){
+      if (sessionCount != 0) {
         sessionCount--;
         input = 0.2;
         endAt = Date.now() + (60000 * Number(input));
-      }
-      else{
+      } else {
         countingDown = false;
         toggleUnloadPrompt();
         sound.play();
@@ -58,7 +51,6 @@ function update() {
           sound.pause();  // Stop sound after done
         }, 1);
       }
-
     }
   }
 }
@@ -66,16 +58,21 @@ function update() {
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
 function toHuman(ms) {
-  let min = Math.floor((ms / (1000 * 60)) % 60); //*1000 to convert into seconds, *60 to convert into minutes, find the remainder of minutes for formatting
-  let sec = Math.floor((ms / 1000) % 60); //*1000 to convert into seconds, find the remainder of seconds for formatting
+  let min = Math.floor(
+      (ms / (1000 * 60)) %
+      60);  //*1000 to convert into seconds, *60 to convert into minutes, find
+            //the remainder of minutes for formatting
+  let sec =
+      Math.floor((ms / 1000) % 60);  //*1000 to convert into seconds, find the
+                                     //remainder of seconds for formatting
 
-  if (min < 10){
+  if (min < 10) {
     min = '0' + min;
   }
-  if (sec < 10){
+  if (sec < 10) {
     sec = '0' + sec;
   }
-  
+
   return min + ':' + sec;
 }
 
