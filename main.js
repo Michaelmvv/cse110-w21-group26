@@ -15,11 +15,15 @@ window.onload = () => {
 
 
 
+<<<<<<< HEAD:test.js
 
 
 
 
 // 
+=======
+// Exit Prompt... Only works if you have interacted with site...
+>>>>>>> github-pages:main.js
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
 /**
  * @description Exit Prompt... Only works if you have interacted with site...
