@@ -9,6 +9,8 @@ let input;
 // Startup stuffs, Wait for load before starting
 window.onload = () => {
   timerText = document.getElementById('timer');
+  document.getElementById("StartButton").addEventListener("click", startTimer)
+  document.getElementById("StopButton").addEventListener("click", stopTimer)
   // document.get
   setInterval(update, 1000);
 };
@@ -32,20 +34,19 @@ function toggleUnloadPrompt() {
 // This is run every second, and updates the screen and state.
 function update() {
   if (countingDown) {
-    if (Date.now() < endAt) {
-      timerText.innerHTML =
-          toHuman((endAt - Date.now()));  // sets timer text on HTML page (not
-                                          // sure what this does)
+    if (Date.now() < endAt + 1000) {
+      timerText.textContent = toHuman((((endAt/10000)*10000) - Date.now()));//sets timer text on HTML page (not sure what this does)
     } else {
-      if (sessionCount != 0) {
+      if (sessionCount !== 0) {
         sessionCount--;
-        input = 0.2;
-        endAt = Date.now() + (60000 * Number(input));
+        input = 1;
+        endAt = Date.now() + (60000 * Number(input));       
+        update();
       } else {
         countingDown = false;
         toggleUnloadPrompt();
         sound.play();
-        timerText.innerHTML = 'Pomo Session';
+        timerText.textContent = 'Pomo Session';
         setTimeout(() => {
           alert('Your pomodoro session is done!');
           sound.pause();  // Stop sound after done
@@ -58,31 +59,21 @@ function update() {
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
 function toHuman(ms) {
-  let min = Math.floor(
-      (ms / (1000 * 60)) %
-      60);  //*1000 to convert into seconds, *60 to convert into minutes, find
-            //the remainder of minutes for formatting
-  let sec =
-      Math.floor((ms / 1000) % 60);  //*1000 to convert into seconds, find the
-                                     //remainder of seconds for formatting
+  var currentTime = new Date(1000*Math.round(ms/1000)); // round to nearest second
+  function pad(i) { return ('0'+i).slice(-2); }
+  var str = pad(currentTime.getUTCMinutes()) + ':' + pad(currentTime.getUTCSeconds());
 
-  if (min < 10) {
-    min = '0' + min;
-  }
-  if (sec < 10) {
-    sec = '0' + sec;
-  }
-
-  return min + ':' + sec;
+  
+  return str;
 }
 
 // button click turns on timer/ restarts timer.
 function startTimer() {
-  input = 0.2;
+  input = .5;
   endAt = Date.now() + (60000 * Number(input));  // 60000 min to ms
   countingDown = true;
   sessionCount = 2;
-  // update();
+  update();
   toggleUnloadPrompt();
   document.getElementById('StartButton').innerText = 'Restart Timer';
 }
@@ -91,7 +82,7 @@ function startTimer() {
 function stopTimer() {
   sound.pause();
   countingDown = false;
-  timerText.innerHTML = 'Stopped!';
+  timerText.textContent = 'Stopped!';
   toggleUnloadPrompt();
   document.getElementById('StartButton').innerText = 'Start Timer';
 }
