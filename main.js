@@ -90,7 +90,6 @@ function updateSession() {
 
 }
 
-
 // function update() {
 //   if (countingDown) {
 //     if (Date.now() < endAt + 1000) {
