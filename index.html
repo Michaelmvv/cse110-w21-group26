@@ -25,17 +25,19 @@
       <button id="workTime" class="active" onclick="seshClicked(this.id)">
         Work Timer
       </button>
-      <button id="longBreak" class="" onclick="seshClicked(this.id)">
-        Long Break
-      </button>
+
       <button id="shortBreak" class="" onclick="seshClicked(this.id)">
         Short Break
+      </button>
+      <button id="longBreak" class="" onclick="seshClicked(this.id)">
+        Long Break
       </button>
     </div>
     <!-- for the circle timer -->
     <!-- https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/ -->
     <!-- https://www.cssscript.com/circular-countdown-timer-javascript-css3/ -->
 
+   
     <div class="main-timer">
       <p id="timer">25:00</p>
       <p id="sessionsLeftBeforeLongBreak"></p>
@@ -57,7 +59,6 @@
     <label for="workTimeInput">Work Time</label>
     <input id="workTimeInput" type="number" value="25" />
 
-   
     <div id="pomoList" class="header">
       <h2>PomoList</h2>
       <input type="text" id="myInput" placeholder="Title..." />
