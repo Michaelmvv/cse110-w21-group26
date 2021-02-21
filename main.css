@@ -37,15 +37,15 @@ button.active{
 .setting {
     text-align: right;
 }
-.controller {
+controller {
     text-align: center;
     
-    /* display: flex;
+    display: flex;
     flex-flow: row wrap;
     padding-left: 30%;
-    padding-right: 30%; */ 
-     padding-bottom: 5%;
-}
+    padding-right: 30%; 
+    padding-bottom: 5%;
+} 
 
 .sessions {
     text-align: center;
