@@ -26,6 +26,7 @@ window.onload = () => {
   window.onbeforeunload = unloadChecker;
   timerText = document.getElementById('timer');
   document.getElementById("StartButton").addEventListener("click", startTimer);
+  document.getElementById('StopButton').style.display = 'none';
   document.getElementById("StopButton").addEventListener("click", stopTimer);
 
   document.getElementById("workTime").addEventListener("click", setWorkTime);
@@ -230,7 +231,21 @@ function addTask(task, addToStorage) {
   }
 }
 
+/** 
+ * Functions for CSS
+ */
+
+function seshClicked(seshID){
+  document.querySelectorAll(".active").forEach(function(item){
+    item.className = "";
+  });
+  document.getElementById(seshID).className = "active";
+}
+
+
+
+
 /** This is needed to export functions in this file to the main.test.js files
  *  If the console says exports is not defined, go ahead and comment it out when testing the timer
  */
-exports.setWorkTime = setWorkTime;
+//exports.setWorkTime = setWorkTime;
