@@ -12,7 +12,7 @@ body {
 }
 
 h2 {
-  font-size: 40px;
+  font-size: 20px;
 }
 
 button {
@@ -24,12 +24,12 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 10;
-  border-radius: 20%;
+  border-radius: 10%;
 
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  /* font-weight: bold; */
   padding: 10px;
-  margin: 5%;
+  margin: 4% 9%;
 }
 
 button:hover {
@@ -37,10 +37,28 @@ button:hover {
 }
 
 button.active {
-  background-color: #c96567;
+  background-color: #9e5a63;
+}
+.settingAndLogo {
+  display: flex;
+  justify-content: space-between;
 }
 .setting {
   text-align: right;
+  margin: 10px;
+}
+.logo {
+  margin: 10px;
+}
+
+.sessions {
+  text-align: center;
+  /* align-items: center; */
+  display: flex;
+  flex-flow: row wrap;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-top: -10px;
 }
 .controller {
   text-align: center;
@@ -49,17 +67,13 @@ button.active {
   padding-left: 30%;
   padding-right: 30%;
 }
-
-.sessions {
-  text-align: center;
-  /* align-items: center; */
-  display: flex;
-  flex-flow: row wrap;
-  padding-left: 10%;
-  padding-right: 10%;
-}
 .header {
-  width: 60%;
+  text-align: center;
+  width: 80%;
+  height: 80%;
+  border: 1px solid #8a8a8a;
+  border-radius: 7%;
+  margin: auto;
 }
 
 #StartButton {
@@ -68,7 +82,8 @@ button.active {
   flex-basis: auto;
   align-self: center;
   background-color: #ff4444;
-  padding: 10px 15px;
+  padding: 10px 20px;
+  margin-left: 30px;
 }
 
 #StopButton {
@@ -77,31 +92,34 @@ button.active {
   flex-basis: auto;
   align-self: center;
   background-color: #ff4444;
-  padding: 10px 15px;
+  padding: 10px 20px;
+  margin-left: 30px;
 }
 
 #workTime {
-  /* flex: 1 1 auto; */
+  width: 5%;
+  height: 20%;
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
 }
 #longBreak {
   /* flex: 1 1 auto; */
+  width: 3%;
+  height: 20%;
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
 }
 #shortBreak {
   /* flex: 1 1 auto; */
+  width: 5%;
+  height: 20%;
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
 }
-#setting {
-  margin-left: auto;
-  margin-right: 0;
-}
+
 #timer {
   font: 100px;
 }
