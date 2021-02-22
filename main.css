@@ -153,7 +153,22 @@ label {
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
+  position:relative
 }
+
+/*
+#btn-overlay:hover{
+  position: absolute;
+  padding: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  opacity: 0.5;
+  transition: opacity .5s;
+}
+*/
 #longBreak {
   /* flex: 1 1 auto; */
   width: 5%;
@@ -193,19 +208,22 @@ label {
   stroke: #b6b6b6;
   stroke-width: 4px;
 }
+.shadow {
+  filter: drop-shadow(10px 0 5px red);
+}
 
 /* Circle Timer Circle Progress Bar Style */
 #circleProgress {
   fill: none;
-  stroke: #f7958e;
+  stroke: #d10000;
   stroke-width: 4px;
   transition: stroke-dashoffset 0.7s;
 }
 
 /* Dot on circle progress bar */
-.pointerProgress {
+#pointerProgress {
   fill: #fff;
-  stroke: #f7958e;
+  stroke: #d10000;
   stroke-width: 2px;
 }
 

@@ -51,16 +51,13 @@
         Long Break
       </button>
     </div>
-    <!-- for the circle timer -->
-    <!-- https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/ -->
-    <!-- https://www.cssscript.com/circular-countdown-timer-javascript-css3/ -->
-
+  
     <div class="circle">
       <!-- viewBox is part of svg class -->
       <svg class="circleTimer" viewBox="0 0 220 220">
         <!-- translate positions the circle timer fill inside the circle timer-->
         <g transform="translate(110,110)">
-          <circle class="circleTimerFill" r="100" />
+          <circle class="circleTimerFill shadow" r="100" />
 
           <text id="timer" text-anchor="middle" alignment-baseline="middle">
             25:00
@@ -69,7 +66,7 @@
           <g transform="rotate(-90)">
             <circle r="100" id="circleProgress" />
             <g id="pointerDot">
-              <circle class="pointerProgress" cx="100" cy="0" r="5" />
+              <circle id="pointerProgress" cx="100" cy="0" r="5" />
             </g>
           </g>
         </g>

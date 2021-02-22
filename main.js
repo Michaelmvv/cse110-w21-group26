@@ -74,9 +74,11 @@ function updateTimerText() {
 
   //Some CSS play around - sorry Dev team!
   let ms = (endAt - Date.now())/60000;
-  updateCircle(ms, timerLength);
+  if(ms != timerLength){
+    console.log(ms + ", " + timerLength);
+    updateCircle(ms, timerLength);
+  }
 }
-
 /*
 * update html text
 * keep trac
@@ -191,6 +193,7 @@ function officialStart() {
   timerLength = document.getElementById("workTimeInput").value;
   endAt = Date.now() + (60000 * Number(timerLength));  // 60000 min to ms
   countingDown = true;
+  updateCircle(timerLength, timerLength);
   update();
   document.getElementById('StartButton').style.display = 'none';
   document.getElementById('StopButton').style.display = 'initial';
@@ -248,7 +251,48 @@ function seshClicked(seshID){
   document.querySelectorAll(".active").forEach(function(item){
     item.className = "";
   });
+  
+  
+  let session = document.getElementById(seshID);
+  let circle = document.getElementById("circleProgress");
+  let circlePointer = document.getElementById('pointerProgress');
+  let start = document.getElementById('StartButton');
+  let end = document.getElementById('StopButton');
+  let short = document.getElementById("shortBreak");
+  let long = document.getElementById('longBreak');
+  let work = document.getElementById('workTime');
+  let bts = document.getElementsByTagName('button');
   document.getElementById(seshID).className = "active";
+  // hover effect need to address
+  if (seshID == 'shortBreak') {
+    session.style.backgroundColor = "#5883c3";
+    long.style.backgroundColor = "#5883c3";
+    work.style.backgroundColor = "#5883c3";
+    circlePointer.style.stroke = "#5883c3";
+    circle.style.stroke = "#5883c3";
+    start.style.backgroundColor = "#5883c3";
+    end.style.backgroundColor = "#5883c3";
+    bts.focus();
+  }
+  else if(seshID == 'longBreak'){
+    session.style.backgroundColor = "#2947B5";
+    work.style.backgroundColor = "#2947B5";
+    short.style.backgroundColor = "#2947B5";
+    circlePointer.style.stroke = "#5883c3";
+    circle.style.stroke = "#2947B5";
+    start.style.backgroundColor = "#2947B5";
+    end.style.backgroundColor = "#2947B5";
+  }
+  else {
+    session.style.backgroundColor = "#e97878";
+    short.style.backgroundColor = "#e97878";
+    long.style.backgroundColor = "#e97878";
+    circlePointer.style.stroke = "#5883c3";
+    circle.style.stroke = "#e97878";
+    start.style.backgroundColor = "#e97878";
+    end.style.backgroundColor = "#e97878";
+  }
+  
 }
 
 
@@ -265,9 +309,3 @@ function updateCircle(val, time){
   pointer.style.transform = `rotate(${rotation}deg)`;
 }
 
-
-
-/** This is needed to export functions in this file to the main.test.js files
- *  If the console says exports is not defined, go ahead and comment it out when testing the timer
- */
-//exports.setWorkTime = setWorkTime;
