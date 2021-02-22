@@ -2,7 +2,7 @@
 
 * Status: [accepted]
 * Deciders: [Everyone, (In weekly meeting)] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
+* Date: [2021-01-17 when the decision was last updated] <!-- optional -->
 
 Technical Story: [Our focus on a minimalistic approach] <!-- optional -->
 

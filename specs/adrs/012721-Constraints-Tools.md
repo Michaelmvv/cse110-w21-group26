@@ -2,7 +2,7 @@
 
 * Status: [accepted] <!-- optional -->
 * Deciders: [Weekly Meeting] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
+* Date: [2021-02-08 when the decision was last updated] <!-- optional -->
 
 Technical Story: [We need to finalize the constraints that we have for the project] <!-- optional -->
 
