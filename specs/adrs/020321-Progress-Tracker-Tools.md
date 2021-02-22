@@ -1,8 +1,8 @@
 # [Progress Tracker - tools to help the process]
 
 * Status: [accepted]
-* Deciders: [list everyone involved in the decision] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
+* Deciders: [Weekly Meeting (everyone)] <!-- optional -->
+* Date: [2021-02-03 when the decision was last updated] <!-- optional -->
 
 Technical Story: [How to keep track of our progress] <!-- optional -->
 
@@ -34,4 +34,4 @@ Technical Story: [How to keep track of our progress] <!-- optional -->
 
 ### Negative Consequences <!-- optional -->
 
-* None that we can think of.P
+* None that we can think of.
