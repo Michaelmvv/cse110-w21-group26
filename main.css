@@ -1,107 +1,128 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
-html, body, html * {
-    font-family: 'Roboto', sans-serif;
+html,
+body,
+html * {
+  font-family: "Roboto", sans-serif;
 }
 
-head, body {
-    background: #f2f2f2;
-    width: 85%;
+head,
+body {
+  background: #f2f2f2;
+  /* width: 85%; */
 }
 
 h2 {
-    font-size: 40px;
+  font-size: 20px;
 }
 
 button {
-    background-color:#e97878;
-    border:none;
-    color: #FFFFFF;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 10;
-    border-radius: 5%;
-    font: 22px/30px;
-    font-size: 40px;
-    font-weight: bold;
-   
+  background-color: #e97878;
+  /* width: 10%; */
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10;
+  border-radius: 10%;
+
+  font-size: 18px;
+  /* font-weight: bold; */
+  padding: 10px;
+  margin: 4% 9%;
 }
 
 button:hover {
-    background-color: #9e5a63;
+  background-color: #9e5a63;
 }
 
-button.active{
-    background-color: #c96567;
+button.active {
+  background-color: #9e5a63;
+}
+.settingAndLogo {
+  display: flex;
+  justify-content: space-between;
 }
 .setting {
-    text-align: right;
+  text-align: right;
+  margin: 10px;
 }
-.controller {
-    text-align: center;
-    
-    /* display: flex;
-    flex-flow: row wrap;
-    padding-left: 30%;
-    padding-right: 30%; */ 
-     padding-bottom: 5%;
+.logo {
+  margin: 10px;
 }
 
 .sessions {
-    text-align: center;
-    /* align-items: center; */
-    display: flex;
-    flex-flow: row wrap; 
-    padding-left: 20%;
-    padding-right: 20%;
-    padding-bottom: 5%;
+  text-align: center;
+  /* align-items: center; */
+  display: flex;
+  flex-flow: row wrap;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-top: -10px;
+}
+.controller {
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  padding-left: 30%;
+  padding-right: 30%;
 }
 .header {
-    width: 60%;
+  text-align: center;
+  width: 80%;
+  height: 80%;
+  border: 1px solid #8a8a8a;
+  border-radius: 7%;
+  margin: auto;
+}
+.main-timer {
+  text-align: center;
 }
 
 #StartButton {
-    flex: 1 1 auto;
-    flex-grow: 1;
-    flex-basis: auto;
-    align-self: center;
-    background-color: #FF4444;
-    padding: 10px 15px;
+  flex: 1 1 auto;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+  background-color: #ff4444;
+  padding: 10px 20px;
+  margin-left: 30px;
 }
 
 #StopButton {
-    /* flex: 1 1 auto; */
-    flex-grow: 1;
-    flex-basis: auto;
-    align-self: center;
-    background-color: #FF4444;
-    padding: 10px 15px;
+  /* flex: 1 1 auto; */
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+  background-color: #ff4444;
+  padding: 10px 20px;
+  margin-left: 30px;
 }
 
 #workTime {
-    /* flex: 1 1 auto; */
-    flex-grow: 1;
-    flex-basis: auto;
-    align-self: center;
+  width: 5%;
+  height: 20%;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
 }
 #longBreak {
-    /* flex: 1 1 auto; */
-    flex-grow: 1;
-    flex-basis: auto;
-    align-self: center;
+  /* flex: 1 1 auto; */
+  width: 5%;
+  height: 20%;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
 }
 #shortBreak {
-    /* flex: 1 1 auto; */
-    flex-grow: 1;
-    flex-basis: auto;
-    align-self: center;
+  /* flex: 1 1 auto; */
+  width: 5%;
+  height: 20%;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
 }
-#setting {
-    margin-left: auto; 
-    margin-right: 0;
-}
+
 #timer {
-    font: 100px;
+  font: 100px;
 }
-
-

@@ -23,10 +23,9 @@ let taskList;
 /** */
 window.onload = () => {
   // window.addEventListener('beforeunload',unloadChecker);
-  window.onbeforeunload = unloadChecker;
+  window.onbeforeunload = unloadChecker;``
   timerText = document.getElementById('timer');
   document.getElementById("StartButton").addEventListener("click", startTimer);
-  document.getElementById('StopButton').style.display = 'none';
   document.getElementById("StopButton").addEventListener("click", stopTimer);
 
   document.getElementById("workTime").addEventListener("click", setWorkTime);

@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Pomo Timer</title>
     <script src="main.js"></script>
-    <link href="main.css" rel="stylesheet">
-</head>
+    <link href="main.css" rel="stylesheet" />
+  </head>
 
-<body> 
+  <body>
     <!--h1>Timer</h1-->
-    <div>
-        <p>LOGO</p>
-        <!-- the image is for setting, for now just use button-->
-        <div class="setting">
-            <button id="setting">Settings</button>
-        </div>
-        
+    <div class="settingAndLogo">
+      <div class="logo">
+        <img src="images/logo.svg" alt="logo" height="40" />
+      </div>
+
+      <!-- <p>LOGO</p> -->
+      <div class="setting">
+        <!-- <button>Settings</button> -->
+        <img src="images/settings.svg" alt="settings" height="30" />
+      </div>
     </div>
 
-    <div class ="sessions">
-        <button id="workTime" class="active" onclick="seshClicked(this.id)">Work Timer</button>
-        <button id="longBreak" class="" onclick="seshClicked(this.id)">Long Break</button>
-        <button id="shortBreak" class="" onclick="seshClicked(this.id)">Short Break</button>
+    <div class="sessions">
+      <button id="workTime" class="active" onclick="seshClicked(this.id)">
+        Work Timer
+      </button>
+
+      <button id="shortBreak" class="" onclick="seshClicked(this.id)">
+        Short Break
+      </button>
+      <button id="longBreak" class="" onclick="seshClicked(this.id)">
+        Long Break
+      </button>
     </div>
     <!-- for the circle timer -->
     <!-- https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/ -->
     <!-- https://www.cssscript.com/circular-countdown-timer-javascript-css3/ -->
-    
-    <div class="main-timer">
-          
-        <p id="timer">25:00</p>
-        <p id="sessionsLeftBeforeLongBreak"></p>
-        <p id="CurrentActivity"></p>
-    </div>
+
    
-    <div class="controller">
-        <button id="StartButton">Start</button>
-        <button id="StopButton">Stop</button>
+    <div class="main-timer">
+      <p id="timer">25:00</p>
+      <p id="sessionsLeftBeforeLongBreak"></p>
+      <p id="CurrentActivity"></p>
     </div>
-    
-    
-    
 
-
+    <div class="controller">
+      <button id="StartButton">Start</button>
+      <button id="StopButton">Stop</button>
+    </div>
 
     <!-- Will Be in settings Later -->
     <label for="longBreakTimeInput">Long Break</label>
-    <input id="longBreakTimeInput" type="number" value="15">
+    <input id="longBreakTimeInput" type="number" value="15" />
 
     <label for="shortBreakTimeInput">Short Break</label>
-    <input id="shortBreakTimeInput" type="number" value="5">
+    <input id="shortBreakTimeInput" type="number" value="5" />
 
     <label for="workTimeInput">Work Time</label>
-    <input id="workTimeInput" type="number" value="25">
-
+    <input id="workTimeInput" type="number" value="25" />
 
     <div id="pomoList" class="header">
-        <h2>PomoList</h2>
-        <input type="text" id="myInput" placeholder="Title...">
-        <span onclick="addTask()" class="addBtn">Add</span>
+      <h2>PomoList</h2>
+      <input type="text" id="myInput" placeholder="Title..." />
+      <span onclick="addTask()" class="addBtn">Add</span>
     </div>
-      
-      <ul id="myUL">
-      </ul> 
-</body>
 
+    <ul id="myUL"></ul>
+  </body>
 </html>
