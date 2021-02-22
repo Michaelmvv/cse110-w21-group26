@@ -29,7 +29,7 @@ jobs:
           node-version: '12'
       - run: npm install
       - run: mkdir docs
-      - run: npx jsdoc2md --template ./JSDocTemplate/README.hbs *.js > ./docs/api.md
+      - run: npx jsdoc2md --template ./JSDocTemplate/README.hbs *.js > ./docs/API.md
       #
       # Additional steps to generate documentation in "Documentation" directory
       - name: Upload Documentation to Wiki
