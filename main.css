@@ -25,10 +25,8 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 10;
-  border-radius: 10%;
-
+  border-radius: 10px;
   font-size: 18px;
-
   padding: 10px;
   margin: 4% 9%;
 }
@@ -52,7 +50,7 @@ label {
 }
 .setting {
   text-align: right;
-  margin: 10px;
+  margin: 27px 10px 10px 10px;
 }
 
 .dropdown {
@@ -108,8 +106,31 @@ label {
   width: 80%;
   height: 200px;
   border: 2px solid #8a8a8a;
-  border-radius: 7%;
+  border-radius: 10px;
   margin: auto;
+}
+
+.notShortbreak {
+  background-color: #5883ce;
+}
+.notLongbreak {
+  background-color: #2947b5;
+}
+
+.notWork {
+  background-color: #e97979;
+}
+.notWork:hover {
+  background-color: #9e5a63;
+}
+.shortCircle {
+  stroke: #5883ce;
+}
+.longCircle {
+  stroke: #2947b5;
+}
+.workCircle {
+  stroke: #e97979;
 }
 
 #StartButton {
@@ -117,7 +138,6 @@ label {
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
-  background-color: #ff4444;
   padding: 10px 20px;
   margin-left: 30px;
   width: 5%;
@@ -129,7 +149,6 @@ label {
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
-  background-color: #ff4444;
   padding: 10px 20px;
   margin-left: 30px;
   width: 5%;
@@ -153,7 +172,7 @@ label {
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
-  position:relative
+  position: relative;
 }
 
 /*
@@ -215,7 +234,6 @@ label {
 /* Circle Timer Circle Progress Bar Style */
 #circleProgress {
   fill: none;
-  stroke: #d10000;
   stroke-width: 4px;
   transition: stroke-dashoffset 0.7s;
 }
@@ -223,7 +241,6 @@ label {
 /* Dot on circle progress bar */
 #pointerProgress {
   fill: #fff;
-  stroke: #d10000;
   stroke-width: 2px;
 }
 

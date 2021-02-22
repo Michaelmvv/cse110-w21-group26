@@ -15,7 +15,7 @@
     <!--h1>Timer</h1-->
     <div class="settingAndLogo">
       <div class="logo">
-        <img src="images/logo.svg" alt="logo" height="40" />
+        <img src="images/logo.svg" alt="logo" height="80" width="80" />
       </div>
 
       <div class="setting dropdown">
@@ -51,7 +51,7 @@
         Long Break
       </button>
     </div>
-  
+
     <div class="circle">
       <!-- viewBox is part of svg class -->
       <svg class="circleTimer" viewBox="0 0 220 220">
@@ -64,9 +64,15 @@
           </text>
           <!-- This rotates where the dot on the progress bar is positioned (if no -90, dot is on 3:00 if circle is clock ) -->
           <g transform="rotate(-90)">
-            <circle r="100" id="circleProgress" />
+            <circle r="100" id="circleProgress" class="workCircle" />
             <g id="pointerDot">
-              <circle id="pointerProgress" cx="100" cy="0" r="5" />
+              <circle
+                id="pointerProgress"
+                class="workCircle"
+                cx="100"
+                cy="0"
+                r="5"
+              />
             </g>
           </g>
         </g>

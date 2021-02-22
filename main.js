@@ -75,7 +75,7 @@ function updateTimerText() {
   //Some CSS play around - sorry Dev team!
   let ms = (endAt - Date.now())/60000;
   if(ms != timerLength){
-    console.log(ms + ", " + timerLength);
+    // console.log(ms + ", " + timerLength);
     updateCircle(ms, timerLength);
   }
 }
@@ -188,7 +188,6 @@ function startTimer() {
   officialStart(); // startTimer only calls officialStart(), replace all calls of startTimer() with officialStar
 }
 
-
 function officialStart() {
   timerLength = document.getElementById("workTimeInput").value;
   endAt = Date.now() + (60000 * Number(timerLength));  // 60000 min to ms
@@ -261,41 +260,33 @@ function seshClicked(seshID){
   let short = document.getElementById("shortBreak");
   let long = document.getElementById('longBreak');
   let work = document.getElementById('workTime');
-  let bts = document.getElementsByTagName('button');
-  document.getElementById(seshID).className = "active";
+  session.className = "active";
   // hover effect need to address
   if (seshID == 'shortBreak') {
-    session.style.backgroundColor = "#5883c3";
-    long.style.backgroundColor = "#5883c3";
-    work.style.backgroundColor = "#5883c3";
-    circlePointer.style.stroke = "#5883c3";
-    circle.style.stroke = "#5883c3";
-    start.style.backgroundColor = "#5883c3";
-    end.style.backgroundColor = "#5883c3";
-    bts.focus();
+    long.className = "notShortbreak";
+    work.className = "notShortbreak";
+    start.className = "notShortbreak";
+    end.className = "notShortbreak";
+    circlePointer.className.baseVal = "shortCircle";
+    circle.className.baseVal = "shortCircle";
   }
-  else if(seshID == 'longBreak'){
-    session.style.backgroundColor = "#2947B5";
-    work.style.backgroundColor = "#2947B5";
-    short.style.backgroundColor = "#2947B5";
-    circlePointer.style.stroke = "#5883c3";
-    circle.style.stroke = "#2947B5";
-    start.style.backgroundColor = "#2947B5";
-    end.style.backgroundColor = "#2947B5";
+  else if (seshID == 'longBreak') {
+    short.className = "notLongbreak";
+    work.className = "notLongbreak";
+    start.className = "notLongbreak";
+    end.className = "notLongbreak";
+    circlePointer.className.baseVal = "longCircle";
+    circle.className.baseVal = "longCircle";
   }
   else {
-    session.style.backgroundColor = "#e97878";
-    short.style.backgroundColor = "#e97878";
-    long.style.backgroundColor = "#e97878";
-    circlePointer.style.stroke = "#5883c3";
-    circle.style.stroke = "#e97878";
-    start.style.backgroundColor = "#e97878";
-    end.style.backgroundColor = "#e97878";
-  }
-  
+    short.className = "notWork";
+    long.className = "notWork";
+    start.className = "notWork";
+    end.className = "notWork";
+    circlePointer.className.baseVal = "workCircle";
+    circle.className.baseVal = "workCircle";
+  } 
 }
-
-
 
 let progress = document.getElementById('circleProgress');
 let pointer = document.getElementById('pointerDot');
@@ -308,4 +299,3 @@ function updateCircle(val, time){
   let rotation = 360*val/(time);
   pointer.style.transform = `rotate(${rotation}deg)`;
 }
-
