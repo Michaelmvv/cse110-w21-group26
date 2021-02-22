@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
+      - run: ls
       - run: npx jsdoc2md --template ./JSDocTemplate/README.hbs *.js > ./docs/api.md
       #
       - uses: actions/checkout@v1
