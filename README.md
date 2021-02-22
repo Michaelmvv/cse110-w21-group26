@@ -1,1 +1,1 @@
-# cse110-w21-group26 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ac07659f255e408bb574c5317e61262b)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Michaelmvv/cse110-w21-group26&amp;utm_campaign=Badge_Grade)
+# cse110-w21-group26
