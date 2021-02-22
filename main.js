@@ -19,8 +19,6 @@ window.onload = () => {
 // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
 /**
  * @description Exit Prompt... Only works if you have interacted with site...
- * @param  {} {window.onbeforeunload=running?(
- * @param  {null;}} =>{returntrue;}
  * @returns null
  */
 function toggleUnloadPrompt() {
@@ -61,10 +59,10 @@ function toHuman(ms) {
   let min = Math.floor(
       (ms / (1000 * 60)) %
       60);  //*1000 to convert into seconds, *60 to convert into minutes, find
-            //the remainder of minutes for formatting
+            // the remainder of minutes for formatting
   let sec =
       Math.floor((ms / 1000) % 60);  //*1000 to convert into seconds, find the
-                                     //remainder of seconds for formatting
+                                     // remainder of seconds for formatting
 
   if (min < 10) {
     min = '0' + min;
