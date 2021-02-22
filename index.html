@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0"
     />
     <title>Pomo Timer</title>
-    <script src="main.js"></script>
+    <!-- <script src="main.js"></script> -->
     <link href="main.css" rel="stylesheet" />
   </head>
 
@@ -61,12 +61,15 @@
         <!-- translate positions the circle timer fill inside the circle timer-->
         <g transform="translate(110,110)">
           <circle class="circleTimerFill" r="100" />
-          <text id="timer">25:00</text>
+
+          <text id="timer" text-anchor="middle" alignment-baseline="middle">
+            25:00
+          </text>
           <!-- This rotates where the dot on the progress bar is positioned (if no -90, dot is on 3:00 if circle is clock ) -->
           <g transform="rotate(-90)">
-            <circle r="100" class="circleProgress"/>
+            <circle r="100" id="circleProgress" />
             <g id="pointerDot">
-              <circle class="pointerProgress" cx="100" cy="0" r="8" />
+              <circle class="pointerProgress" cx="100" cy="0" r="5" />
             </g>
           </g>
         </g>
@@ -91,5 +94,6 @@
     </div>
 
     <ul id="myUL"></ul>
+    <script src="main.js"></script>
   </body>
 </html>

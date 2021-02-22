@@ -47,6 +47,8 @@ function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
   sessionCountDown = 0;
   officialStart();
+
+  // Change color scheme
 }
 
 /**This is called when the "Short Break" button is pressed */
@@ -54,6 +56,8 @@ function setShortTime() {
   timerLength = document.getElementById("shortBreakTimeInput").value;
   sessionCountDown = 0;
   officialStart();
+
+  // Change color scheme
 }
 
 /**Run when the window is going to close. Gives a warning when the timer is running. */
@@ -69,7 +73,7 @@ function updateTimerText() {
   timerText.textContent = toHuman((endAt - Date.now()));//sets timer text on HTML page 
 
   //Some CSS play around - sorry Dev team!
-  let ms = endAt - Date.now();
+  let ms = (endAt - Date.now())/60000;
   updateCircle(ms, timerLength);
 }
 
@@ -247,17 +251,21 @@ function seshClicked(seshID){
   document.getElementById(seshID).className = "active";
 }
 
-let progress = document.getElementsByClassName('circleProgress');
+
+
+let progress = document.getElementById('circleProgress');
 let pointer = document.getElementById('pointerDot');
-progress.style.strokeDasharray = Math.PI*2*100;
+let move = Math.PI*2*100;
+progress.style.strokeDasharray = move;
 
 function updateCircle(val, time){
-  let offset = (Math.PI*4*100*val)/time;
-  progress.style.strokeDasharray = offset;
-  let rotation = (360*val)/time;
-  progress.style.transform = `rotate(${rotation}deg)`;
-  console.log("it reaches update circle")
+  let offset = -move-move*val/(time);
+  progress.style.strokeDashoffset = offset;
+  let rotation = 360*val/(time);
+  pointer.style.transform = `rotate(${rotation}deg)`;
 }
+
+
 
 /** This is needed to export functions in this file to the main.test.js files
  *  If the console says exports is not defined, go ahead and comment it out when testing the timer
