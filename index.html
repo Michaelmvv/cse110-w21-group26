@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta
+      charset="UTF-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>Pomo Timer</title>
     <script src="main.js"></script>
     <link href="main.css" rel="stylesheet" />
@@ -14,11 +18,25 @@
         <img src="images/logo.svg" alt="logo" height="40" />
       </div>
 
-      <!-- <p>LOGO</p> -->
-      <div class="setting">
-        <!-- <button>Settings</button> -->
+      <div class="setting dropdown">
         <img src="images/settings.svg" alt="settings" height="30" />
+
+        <div class="dropdown-content">
+          <div class="dropdown-item">
+            <label for="longBreakTimeInput">Long Break</label>
+            <input id="longBreakTimeInput" type="number" value="15" />
+          </div>
+          <div class="dropdown-item">
+            <label for="shortBreakTimeInput">Short Break</label>
+            <input id="shortBreakTimeInput" type="number" value="5" />
+          </div>
+          <div class="dropdown-item">
+            <label for="workTimeInput">Work Time</label>
+            <input id="workTimeInput" type="number" value="25" />
+          </div>
+        </div>
       </div>
+      <!-- Will Be in settings Later -->
     </div>
 
     <div class="sessions">
@@ -37,9 +55,26 @@
     <!-- https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/ -->
     <!-- https://www.cssscript.com/circular-countdown-timer-javascript-css3/ -->
 
-   
+    <div class="circle">
+      <!-- viewBox is part of svg class -->
+      <svg class="circleTimer" viewBox="0 0 220 220">
+        <!-- translate positions the circle timer fill inside the circle timer-->
+        <g transform="translate(110,110)">
+          <circle class="circleTimerFill" r="100" />
+          <text id="timer">25:00</text>
+          <!-- This rotates where the dot on the progress bar is positioned (if no -90, dot is on 3:00 if circle is clock ) -->
+          <g transform="rotate(-90)">
+            <circle r="100" class="circleProgress"/>
+            <g id="pointerDot">
+              <circle class="pointerProgress" cx="100" cy="0" r="8" />
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
     <div class="main-timer">
-      <p id="timer">25:00</p>
+      <!--<p id="timer">25:00</p>-->
       <p id="sessionsLeftBeforeLongBreak"></p>
       <p id="CurrentActivity"></p>
     </div>
@@ -48,16 +83,6 @@
       <button id="StartButton">Start</button>
       <button id="StopButton">Stop</button>
     </div>
-
-    <!-- Will Be in settings Later -->
-    <label for="longBreakTimeInput">Long Break</label>
-    <input id="longBreakTimeInput" type="number" value="15" />
-
-    <label for="shortBreakTimeInput">Short Break</label>
-    <input id="shortBreakTimeInput" type="number" value="5" />
-
-    <label for="workTimeInput">Work Time</label>
-    <input id="workTimeInput" type="number" value="25" />
 
     <div id="pomoList" class="header">
       <h2>PomoList</h2>

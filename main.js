@@ -67,6 +67,10 @@ function unloadChecker(e) {
 function updateTimerText() {
   timerText = document.getElementById('timer'); /** Need a local variable for testing */
   timerText.textContent = toHuman((endAt - Date.now()));//sets timer text on HTML page 
+
+  //Some CSS play around - sorry Dev team!
+  let ms = endAt - Date.now();
+  updateCircle(ms, timerLength);
 }
 
 /*
@@ -185,6 +189,7 @@ function officialStart() {
   countingDown = true;
   update();
   document.getElementById('StartButton').style.display = 'none';
+  document.getElementById('StopButton').style.display = 'initial';
 }
 
 // stops timer
@@ -194,6 +199,7 @@ function stopTimer() {
   timerText.textContent = 'Stopped!';
   document.getElementById('StartButton').innerText = 'Start Timer';
   document.getElementById('StartButton').style.display = '';
+  document.getElementById('StopButton').style.display = 'none';
   sessionCountDown = sessionsBeforeLongBreak;
 }
 
@@ -241,8 +247,17 @@ function seshClicked(seshID){
   document.getElementById(seshID).className = "active";
 }
 
+let progress = document.getElementsByClassName('circleProgress');
+let pointer = document.getElementById('pointerDot');
+progress.style.strokeDasharray = Math.PI*2*100;
 
-
+function updateCircle(val, time){
+  let offset = (Math.PI*4*100*val)/time;
+  progress.style.strokeDasharray = offset;
+  let rotation = (360*val)/time;
+  progress.style.transform = `rotate(${rotation}deg)`;
+  console.log("it reaches update circle")
+}
 
 /** This is needed to export functions in this file to the main.test.js files
  *  If the console says exports is not defined, go ahead and comment it out when testing the timer

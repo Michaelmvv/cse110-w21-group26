@@ -1,4 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 html,
 body,
 html * {
@@ -27,7 +28,7 @@ button {
   border-radius: 10%;
 
   font-size: 18px;
-  /* font-weight: bold; */
+
   padding: 10px;
   margin: 4% 9%;
 }
@@ -39,6 +40,12 @@ button:hover {
 button.active {
   background-color: #9e5a63;
 }
+
+label {
+  margin: 0px 10px;
+  align-items: left;
+}
+
 .settingAndLogo {
   display: flex;
   justify-content: space-between;
@@ -47,13 +54,43 @@ button.active {
   text-align: right;
   margin: 10px;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #f5f5f5;
+  min-width: 10%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 10%;
+  margin: 5%;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  border-radius: 10%;
+  float: left;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  padding: 2%;
+}
 .logo {
   margin: 10px;
 }
 
 .sessions {
   text-align: center;
-  /* align-items: center; */
+  position: static;
+  text-align: center;
+  position: static;
   display: flex;
   flex-flow: row wrap;
   padding-left: 8%;
@@ -70,8 +107,8 @@ button.active {
 .header {
   text-align: center;
   width: 80%;
-  height: 80%;
-  border: 1px solid #8a8a8a;
+  height: 200px;
+  border: 2px solid #8a8a8a;
   border-radius: 7%;
   margin: auto;
 }
@@ -87,6 +124,8 @@ button.active {
   background-color: #ff4444;
   padding: 10px 20px;
   margin-left: 30px;
+  width: 5%;
+  height: 20%;
 }
 
 #StopButton {
@@ -97,6 +136,18 @@ button.active {
   background-color: #ff4444;
   padding: 10px 20px;
   margin-left: 30px;
+  width: 5%;
+  height: 20%;
+  display: none;
+}
+
+#workTime {
+  width: 5%;
+  padding: 10px 20px;
+  margin-left: 30px;
+  width: 5%;
+  height: 20%;
+  display: none;
 }
 
 #workTime {
@@ -125,4 +176,37 @@ button.active {
 
 #timer {
   font: 100px;
+}
+
+/* Circle Timer components style */
+.circleTimer {
+  width: 30%;
+  margin-left: 40%;
+  z-index: -1;
+}
+
+/* No idea what this is for */
+.circleTimerFill {
+  fill: none;
+  stroke: #b6b6b6;
+  stroke-width: 4px;
+}
+
+/* Circle Timer Circle Progress Bar Style */
+.circleProgress {
+  fill: none;
+  stroke: #f7958e;
+  stroke-width: 4px;
+  transition: stroke-dashoffset 0.7s;
+}
+
+/* Dot on circle progress bar */
+.pointerProgress {
+  fill: #fff;
+  stroke: #f7958e;
+  stroke-width: 2px;
+}
+
+#pointerDot {
+  transition: transform 0.7s;
 }
