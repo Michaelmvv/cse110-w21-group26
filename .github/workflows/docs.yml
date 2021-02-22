@@ -22,14 +22,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-    
+      #
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.4
         with:
           node-version: '12'
       - run: npm install
       - run: npx jsdoc2md --template ./JSDocTemplate/README.hbs *.js > docs/api.md
-    
+      #
       - uses: actions/checkout@v1
       # Additional steps to generate documentation in "Documentation" directory
       - name: Upload Documentation to Wiki
