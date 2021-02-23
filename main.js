@@ -3,27 +3,35 @@ let countingDown = false;
 
 let timerText;
 
-/**Users input of how many short breaks before a long break */
+/**
+ * Users input of how many short breaks before a long break
+ */
 let sessionsBeforeLongBreak = 4; // user seleciton
 
-/**Number of sessions until long break */
+/**
+ * Number of sessions until long break
+ */
 let sessionCountDown = sessionsBeforeLongBreak;
 let sound = new Audio('alarm1.flac');
 
 /** keeps track if timer is a work or a break timer.
- * breakState will be set to true when a break begins*/
+ *  breakState will be set to true when a break begins
+ */
 let breakState = false;
 
 /**Number of minutes to run the timer for */
 let timerLength = [];
 
 /**Variable storing the list of tasks as a JSON object */
-let taskList;
+let taskList = [];
 
-/** */
+/** 
+ * Onload function. Adds eventListeners to buttons, sets update function to run every 1000 ms
+ * loads taskList contents from local storage, and displays taskList contents
+ */
 window.onload = () => {
   // window.addEventListener('beforeunload',unloadChecker);
-  window.onbeforeunload = unloadChecker;``
+  window.onbeforeunload = unloadChecker; ``
   timerText = document.getElementById('timer');
   document.getElementById("StartButton").addEventListener("click", startTimer);
   document.getElementById("StopButton").addEventListener("click", stopTimer);
@@ -31,18 +39,25 @@ window.onload = () => {
   document.getElementById("workTime").addEventListener("click", setWorkTime);
   document.getElementById("longBreak").addEventListener("click", setLongTime);
   document.getElementById("shortBreak").addEventListener("click", setShortTime);
-  // document.get
+
   setInterval(update, 1000);
+
+  getList();
+  displayList();
 };
 
-/**This is called when the "Work Timer" button is pressed */
+/**
+ * This is called when the "Work Timer" button is pressed 
+ */
 function setWorkTime() {
   timerLength = document.getElementById("workTimeInput").value;
   sessionCountDown = 0;
   officialStart();
 }
 
-/**This is called when the "Long Break" button is pressed */
+/**
+ * This is called when the "Long Break" button is pressed
+ */
 function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
   sessionCountDown = 0;
@@ -51,7 +66,9 @@ function setLongTime() {
   // Change color scheme
 }
 
-/**This is called when the "Short Break" button is pressed */
+/**
+ * This is called when the "Short Break" button is pressed 
+ */
 function setShortTime() {
   timerLength = document.getElementById("shortBreakTimeInput").value;
   sessionCountDown = 0;
@@ -60,24 +77,25 @@ function setShortTime() {
   // Change color scheme
 }
 
-/**Run when the window is going to close. Gives a warning when the timer is running. */
+/**
+ * Run when the window is going to close. Gives a warning when the timer is running.
+ */
 function unloadChecker(e) {
   let test = countingDown ? "Are you sure you want to leave?" : null; //Chrome will not show this.
   e.retunValue = test;
   return test;
 }
 
-/**Timer function that keeps track of time left until end - Under consturction*/
+/**
+ * Timer function that keeps track of time left until end - Under consturction
+ */
 function updateTimerText() {
   timerText = document.getElementById('timer'); /** Need a local variable for testing */
   timerText.textContent = toHuman((endAt - Date.now()));//sets timer text on HTML page 
 
   //Some CSS play around - sorry Dev team!
-  let ms = (endAt - Date.now())/60000;
-  if(ms != timerLength){
-    // console.log(ms + ", " + timerLength);
-    updateCircle(ms, timerLength);
-  }
+  let ms = (endAt - Date.now()) / 60000;
+  updateCircle(ms, timerLength);
 }
 /*
 * update html text
@@ -88,7 +106,9 @@ function updateTimerText() {
 *   - stoped
 */
 
-/**The update function is called once per second */
+/**
+ * The update function is called once per second
+ */
 function update() {
   if (countingDown) {
     if (Date.now() < endAt + 1000) {
@@ -99,7 +119,9 @@ function update() {
   }
 
 }
-
+/** 
+ * Updates the number of Pomodoro work sessions left to be completed before a long break happens
+ */
 function updateSession() {
   //during work, displays how many sessions left of work before longbreak
   //during short break, displays "break!" or something similar
@@ -143,38 +165,12 @@ function updateSession() {
   sessionCountDown--;
 }
 
-// function update() {
-//   if (countingDown) {
-//     if (Date.now() < endAt + 1000) {
-//       timerText.textContent = toHuman((endAt - Date.now()));//sets timer text on HTML page (not sure what this does)
-//     } else {
-//       if (sessionCountDown !== 0) {
-//         sessionCountDown--;
-//         timerLength = 1;
-//         endAt = Date.now() + (60000 * Number(timerLength));       
-//         update(); 
-//       } else {
-//         sessionCountDown = sessionsBeforeLongBreak; 
-//         // countingDown = false;
-//         // // toggleUnloadPrompt();
-//         // sound.play();
-//         // timerText.textContent = 'Pomo Session';
-//         // setTimeout(() => {
-//         //   alert('Your pomodoro session is done!');
-//         //   //sound.pause();  // Stop sound after done
-//         // }, 1);
-
-//       }
-//     }
-//   }
-// }
-
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
 /**Converts a time in ms to a human readable string
  * @param {number} ms - Time in ms to convert
  * @returns {string} Text of time remaining
-*/
+ */
 function toHuman(ms) {
   var currentTime = new Date(1000 * Math.round(ms / 1000)); // round to nearest second
   function pad(i) { return ('0' + i).slice(-2); }
@@ -183,11 +179,14 @@ function toHuman(ms) {
   return str;
 }
 
-// button click turns on timer/ restarts timer.
+
 function startTimer() {
   officialStart(); // startTimer only calls officialStart(), replace all calls of startTimer() with officialStar
 }
 
+/**
+ * Sets timer to beginning of work timer length. Depending on context, this may be used to start a new session or reset one
+ */
 function officialStart() {
   timerLength = document.getElementById("workTimeInput").value;
   endAt = Date.now() + (60000 * Number(timerLength));  // 60000 min to ms
@@ -198,7 +197,9 @@ function officialStart() {
   document.getElementById('StopButton').style.display = 'initial';
 }
 
-// stops timer
+/** 
+ * Stops timer and resets button text to starting contents 
+ */
 function stopTimer() {
   sound.pause();
   countingDown = false;
@@ -209,36 +210,83 @@ function stopTimer() {
   sessionCountDown = sessionsBeforeLongBreak;
 }
 
-//loads stored list elements from local storage upon loading the page
-//accessible from local storage in taskList-JSON variable
-function loadList() {
-  if (localStorage.getItem("taskList-JSON") != null) {
-    taskList = JSON.parse(localStorage.getItem("taskList-JSON"));
-    for (let i = 0; i < taskList.length; i++) {
-      addTask(taskList[i], false);
+/**
+ * Create A Task Object - to be folded into taskEntry class
+ * @constructor
+ * @param {string} name - Name of Task
+ */
+function Task(name) {
+  this.name = name;
+  this.sessions = 0;
+  this.done = false;
+}
+
+/** 
+ * Create the Task Object and add it to list/save in local storage
+ * @param {string} name - Name of Task 
+ */
+function putTaskInList(name) {
+  let t = new Task(name);
+  taskList.push(t);
+  saveList();
+  displayList();
+}
+
+/** 
+ * Remove the task object by list
+ * @param {string} name - Name of Task 
+ */
+function removeTask(name) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      taskList.splice(i, 1);
+      break;
     }
   }
+  saveList();
+  displayList();
 }
 
-//Add task from user input
-function addUserTask() {
-  var inputValue = document.getElementById("myInput").value;
-  var session = 1;
-  var taskObject = {
-    name: inputValue,
-    sessionCount: session
+/** 
+ * Add an user entered task into the list
+ */
+function addTask() {
+  var name = document.getElementById("addTaskInput").value;
+  if (name != null) {
+    putTaskInList(name);
   }
-  addTask(taskObject, true);
 }
 
-//Add an element (task) to the list and store in local storage
-function addTask(task, addToStorage) {
+/** 
+ * Accesses local storage to populate taskList and sets to empty if not found
+ */
+function getList() {
+  if (localStorage.getItem("taskList-JSON") != null) {
+    taskList = JSON.parse(localStorage.getItem("taskList-JSON"));
+  } else {
+    taskList = [];
+  }
+}
 
-  //Display Item
+/** 
+ * Save taskList in a string version to local storage
+ */
+function saveList() {
+  localStorage.setItem("taskList-JSON", JSON.stringify(taskList));
+}
 
-  if (addToStorage) {
-    taskList.append(task);
-    localStorage.setItem('taskList-JSON', JSON.stringify(taskList));
+/**
+ * Displays all the task list on the web page
+ */
+function displayList() {
+  var taskFile = document.getElementById("tasks");
+  console.log(taskList);
+  taskFile.innerHTML = "";
+  for (let i = 0; i < taskList.length; i++) {
+    var currentTask = taskList[i];
+    let newTask = new taskEntry();
+    newTask.syncName(currentTask);
+    taskFile.appendChild(newTask);
   }
 }
 
@@ -246,12 +294,14 @@ function addTask(task, addToStorage) {
  * Functions for CSS
  */
 
-function seshClicked(seshID){
-  document.querySelectorAll(".active").forEach(function(item){
+//Indicates which button is active
+function seshClicked(seshID) {
+  document.querySelectorAll(".active").forEach(function (item) {
     item.className = "";
   });
-  
-  
+
+
+  /* Changing color scheme of buttons depending on which button is clicked*/
   let session = document.getElementById(seshID);
   let circle = document.getElementById("circleProgress");
   let circlePointer = document.getElementById('pointerProgress');
@@ -285,17 +335,25 @@ function seshClicked(seshID){
     end.className = "notWork";
     circlePointer.className.baseVal = "workCircle";
     circle.className.baseVal = "workCircle";
-  } 
+  }
 }
 
+// For circle rotation
 let progress = document.getElementById('circleProgress');
 let pointer = document.getElementById('pointerDot');
-let move = Math.PI*2*100;
+let move = Math.PI * 2 * 100;
 progress.style.strokeDasharray = move;
+progress.style.strokeDashoffset = move * 2;
 
-function updateCircle(val, time){
-  let offset = -move-move*val/(time);
+
+function updateCircle(val, time) {
+  let offset = move + move * val / (time);
   progress.style.strokeDashoffset = offset;
-  let rotation = 360*val/(time);
+  let rotation = 360 - 360 * val / (time);
   pointer.style.transform = `rotate(${rotation}deg)`;
 }
+
+
+
+
+

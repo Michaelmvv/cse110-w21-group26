@@ -92,11 +92,13 @@
 
     <div id="pomoList" class="header">
       <h2>PomoList</h2>
-      <input type="text" id="myInput" placeholder="Title..." />
-      <span onclick="addTask()" class="addBtn">Add</span>
+      <input type="text" id="addTaskInput" placeholder="Title..." />
+      <button onclick="addTask()" class="addBtn">Add</button>
+      <ul id="tasks">
+      </ul>
     </div>
 
-    <ul id="myUL"></ul>
     <script src="main.js"></script>
+    <script src="task-item.js"></script>
   </body>
 </html>

@@ -104,10 +104,12 @@ label {
 .header {
   text-align: center;
   width: 80%;
-  height: 200px;
+  height: 600px;
   border: 2px solid #8a8a8a;
   border-radius: 10px;
   margin: auto;
+  overflow-y: scroll;
+  background-color: #ffffff;
 }
 
 .notShortbreak {
@@ -221,7 +223,7 @@ label {
   text-align: center;
 }
 
-/* No idea what this is for */
+/* Circle background*/
 .circleTimerFill {
   fill: none;
   stroke: #b6b6b6;
@@ -235,6 +237,7 @@ label {
 #circleProgress {
   fill: none;
   stroke-width: 4px;
+  transform-origin: top;
   transition: stroke-dashoffset 0.7s;
 }
 
