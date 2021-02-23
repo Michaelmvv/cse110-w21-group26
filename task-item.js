@@ -7,7 +7,31 @@ class taskEntry extends HTMLElement {
       const template = document.createElement('template');
       template.innerHTML= `  
       <style>
-
+        .object {
+          display: flex;
+          align-items: center;
+         
+        }
+        .object:hover {
+          background-color: #f2f2f2;
+        }
+        .Name {
+          padding: 20px;
+          max-width: 200px;
+        }
+        .Session {
+          padding: 20px;
+        }
+        #removeTask {
+          background-color: #e97;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          width: 12%;
+          height: 9%;
+          text-align: center;
+          margin-left: 80px;
+        }
       </style>
       <span>
       <li class="object">

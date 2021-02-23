@@ -34,6 +34,13 @@
             <label for="workTimeInput">Work Time</label>
             <input id="workTimeInput" type="number" value="25" />
           </div>
+          <!-- <div class="dropdown-item">
+            <label for="darkMode"> Dark Mode</label>
+            <label class="switch" id="darkMode">
+              <input type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+          </div> -->
         </div>
       </div>
       <!-- Will Be in settings Later -->
@@ -89,13 +96,12 @@
       <button id="StartButton">Start</button>
       <button id="StopButton">Stop</button>
     </div>
+    <h2 style="text-align: center">PomoList</h2>
 
     <div id="pomoList" class="header">
-      <h2>PomoList</h2>
       <input type="text" id="addTaskInput" placeholder="Title..." />
       <button onclick="addTask()" class="addBtn">Add</button>
-      <ul id="tasks">
-      </ul>
+      <ul id="tasks"></ul>
     </div>
 
     <script src="main.js"></script>

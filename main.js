@@ -353,7 +353,11 @@ function updateCircle(val, time) {
   pointer.style.transform = `rotate(${rotation}deg)`;
 }
 
-
+function darkMode() {
+  let dark = document.getElementById("darkMode");
+  console.log("wat");
+  console.log(dark);
+}
 
 
 
