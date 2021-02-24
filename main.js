@@ -26,12 +26,18 @@ let timerLength = [];
 /**Variable storing the list of tasks as a JSON object */
 let taskList = [];
 
+
+let progress;
+let pointer;
+let move;
+
+window.onload = start(); 
 /**
  * Onload function. Adds eventListeners to buttons, sets update function to run
  * every 1000 ms loads taskList contents from local storage, and displays
  * taskList contents
  */
-window.onload = () => {
+function start(){
   // window.addEventListener('beforeunload',unloadChecker);
   window.onbeforeunload = unloadChecker;
   ``
@@ -43,11 +49,19 @@ window.onload = () => {
   document.getElementById('longBreak').addEventListener('click', setLongTime);
   document.getElementById('shortBreak').addEventListener('click', setShortTime);
 
+  // For circle rotation
+  progress = document.getElementById('circleProgress');
+  pointer = document.getElementById('pointerDot');
+  move = Math.PI * 2 * 100;
+  progress.style.strokeDasharray = move;
+  progress.style.strokeDashoffset = move * 2;
+
+
   setInterval(update, 1000);
 
   getList();
   displayList();
-};
+}
 
 /**
  * This is called when the "Work Timer" button is pressed
@@ -192,6 +206,7 @@ function toHuman(ms) {
 
 
 function startTimer() {
+  timerLength = document.getElementById('workTimeInput').value;
   officialStart();  // startTimer only calls officialStart(), replace all calls
                     // of startTimer() with officialStar
 }
@@ -201,7 +216,7 @@ function startTimer() {
  * be used to start a new session or reset one
  */
 function officialStart() {
-  timerLength = document.getElementById('workTimeInput').value;
+  
   endAt = Date.now() + (60000 * Number(timerLength));  // 60000 min to ms
   countingDown = true;
   updateCircle(timerLength, timerLength);
@@ -349,12 +364,7 @@ function seshClicked(seshID) {
   }
 }
 
-// For circle rotation
-let progress = document.getElementById('circleProgress');
-let pointer = document.getElementById('pointerDot');
-let move = Math.PI * 2 * 100;
-progress.style.strokeDasharray = move;
-progress.style.strokeDashoffset = move * 2;
+
 
 
 function updateCircle(val, time) {
@@ -369,3 +379,7 @@ function darkMode() {
   console.log('wat');
   console.log(dark);
 }
+
+// module.exports.method = setWorkTime;
+// exports.method = setWorkTime;
+module.exports = {setWorkTime,darkMode}

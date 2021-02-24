@@ -1,42 +1,49 @@
+const fs = require('fs');
+const path = require('path');
+document.documentElement.innerHTML = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf8');
+
+
 const allMethods = require('./main.js');
 const testWorkButton = allMethods.setWorkTime;
-const testDisplay = allMethods.readTime;
+// const testDisplay = allMethods.readTime;
 
-// describe("testing button clicks for work timer and breaks", () => {
+describe("testing button clicks for work timer and breaks", () => {
 
-//   //
-//   document.body.innerHTML = `
-//     <button id="workTime">Work Timer</button>
-//     <button id="StartButton">Start Timer</button>
-//     <input id="workTimeInput" type="number" value="50">
-//     <p id="timer">foo</p>`;
-//     require("./main.js");
+  //
+  // document.body.innerHTML = `
+  //   <button id="workTime">Work Timer</button>
+  //   <button id="StartButton">Start Timer</button>
+  //   <input id="workTimeInput" type="number" value="50">
+  //   <p id="timer">foo</p>`;
+  //   require("./main.js");
 
-//   // Click Work Time button
-//   test('Work Time button', () => {
+  // Click Work Time button
+  test('Work Time button', () => {
 
-//     const workTimeInput = document.getElementById('workTimeInput');
-//     expect(workTimeInput.value).toBe("50");
+    const workTimeInput = document.getElementById('workTimeInput');
+    expect(workTimeInput.value).toBe("25");
 
-//     const mockFn = jest.fn();
-//     const response = testWorkButton(mockFn);
-//     //testWorkButton();
-//     expect(mockFn).toHaveBeenCalledTimes(1);
+    // const mockFn = jest.fn();
+    // const response = testWorkButton(mockFn);
+     //testWorkButton();
+     allMethods.setWorkTime();
+     expect(allMethods.sessionCountDown).toBe(0);
+    // expect(mockFn).toHaveBeenCalledTimes(1);
 
-//     expect(workTimeInput.value).toBe("50");
+    // expect(workTimeInput.value).toBe("50");
 
-//     const timerDisplay = document.getElementById('timer');
-//     expect(timerDisplay.innerHTML).toBe("50:00");
+    // const timerDisplay = document.getElementById('timer');
+    // expect(timerDisplay.innerHTML).toBe("50:00");
 
-//     //const mock = jest.fn();
-//     //expect(mock).toHaveBeenCalledTimes(1);
+    //const mock = jest.fn();
+    //expect(mock).toHaveBeenCalledTimes(1);
 
-//     /*const spy = jest.spyOn(workTimerButton,'setWorkTime');
-//     workTimerButton(mock);
-//     expect(spy).toHaveBeenCalledTimes(1); */
+    /*const spy = jest.spyOn(workTimerButton,'setWorkTime');
+    workTimerButton(mock);
+    expect(spy).toHaveBeenCalledTimes(1); */
 
 
-//   });
+  });
 
 //   // Click Long Break Button
 //   test('Long Time button', () => {
@@ -122,6 +129,6 @@ describe("testing if ms are converted to readable time", () => {
     allMethods.setWorkTime = jest.fn();
     expect(allMethods.setWorkTime.mock).toBeTruthy();
   });
-
-});
 */
+});
+
