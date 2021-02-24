@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+html,
+body,
+html * {
+  font-family: "Roboto", sans-serif;
+}
+
+head,
+body {
+  background: #f2f2f2;
+  /* width: 85%; */
+}
+
+h2 {
+  font-size: 20px;
+}
+
+button {
+  background-color: #e97878;
+  /* width: 10%; */
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  /* font-size: 10; */
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 10px;
+  margin: 4% 9%;
+}
+
+button:hover {
+  background-color: #9e5a63;
+}
+
+button.active {
+  background-color: #9e5a63;
+}
+
+label {
+  margin: 0 10px;
+  align-items: left;
+}
+
+.settingAndLogo {
+  display: flex;
+  justify-content: space-between;
+}
+.setting {
+  text-align: right;
+  margin: 27px 10px 10px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f5f5f5;
+  min-width: 10%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 50%;
+  margin: 1%;
+  right: 0;
+  justify-content: space-evenly;
+  border-radius: 10%;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  padding: 3%;
+  text-align: left;
+  
+}
+
+.logo {
+  margin: 10px;
+}
+
+.sessions {
+  /* text-align: center; */
+  /* position: static; */
+  text-align: center;
+  position: static;
+  display: flex;
+  flex-flow: row wrap;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-top: -10px;
+}
+.controller {
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  padding-left: 30%;
+  padding-right: 30%;
+}
+.header {
+  text-align: center;
+  width: 80%;
+  height: 400px;
+  border: 2px solid #8a8a8a;
+  border-radius: 10px;
+  margin: auto;
+  overflow-y: scroll;
+  background-color: #ffffff;
+}
+.addBtn {
+  align-content: center;
+  margin: 5px;
+}
+#addTaskInput {
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  border-style: groove;
+  border-color: #e97979;
+}
+.notShortbreak {
+  background-color: #5883ce;
+}
+.notLongbreak {
+  background-color: #2947b5;
+}
+
+.notWork {
+  background-color: #e97979;
+}
+.notWork:hover {
+  background-color: #9e5a63;
+}
+.shortCircle {
+  stroke: #5883ce;
+}
+.longCircle {
+  stroke: #2947b5;
+}
+.workCircle {
+  stroke: #e97979;
+}
+
+#StartButton {
+  flex: 1 1 auto;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+  padding: 10px 20px;
+  margin-left: 30px;
+  width: 5%;
+  height: 20%;
+}
+
+#StopButton {
+  /* flex: 1 1 auto; */
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+  padding: 10px 20px;
+  margin-left: 30px;
+  width: 5%;
+  height: 20%;
+  display: none;
+}
+
+/*
+#workTime {
+  width: 5%;
+  padding: 10px 20px;
+  margin-left: 30px;
+  width: 5%;
+  height: 20%;
+  display: none;
+}
+*/
+#workTime {
+  width: 5%;
+  height: 20%;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+  position: relative;
+}
+
+/*
+#btn-overlay:hover{
+  position: absolute;
+  padding: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  opacity: 0.5;
+  transition: opacity .5s;
+}
+*/
+#longBreak {
+  /* flex: 1 1 auto; */
+  width: 5%;
+  height: 20%;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+}
+#shortBreak {
+  /* flex: 1 1 auto; */
+  width: 5%;
+  height: 20%;
+  flex-grow: 1;
+  flex-basis: auto;
+  align-self: center;
+}
+
+#timer {
+  font-size: 50px;
+  padding: 10%;
+  margin-right: 0;
+}
+
+/* Circle Timer components style */
+
+.circleTimer {
+  width: 30%;
+  margin-left: 35%;
+  z-index: -1;
+  align-content: center;
+  text-align: center;
+}
+
+/* Circle background*/
+.circleTimerFill {
+  fill: none;
+  stroke: #b6b6b6;
+  stroke-width: 4px;
+}
+.shadow {
+  filter: drop-shadow(10px 0 5px red);
+}
+
+/* Circle Timer Circle Progress Bar Style */
+#circleProgress {
+  fill: none;
+  stroke-width: 4px;
+  transform-origin: top;
+  transition: stroke-dashoffset 0.7s;
+}
+
+/* Dot on circle progress bar */
+#pointerProgress {
+  fill: #fff;
+  stroke-width: 2px;
+}
+
+#pointerDot {
+  transition: transform 0.7s;
+}
+
+#tasks {
+  padding: 0;
+}
