@@ -14,7 +14,7 @@ Technical Story: [Our focus on a minimalistic approach] <!-- optional -->
 
 * [We have a strict deadline to complete this project]
 * [More features = Less Intuitive design for the user which may lead to more conflict]
-* [We want to learn the process and how to work in team environments more than acutally coding this project with a large amount of features]
+* [We want to learn the process and how to work in team environments more than actually coding this project with a large amount of features]
 
 ## Considered Options
 
