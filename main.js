@@ -12,7 +12,7 @@ let sessionsBeforeLongBreak = 4;  // user seleciton
  * Number of sessions until long break
  */
 let sessionCountDown = sessionsBeforeLongBreak;
-let sound = new Audio('alarm1.flac');
+//let sound = new Audio('alarm1.flac');
 
 /**
  * keeps track if timer is a work or a break timer.
