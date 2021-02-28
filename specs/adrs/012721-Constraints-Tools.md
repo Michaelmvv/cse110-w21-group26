@@ -1,75 +1,76 @@
-# [What Tools on the development side will we be using - List (Constraints, Jest, ESLint, etc)]
+# [What Tools on the development side will we be using for testing and code quality]
 
 * Status: [accepted] <!-- optional -->
-* Deciders: [Weekly Meeting] <!-- optional -->
-* Date: [2021-02-08 when the decision was last updated] <!-- optional -->
+* Deciders: [(everyone) Weekly Meeting] <!-- optional -->
+* Date: [2021-02-25 when the decision was last updated] <!-- optional -->
 
 Technical Story: [We need to finalize the constraints that we have for the project] <!-- optional -->
 
 ## Context and Problem Statement
 
-[What languages/tools do we want to limit ourselves to/are the necessities to complete this project.]
+[To test the robustness of our Pomodoro timer, we will stick to testing frameworks used in the scope of this course like Cypress for user interface testing, unit testing, and code coverage.]
 
 ## Decision Drivers <!-- optional -->
 
 * Web-Application compatible.
-* We need to follow constraints given in class
+* Take care of bugs we find before our users find them.
+* Have code that ensures our app is safe, secure, and reliable.
+* Need to follow strict deadlines to complete this project.
 * … <!-- numbers of drivers can vary -->
 
 ## Considered Options
 
-* JavaScript, HTML, CSS - Constraints
-* Local Storage API
-* Other Third Part API
+* Use CodeFactor for code quality maintenance.
+* Use Codacy for code quality maintenance.
+* Use Jest for our testing framework.
+* Use Cypress as our testing framework.
 * … <!-- numbers of options can vary -->
 
 ## Decision Outcome
 
-Chosen option: Option 1 is a chosen because that's what this class requires and is needed for web-development. We will use Local Storage if we choose to do task list implementation. <br />
-UPDATE on 2/8/2021 - We are doing a Task List so Local Storage will probably be used
+UPDATE on 2/17/2021 - We will be using Jest as our testing framework.
+UPDATE on 2/25/2021 - In addition to Jest, we will be using Cypress as another testing framework.
+UPDATE on 2/27/2021 - We are removing Jest as a testing framework and will solely use Cypress.
+
+Chosen option: We have decided to use options 1 and option 4. Option 1 is chosen because CodeFactor was one of the few free code quality tools for our CI/CD pipeline for a private GitHub repository instead of a GitHub organization. We chose option 4 because after exploring this testing framework, Cypress allows us to test user interface interactions in addition to unit testing and code coverage. We will not be using Jest because originally we were using it for unit testing and code coverage but since Cypress is able to do that as well, we are only using Cypress.
+<br/>
+
 
 ### Positive Consequences <!-- optional -->
 
-* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-* …
+* Ensure that our code is reliable with a code quality tool that catches issues during the development process.
+* Ensure that our code is safe, secure, and works as expected with robust integration and unit testing.
 
 ### Negative Consequences <!-- optional -->
 
-* [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
+* Cost time exploring testing frameworks.
+* Cost time exploring different code quality tools.
 
 ## Pros and Cons of the Options <!-- optional -->
 
-### [option 1]
+### [option 1: Use CodeFactor for code quality maintenance. ]
 
-[example | description | pointer to more information | …] <!-- optional -->
+* Good, because it catches issues easily overlooked like "mixed tabs and spaces".
+* Good, because it is useable in a private GitHub repository.
+* Good, because it is free.
+* Bad, because some errors have to do with style when code functionality works as expected.
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+### [option 2: Use Codacy for code quality maintenance. ]
 
-### [option 2]
+* Good, because it provides more context to code quality issues.
+* Bad, because it requires us to use a GitHub Organization but we are supposed to use a private repository.
 
-[example | description | pointer to more information | …] <!-- optional -->
+### [option 3: Use Jest for our testing framework.]
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+* Good, because Jest is easy to set up locally and on our CI/CD Pipeline
+* Good, because Jest has official documentation we can use as a resource for unit testing and code coverage.
+* Bad, because Jest is harder to test button clicks and DOM changes; easier to test functions that have a return value.
+* Bad, because Jest may interfere with Cypress tests (solved by configuring Jest to ignore Cypress test files).
 
-### [option 3]
+### [option 4: Use Cypress as our testing framework.]
 
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-## Links <!-- optional -->
-
-* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* … <!-- numbers of links can vary -->
+* Good, because Cypress allows testing user interactions with our interface easily.
+* Good, because Cypress allows unit testing and code coverage.
+* Bad, because it may interfere with our previous testing framework, Jest (solved by checking whether module exists in our main JavaScript file for the module.exports line needed for Jest).
 
 <!-- markdownlint-disable-file MD013 -->
