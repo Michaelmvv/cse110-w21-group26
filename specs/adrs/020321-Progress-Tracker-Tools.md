@@ -19,19 +19,22 @@ Technical Story: [How to keep track of our progress] <!-- optional -->
 ## Considered Options
 
 * [Figma]
-* [GitHub Actions]
+* [GitHub Actions and Sprint Board on Github]
 * [Tools that Professor has mentioned]
-* [Integrate Stand-up with Slack]
+* [Integrate Daily Stand-up with Slack]
 * … <!-- numbers of options can vary -->
 
 ## Decision Outcome
 
-[We choose options 1,2, and 4. Figma allows design to be made in a very nice and easy to use website. GitHub Actions allows all project-related information to be in one place. Daily stand-up on Slack reduces different accounts need to be made].
+[We choose options 1,2, and 4. Figma allows design to be made in a very nice and easy to use website. GitHub Actions allows all project-related information to be in one place and we can easily visualize which tasks are on the backlog, ready for work, in progress, blocked, need human checking, and which tasks are done. Daily stand-up on Slack reduces different accounts needed to be made and prompts a reminder to all members to communicate their progress or blockers].
 
 ### Positive Consequences <!-- optional -->
 
-* Reasons stated above
+* Increased communication between members.
+* Organized place to put deliverables.
+* Sprint board helps visualize progress.
 
 ### Negative Consequences <!-- optional -->
+* Takes time to learn how to navigate Figma for new members of our team.
 
 * None that we can think of.
