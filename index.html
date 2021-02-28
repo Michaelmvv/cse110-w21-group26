@@ -97,9 +97,11 @@
       <button id="StopButton">Stop</button>
     </div>
     <h2 style="text-align: center">PomoList</h2>
-
+    <button onclick="displayList()" class="switchList">To-Do</button>
+    <button onclick="displayListDone()" class="switchList">Done</button>
     <div id="pomoList" class="header">
       <input type="text" id="addTaskInput" placeholder="Title..." />
+      <input id="sessionNumber" name="sessionNumber" type="number" min="1" max="10" value="1">
       <button onclick="addTask()" class="addBtn">Add</button>
       <ul id="tasks"></ul>
     </div>
