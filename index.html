@@ -12,40 +12,76 @@
   </head>
 
   <body>
-    <!--h1>Timer</h1-->
+    <!-- logo -->
     <div class="settingAndLogo">
       <div class="logo">
         <img src="images/logo.svg" alt="logo" height="80" width="80" />
       </div>
-
+      <!-- settings -->
       <div class="setting dropdown">
         <img src="images/settings.svg" alt="settings" height="30" />
 
         <div class="dropdown-content">
           <div class="dropdown-item">
             <label for="longBreakTimeInput">Long Break</label>
-            <input id="longBreakTimeInput" type="number" value="15" />
+            <input
+              class="settingLengthInput"
+              id="longBreakTimeInput"
+              type="number"
+              value="15"
+            />
           </div>
           <div class="dropdown-item">
             <label for="shortBreakTimeInput">Short Break</label>
-            <input id="shortBreakTimeInput" type="number" value="5" />
+            <input
+              class="settingLengthInput"
+              id="shortBreakTimeInput"
+              type="number"
+              value="5"
+              style="width: 60px"
+            />
           </div>
           <div class="dropdown-item">
             <label for="workTimeInput">Work Time</label>
-            <input id="workTimeInput" type="number" value="25" />
+            <input
+              class="settingLengthInput"
+              id="workTimeInput"
+              type="number"
+              value="25"
+              style="width: 60px"
+            />
           </div>
-          <!-- <div class="dropdown-item">
+          <!-- volume controller, need to add js function -->
+          <!-- do we still want the volume despite we can modify using laptop? -->
+          <div class="dropdown-item">
+            <label for="volume">Volume</label>
+            <input type="range" min="1" max="100" value="50" id="volume" />
+          </div>
+          <!-- darkmode and auto switch -->
+          <div class="dropdown-item">
             <label for="darkMode"> Dark Mode</label>
-            <label class="switch" id="darkMode">
+            <label class="switch">
+              <input
+                type="checkbox"
+                class="hiddenCheckbox"
+                id="darkMode"
+                onclick="darkMode();"
+              />
+              <span class="slider round"></span>
+            </label>
+            <!-- auto switch need to add js functions -->
+            <label for="auto"> Auto</label>
+            <label class="switch" id="autoSwitch">
               <input type="checkbox" />
               <span class="slider round"></span>
             </label>
-          </div> -->
+          </div>
         </div>
       </div>
       <!-- Will Be in settings Later -->
     </div>
 
+    <!-- session switch section -->
     <div class="sessions">
       <button id="workTime" class="active" onclick="seshClicked(this.id)">
         Work Timer
@@ -97,13 +133,36 @@
       <button id="StopButton">Stop</button>
     </div>
     <h2 style="text-align: center">PomoList</h2>
-    <button onclick="displayList()" class="switchList">To-Do</button>
-    <button onclick="displayListDone()" class="switchList">Done</button>
-    <div id="pomoList" class="header">
-      <input type="text" id="addTaskInput" placeholder="Title..." />
-      <input id="sessionNumber" name="sessionNumber" type="number" min="1" max="10" value="1">
-      <button onclick="addTask()" class="addBtn">Add</button>
-      <ul id="tasks"></ul>
+    <div class="task-list">
+      <div class="taskTabs">
+        <button onclick="displayList()" id="to-do" class="active">To-Do</button>
+        <button onclick="displayListDone()" id="done" class=" ">Done</button>
+      </div>
+      <!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
+      <div id="pomoList" class="header">
+        <button onclick="addTask()" class="addBtn">Add</button>
+        <div id="addModal" class="modal">
+          <div class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <input type="text" id="addTaskInput" placeholder="Title..." />
+            <form action="">
+              <input
+                id="sessionNumber"
+                name="sessionNumber"
+                type="number"
+                min="1"
+                max="10"
+                value="1"
+                onKeyDown="return false"
+              />
+            </form>
+          </div>
+
+         
+        </div>
+
+        <ul id="tasks"></ul>
+      </div>
     </div>
 
     <script src="main.js"></script>

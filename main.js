@@ -1,4 +1,4 @@
-/* global taskEntry, getList, displayList */
+/* global taskEntry, getList, displayList, decrementTopTask */
 
 let endAt = 0;
 let countingDown = false;
@@ -99,7 +99,7 @@ function updateTimerText() {
   timerText.textContent =
       toHuman((endAt - Date.now()));  // sets timer text on HTML page
 
-  // Some CSS play around - sorry Dev team!
+  // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
   updateCircle(ms, timerLength);
 }
@@ -141,6 +141,8 @@ function updateSession() {
     timerLength = document.getElementById('workTimeInput').value;
     endAt = Date.now() + (60000 * Number(timerLength));
     breakState = false;
+    // add this for changing color scheme
+    seshClicked('workTime');
     update();
     return;
   }
@@ -150,6 +152,9 @@ function updateSession() {
     timerLength = document.getElementById('shortBreakTimeInput').value;
     endAt = Date.now() + (60000 * Number(timerLength));
     breakState = true;
+    // add this for changing color scheme
+    seshClicked('shortBreak');
+    decrementTopTask();
   }
 
 
@@ -159,11 +164,15 @@ function updateSession() {
     timerLength = document.getElementById('longBreakTimeInput').value;
     endAt = Date.now() + (60000 * Number(timerLength));
     breakState = true;
+    // add this for changing color scheme
+    seshClicked('longBreak');
+    decrementTopTask();
   }
 
   // can just be an else statement
   else if (sessionCountDown === 0) {
     console.log('DONEEEEE reset plz');
+    // decrementTopTask();
     stopTimer();
   }
 
@@ -227,7 +236,11 @@ function stopTimer() {
  * Functions for CSS
  */
 
-// Indicates which button is active
+
+/**
+ * Change the colors according to button clicked
+ * @param {string} seshID 
+ */
 function seshClicked(seshID) {
   document.querySelectorAll('.active').forEach(function(item) {
     item.className = '';
@@ -276,16 +289,35 @@ let move = Math.PI * 2 * 100;
 progress.style.strokeDasharray = move;
 progress.style.strokeDashoffset = move * 2;
 
-
+/**
+ * update the circular timer display
+ * @param {number} val 
+ * @param {number} time 
+ */
 function updateCircle(val, time) {
   let offset = move + move * val / (time);
   progress.style.strokeDashoffset = offset;
   let rotation = 360 - 360 * val / (time);
   pointer.style.transform = `rotate(${rotation}deg)`;
 }
-
+/**
+ * change the dark mode according to toggle button
+ */
 function darkMode() {
   let dark = document.getElementById('darkMode');
-  console.log('wat');
-  console.log(dark);
+  let timerText = document.getElementById('timer');
+  if (dark.checked) {
+    document.body.style.backgroundColor = "#363636";
+    timerText.style.fill = "#c3c3c3";
+  } else {
+    document.body.style.backgroundColor = "#f2f2f2";
+    timerText.style.fill = "#363636";
+  }
+}
+
+/**
+ * adjust the volume based on slider
+ */
+function volume() {
+  
 }
