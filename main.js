@@ -42,6 +42,10 @@ window.onload = () => {
   document.getElementById('longBreak').addEventListener('click', setLongTime);
   document.getElementById('shortBreak').addEventListener('click', setShortTime);
 
+  document.getElementById('longBreakTimeInput').addEventListener('change',{
+      
+  });
+  timerLength = document.getElementById('workTimeInput').value;
   setInterval(update, 1000);
 
   getList();
@@ -116,7 +120,7 @@ function updateTimerText() {
  */
 function update() {
   if (countingDown) {
-    if (Date.now() < endAt + 1000) {
+    if (Date.now() < endAt) {
       updateTimerText();
     } else {
       updateSession();
@@ -178,7 +182,6 @@ function updateSession() {
   update();
   sessionCountDown--;
 }
-
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
 /**Converts a time in ms to a human readable string
@@ -311,7 +314,7 @@ function seshClicked(seshID) {
     start.className = 'notWork';
     end.className = 'notWork';
     addTaskBtn.style.backgroundColor = "#e97878";
-    taskInput.style.borderColor = "#e97878";;
+    taskInput.style.borderColor = "#e97878";
     if(toDoBtn.className == 'activeList'){
       toDoBtn.style.backgroundColor = "#e97878";
       doneBtn.style.backgroundColor = "#ccc";
@@ -363,6 +366,6 @@ function darkMode() {
 /**
  * adjust the volume based on slider
  */
-function volume() {
+// function volume() {
   
-}
+// }
