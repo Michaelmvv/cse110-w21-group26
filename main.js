@@ -94,8 +94,7 @@ function unloadChecker(e) {
  * Timer function that keeps track of time left until end - Under consturction
  */
 function updateTimerText() {
-  timerText =
-      document.getElementById('timer'); /** Need a local variable for testing */
+  //timerText = document.getElementById('timer'); /** Need a local variable for testing */
   timerText.textContent =
       toHuman((endAt - Date.now()));  // sets timer text on HTML page
 
@@ -209,7 +208,7 @@ function startTimer() {
  * be used to start a new session or reset one
  */
 function officialStart() {
-  timerLength = document.getElementById('workTimeInput').value;
+  //timerLength = document.getElementById('workTimeInput').value;
   endAt = Date.now() + (60000 * Number(timerLength));  // 60000 min to ms
   countingDown = true;
   updateCircle(timerLength, timerLength);
