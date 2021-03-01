@@ -256,6 +256,16 @@ function seshClicked(seshID) {
   let short = document.getElementById('shortBreak');
   let long = document.getElementById('longBreak');
   let work = document.getElementById('workTime');
+  //Task list Components
+  let toDoBtn = document.getElementById('to-do');
+  let doneBtn = document.getElementById('done');
+  let addTaskBtn = document.getElementById('addBtn');
+  let taskInput = document.getElementById('addTaskInput');
+  //Logo Components
+  let logoP1 = document.getElementById('logo-P1');
+  let logoP2 = document.getElementById('logo-P2');
+  let logoCircle = document.getElementById('logo-circle');
+
   session.className = 'active';
   // hover effect need to address
   if (seshID == 'shortBreak') {
@@ -263,6 +273,18 @@ function seshClicked(seshID) {
     work.className = 'notShortbreak';
     start.className = 'notShortbreak';
     end.className = 'notShortbreak';
+    addTaskBtn.style.backgroundColor = "#5883ce";
+    taskInput.style.borderColor = "#5883ce";
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#5883ce";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#5883ce";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+    logoP1.style.fill="#5883ce";
+    logoP2.style.fill="#5883ce";
+    logoCircle.style.fill="#7D97BC";
     circlePointer.className.baseVal = 'shortCircle';
     circle.className.baseVal = 'shortCircle';
   } else if (seshID == 'longBreak') {
@@ -270,6 +292,18 @@ function seshClicked(seshID) {
     work.className = 'notLongbreak';
     start.className = 'notLongbreak';
     end.className = 'notLongbreak';
+    addTaskBtn.style.backgroundColor = "#2947b5";
+    taskInput.style.borderColor = "#2947b5";
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#2947b5";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#2947b5";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+    logoP1.style.fill="#2947b5";
+    logoP2.style.fill="#2947b5";
+    logoCircle.style.fill="#5C6DA8";
     circlePointer.className.baseVal = 'longCircle';
     circle.className.baseVal = 'longCircle';
   } else {
@@ -277,6 +311,18 @@ function seshClicked(seshID) {
     long.className = 'notWork';
     start.className = 'notWork';
     end.className = 'notWork';
+    addTaskBtn.style.backgroundColor = "#e97878";
+    taskInput.style.borderColor = "#e97878";;
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#e97878";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#e97878";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+    logoP1.style.fill="#F14148";
+    logoP2.style.fill="#F14148";
+    logoCircle.style.fill="#F68D90";
     circlePointer.className.baseVal = 'workCircle';
     circle.className.baseVal = 'workCircle';
   }

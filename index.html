@@ -15,11 +15,37 @@
     <!-- logo -->
     <div class="settingAndLogo">
       <div class="logo">
-        <img src="images/logo.svg" alt="logo" height="80" width="80" />
+        <svg width="617" height="617" viewBox="20 20 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!--rect width="617" height="617" fill="none"/-->
+          <path id="logo-P1" d="M169 168.5C169 155.797 179.297 145.5 192 145.5C204.703 145.5 215 155.797 215 168.5V496.5C215 509.203 204.703 519.5 192 519.5C179.297 519.5 169 509.203 169 496.5V168.5Z" fill="#F14148"/>
+          <circle id="logo-P2" cx="311" cy="250" r="102" fill="#F14148"/>
+          <path id="logo-circle" d="M386.5 249.773C386.5 291.747 352.474 325.773 310.5 325.773C268.526 325.773 234.5 291.747 234.5 249.773C234.5 207.8 268.526 173.773 310.5 173.773C352.474 173.773 386.5 207.8 386.5 249.773Z" fill="#F68D90"/>
+          <rect x="237" y="255.15" width="11.15" height="30.4985" rx="5.57499" transform="rotate(-90 237 255.15)" fill="white"/>
+          <rect x="303" y="293" width="11.15" height="30.4985" rx="5.57499" fill="white"/>
+          <rect x="303" y="176" width="11.15" height="30.4985" rx="5.57499" fill="white"/>
+          <rect x="257" y="199.884" width="11.15" height="30.4985" rx="5.57499" transform="rotate(-45 257 199.884)" fill="white"/>
+          <rect x="338" y="278.884" width="11.15" height="30.4985" rx="5.57499" transform="rotate(-45 338 278.884)" fill="white"/>
+          <rect x="345.884" y="221.45" width="11.15" height="30.4985" rx="5.57499" transform="rotate(-135 345.884 221.45)" fill="white"/>
+          <rect x="259.884" y="300.45" width="11.15" height="30.4985" rx="5.57499" transform="rotate(-135 259.884 300.45)" fill="white"/>
+          <rect x="354" y="255.15" width="11.15" height="30.4985" rx="5.57499" transform="rotate(-90 354 255.15)" fill="white"/>
+          <line x1="308.5" y1="182" x2="308.5" y2="250" stroke="black" stroke-width="5"/>
+          <line x1="347.055" y1="251" x2="305.945" y2="251" stroke="black" stroke-width="5"/>
+        </svg>
+        <!--img src="images/logo.svg" alt="logo" height="80" width="80" /-->
       </div>
       <!-- settings -->
-      <div class="setting dropdown">
-        <img src="images/settings.svg" alt="settings" height="30" />
+      <div class="setting dropdown" 
+      onmouseover="{
+        let settingsLogo = document.getElementById('settingsLogo');
+        settingsLogo.style.transition='transform 0.5s';
+        settingsLogo.style.transform='rotate(-45deg)';
+      }"
+      onmouseout="{
+        let settingsLogo = document.getElementById('settingsLogo');
+        settingsLogo.style.transition='transform 0.5s';
+        settingsLogo.style.transform='rotate(45deg)';
+      }">
+        <img id="settingsLogo" src="images/settings.svg" alt="settings" height="30" />
 
         <div class="dropdown-content">
           <div class="dropdown-item">
@@ -135,17 +161,17 @@
     <h2 style="text-align: center">PomoList</h2>
     <div class="task-list">
       <div class="taskTabs">
-        <button onclick="displayList()" id="to-do" class="active">To-Do</button>
+        <button onclick="displayList()" id="to-do" class="activeList">To-Do</button>
         <button onclick="displayListDone()" id="done" class=" ">Done</button>
       </div>
       <!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
       <div id="pomoList" class="header">
-        <button onclick="addTask()" class="addBtn">Add</button>
         <div id="addModal" class="modal">
           <div class="modal-content">
             <!-- <span class="close">&times;</span> -->
             <input type="text" id="addTaskInput" placeholder="Title..." />
             <form action="">
+              <label for="sessionNumber"># Pomodoro Sessions: </label>
               <input
                 id="sessionNumber"
                 name="sessionNumber"
@@ -157,8 +183,7 @@
               />
             </form>
           </div>
-
-         
+          <button onclick="addTask()" id="addBtn" class="addBtn">Add</button>
         </div>
 
         <ul id="tasks"></ul>

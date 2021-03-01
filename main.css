@@ -14,12 +14,14 @@ body {
 }
 
 h2 {
+  margin-top: 50px;
   font-size: 20px;
 }
 button {
   background-color: #e97878;
   /* width: 10%; */
   border: none;
+  outline: none;
   color: #ffffff;
   text-align: center;
   text-decoration: none;
@@ -27,7 +29,7 @@ button {
   /* font-size: 10; */
   border-radius: 10px;
   font-size: 18px;
-  padding: 10px;
+  padding: 15px 10px 15px 10px;
   margin: 4% 9%;
 }
 
@@ -47,10 +49,11 @@ label {
 .settingAndLogo {
   display: flex;
   justify-content: space-between;
+  width:95%;
 }
 .setting {
   text-align: right;
-  margin: 27px 10px 10px;
+  margin: 50px 10px 10px;
 }
 
 .dropdown {
@@ -105,8 +108,7 @@ label {
 }
 .header {
   text-align: center;
-  
-  height: 400px;
+  height: 600px;
   border-radius: 10px;
   margin: auto;
   overflow-y: scroll;
@@ -244,8 +246,8 @@ input:checked + .slider:before {
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
-  padding: 10px 20px;
-  margin-left: 30px;
+  padding: 15px 10px;
+  margin:auto;
   width: 5%;
   height: 20%;
 }
@@ -255,8 +257,8 @@ input:checked + .slider:before {
   flex-grow: 1;
   flex-basis: auto;
   align-self: center;
-  padding: 10px 20px;
-  margin-left: 30px;
+  padding: 15px 10px;
+  margin: auto;
   width: 5%;
   height: 20%;
   display: none;
@@ -332,21 +334,19 @@ input:checked + .slider:before {
 }
 
 .task-list {
-  border-radius: 10px;
+  border-radius: 5px;
   width: 80%;
   margin: auto;
-  background-color: #fff;
-  border: 2px solid #8a8a8a;
-  border-radius: 10px;
+  background-color: #a3a3a3;
+  border: 1.5px solid #a3a3a3;
 }
 
 .taskTabs {
   overflow: hidden;
   text-align: center;
   background-color: #ccc;
-  border: 1px solid #ccc;
   display: flex;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 
 .taskTabs button {
@@ -367,6 +367,58 @@ input:checked + .slider:before {
   background-color: #e9888888;
 }
 
-.taskTabs button.active {
+.taskTabs button.activeList{
   background-color: #e97878;
+}
+
+.modal{
+  padding-top: 10px;
+  width:80%;
+  display: flex;
+  margin: auto;
+}
+
+.modal button{
+  width:10%;
+  margin:auto;
+}
+.modal-content{
+  width: 90%;
+  display: inherit;
+  flex: 1;
+  margin:auto;
+  overflow-y: initial;
+}
+
+.modal-content #addTaskInput{
+  font-size: 20px;
+  height: fit-content;
+  padding: 10px;
+  width: 60%;
+}
+
+.modal-content form{
+  font-size: 18px;
+  height: fit-content;
+  padding: 10px 10px 10px 10px;
+  width: 40%;
+  text-align: left;
+}
+
+.modal-content #sessionNumber{
+  font-size: 20px;
+  text-align: center;
+}
+
+.logo{
+  width: 100px;
+  height: 90px;
+  max-width: 100px;
+  max-height: 90px;
+}
+.logo svg{
+  width: 150px;
+  height: 90px;
+  max-width: 150px;
+  max-height: 90px;
 }
