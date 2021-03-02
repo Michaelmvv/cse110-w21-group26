@@ -42,12 +42,14 @@ class taskEntry extends HTMLElement {
         .move-btns{
           padding-left:15px;
           width: 10%;
+          max-width: 10%;
         }
         .move-btns button{
           background:none;
           outline: none;
           padding: 10px 0px 10px 0px;
           border: none;
+          display:flex;
         }
         .move-btns button svg{
           fill: #a3a3a3;
@@ -65,6 +67,20 @@ class taskEntry extends HTMLElement {
         } 
         #moveToNewList{
           width: 7.5%
+          outline: none;
+          background: none;
+          border:none;
+        }
+        #moveToNewList:hover{
+          outline: none;
+          background: none;
+          border:none;
+        }
+        #moveToNewList svg{
+          fill: #919191;
+        }
+        #moveToNewList svg:hover{
+          fill: #444;
         }
         #removeTask {
           border: none;
@@ -74,7 +90,7 @@ class taskEntry extends HTMLElement {
           outline: none;
         }
         #removeTask svg{
-          fill: #818181;
+          fill: #919191;
         }
         #removeTask svg:hover{
           fill: #555;
@@ -83,7 +99,7 @@ class taskEntry extends HTMLElement {
       <span>
       <li class="object">
         <div class="move-btns">
-          <button title="Move up" onclick="" id="upTask">
+          <button class="up-btn" title="Move up" onclick="" id="upTask">
             <svg xmlns="http://www.w3.org/2000/svg" 
               height="50" viewBox="0 0 24 14" width="50" 
               preserveAspectRatio="xMidYMid slice">
@@ -91,7 +107,7 @@ class taskEntry extends HTMLElement {
               <path d="M7 14l5-5 5 5z"/>
             </svg>
           </button>
-          <button title="Move down" onclick="" id="downTask">
+          <button class="down-btn" title="Move down" onclick="" id="downTask">
             <svg xmlns="http://www.w3.org/2000/svg" 
               height="50" viewBox="0 0 24 14" width="50" 
               preserveAspectRatio="xMidYMid slice">
@@ -104,7 +120,12 @@ class taskEntry extends HTMLElement {
         <form class="taskNumber" action="">
           <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1" onKeyDown="return false">
         </form>
-        <button onclick="" id="moveToNewList">Switch List</button>
+        <button onclick="" title="Move to Other List" id="moveToNewList">
+          <svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 24 24" width="50">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
+          </svg>
+        </button>
         <button title="Delete" onclick="" id="removeTask">
           <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 0 24 24" width="35">
             <path d="M0 0h24v24H0z" fill="none"/>
