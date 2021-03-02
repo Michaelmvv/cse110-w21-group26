@@ -110,14 +110,26 @@ label {
 .header {
   text-align: center;
   height: 600px;
-  border-radius: 0 0 5px 5px;
+  border-radius: 10px;
   margin: auto;
-  overflow-y: scroll;
   background-color: #ffffff;
 }
 .addBtn {
   align-content: center;
-  margin: 5px;
+  margin: 0px;
+  padding: 20px 30px;
+/*  background: none;
+  border: none;
+  outline: none;
+}
+.addBtn:hover{
+  background: none;
+}
+.addBtn svg{
+  fill: #c96567;
+}
+.addBtn svg:hover{
+  fill: #e97979;*/
 }
 .addTaskBtn {
   align-content: center;
@@ -344,11 +356,16 @@ input:checked + .slider:before {
 #tasks {
   padding: 10px;
   text-align: center;
+  overflow-y: scroll;
+  height: 80%;
 }
 
 .task-list {
   width: 80%;
   margin: auto;
+  background: #ffffff;
+  margin-bottom: 200px;
+  border-radius: 10px;
 }
 
 .taskTabs {
@@ -394,7 +411,7 @@ input:checked + .slider:before {
   background-color: #ffffff;
   border: 1px solid #888;
   border-radius: 10px;
-  margin-top: -60%;
+  margin-top: -70%;
 }
 
 .modal button {

@@ -308,7 +308,10 @@
 
       <div id="pomoList" class="header">
         <!-- <button onclick="addTask()" id="addBtn" class="addBtn">Add</button> -->
-        <button id="addBtn" onclick="openModal()" class="addBtn">Add</button>
+        <ul id="tasks"></ul>
+
+        <button id="addBtn" onclick="openModal()" class="addBtn"> Add Task</button>
+
         <div id="addModal" class="modal">
           <div class="modal-content">
             <div style="display: block">
@@ -333,8 +336,8 @@
             <button onclick="addTask()" class="addTaskBtn">Create Task</button>
           </div>
         </div>
-        <ul id="tasks"></ul>
       </div>
+      
     </div>
 
     <script src="main.js"></script>
