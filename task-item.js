@@ -284,7 +284,7 @@ function putTaskInList(name, sessionCount) {
  function switchList(button, name) {
    for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
-      taskList.done = true;
+      taskList[i].done = true;
       if(button != null) {
         button.innerHTML = "Move to Done";
       }
@@ -297,10 +297,11 @@ function putTaskInList(name, sessionCount) {
   }
   for (let i = 0; i < taskListDone.length; i++) {
     if (name == taskListDone[i].name) {
-      taskList.done = false;
+      taskListDone[i].done = false;
       if (button != null) {
         button.innerHTML = "Move to To-Do";
       }
+      taskListDone[i].sessions = 1;
       taskList.push(taskListDone[i]);
       taskListDone.splice(i, 1);
       saveList();
@@ -361,10 +362,11 @@ function addTask() {
     sessionCount.value = 10;
     return;
   }
-  if (name != null) {
-    putTaskInList(name, sessionCount);
+  if (!name.trim().length) {
+    alert("You need to enter a valid task name.");
+    return;
   }
-
+  putTaskInList(name, sessionCount);
   /*Some styling stuff - resetting form after adding */
   let taskBox = document.getElementById('addTaskInput');
   taskBox.value = '';
@@ -415,6 +417,7 @@ function displayList() {
   taskFile.innerHTML = '';
   for (let i = 0; i < taskList.length; i++) {
     var currentTask = taskList[i];
+    //currentTask.sessions = currentTask.originalSessions;
     let newTask = new taskEntry(); //So code factor is happy
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
@@ -437,7 +440,7 @@ function displayListDone() {
   for (let i = 0; i < taskListDone.length; i++) {
     var currentTask = taskListDone[i];
     currentTask.sessions = currentTask.sessionTotal;
-    let newTask = new taskEntry(); //So code factor is happy
+    let newTask = new taskEntry();
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
   }
