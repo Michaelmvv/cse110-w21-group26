@@ -116,21 +116,9 @@ label {
 }
 .addBtn {
   align-content: center;
-  margin: 0px;
-  padding: 20px 30px;
-/*  background: none;
-  border: none;
-  outline: none;
+  margin: 5px;
 }
-.addBtn:hover{
-  background: none;
-}
-.addBtn svg{
-  fill: #c96567;
-}
-.addBtn svg:hover{
-  fill: #e97979;*/
-}
+
 .addTaskBtn {
   align-content: center;
   margin: 2px;
@@ -402,9 +390,9 @@ input:checked + .slider:before {
   padding-top: 10px;
   width: 60%;
   height: 35%;
-  display: none; 
+  display: none;
   margin-left: 10%;
-  margin-right:15%;
+  margin-right: 15%;
   position: fixed;
   z-index: 1;
   overflow: auto;
