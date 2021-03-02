@@ -349,6 +349,9 @@ function addTask() {
   taskBox.value = '';
   let seshNum = document.getElementById('sessionNumber');
   seshNum.value = '1';
+  // close the modal upon creation
+  let modal = document.getElementById('addModal');
+  modal.style.display = "none";
 }
 
 /**

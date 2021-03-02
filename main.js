@@ -354,18 +354,50 @@ function updateCircle(val, time) {
 function darkMode() {
   let dark = document.getElementById('darkMode');
   let timerText = document.getElementById('timer');
+  let taskListBackground = document.getElementById('pomoList');
+  let settingsLogo = document.getElementById('settingsLogo');
   if (dark.checked) {
     document.body.style.backgroundColor = "#363636";
     timerText.style.fill = "#c3c3c3";
+    taskListBackground.style.backgroundColor = "#c4c4c4";
+    settingsLogo.setAttribute("fill", "#c3c3c3");
   } else {
     document.body.style.backgroundColor = "#f2f2f2";
     timerText.style.fill = "#363636";
+    taskListBackground.style.backgroundColor = "#ffffff";
+    settingsLogo.setAttribute("fill", "#444444");
   }
+}
+/**
+ * the automatic function from the settings
+ * it controls the visibility of sessions button 
+ * and the start button state.
+ */
+function autoPilot(){
+    
 }
 
 /**
- * adjust the volume based on slider
+ * open the popup window
  */
-// function volume() {
-  
-// }
+function openModal() {
+  // open
+  const modal = document.getElementById('addModal');
+  modal.style.display = "block";
+  console.log('open success');
+
+  // close
+  const closeBtn = document.getElementsByClassName('close')[0];
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = "none";
+    console.log('close success')
+  })
+
+  const openBtn = document.getElementById('addBtn');
+  // close when click outside of the window
+  window.onclick = (event) => {
+    if (!modal.contains(event.target) && event.target != openBtn) {
+      modal.style.display = "none";
+    }
+  }
+}

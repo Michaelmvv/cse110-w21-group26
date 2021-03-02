@@ -34,11 +34,11 @@ button {
 }
 
 button:hover {
-  background-color: #9e5a63;
+  background-color: #c96567;
 }
 
 button.active {
-  background-color: #9e5a63;
+  background-color: #c96567;
 }
 
 label {
@@ -49,7 +49,7 @@ label {
 .settingAndLogo {
   display: flex;
   justify-content: space-between;
-  width:95%;
+  width: 95%;
 }
 .setting {
   text-align: right;
@@ -105,11 +105,12 @@ label {
   flex-flow: row wrap;
   padding-left: 30%;
   padding-right: 30%;
+  padding-bottom: 5%;
 }
 .header {
   text-align: center;
   height: 600px;
-  border-radius: 10px;
+  border-radius: 0 0 5px 5px;
   margin: auto;
   overflow-y: scroll;
   background-color: #ffffff;
@@ -117,6 +118,17 @@ label {
 .addBtn {
   align-content: center;
   margin: 5px;
+}
+.addTaskBtn {
+  align-content: center;
+  margin: 2px;
+  min-width: 80px;
+}
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 .notShortbreak {
   background-color: #5883ce;
@@ -233,6 +245,7 @@ input:checked + .slider:before {
 
 /* ------------------------------------------- */
 /* IDs */
+
 #addTaskInput {
   width: 300px;
   height: 30px;
@@ -247,7 +260,7 @@ input:checked + .slider:before {
   flex-basis: auto;
   align-self: center;
   padding: 15px 10px;
-  margin:auto;
+  margin: auto;
   width: 5%;
   height: 20%;
 }
@@ -334,11 +347,8 @@ input:checked + .slider:before {
 }
 
 .task-list {
-  border-radius: 5px;
   width: 80%;
   margin: auto;
-  background-color: #a3a3a3;
-  border: 1.5px solid #a3a3a3;
 }
 
 .taskTabs {
@@ -346,7 +356,7 @@ input:checked + .slider:before {
   text-align: center;
   background-color: #ccc;
   display: flex;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
 }
 
 .taskTabs button {
@@ -367,37 +377,62 @@ input:checked + .slider:before {
   background-color: #e9888888;
 }
 
-.taskTabs button.activeList{
+.taskTabs button.activeList {
   background-color: #e97878;
 }
 
-.modal{
+.modal {
   padding-top: 10px;
-  width:80%;
-  display: flex;
+  width: 60%;
+  height: 35%;
+  display: none; 
+  margin-left: 10%;
+  margin-right:15%;
+  position: fixed;
+  z-index: 1;
+  overflow: auto;
+  background-color: #ffffff;
+  border: 1px solid #888;
+  border-radius: 10px;
+  margin-top: -60%;
+}
+
+.modal button {
   margin: auto;
 }
-
-.modal button{
-  width:10%;
-  margin:auto;
-}
-.modal-content{
+.modal-content {
+  background-color: #ffffff;
+  color: #6f6f6f;
   width: 90%;
   display: inherit;
-  flex: 1;
-  margin:auto;
-  overflow-y: initial;
+  /* flex: 1; */
+  margin: auto;
+  /* overflow-y: initial; */
 }
 
-.modal-content #addTaskInput{
-  font-size: 20px;
+.modal-content div {
+  margin-bottom: 15px;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-content #addTaskInput {
+  font-size: 15px;
   height: fit-content;
   padding: 10px;
   width: 60%;
 }
 
-.modal-content form{
+.modal-content form {
   font-size: 18px;
   height: fit-content;
   padding: 10px 10px 10px 10px;
@@ -405,18 +440,18 @@ input:checked + .slider:before {
   text-align: left;
 }
 
-.modal-content #sessionNumber{
+.modal-content #sessionNumber {
   font-size: 20px;
   text-align: center;
 }
 
-.logo{
+.logo {
   width: 100px;
   height: 90px;
   max-width: 100px;
   max-height: 90px;
 }
-.logo svg{
+.logo svg {
   width: 150px;
   height: 90px;
   max-width: 150px;
