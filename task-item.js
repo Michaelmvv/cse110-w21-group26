@@ -1,4 +1,4 @@
-/* global saveList, displayList */
+/* global saveList, displayList, decrementTopTask */
 /**Variable storing the list of tasks as a JSON object */
 let taskList = [];
 let taskListDone = [];
@@ -16,37 +16,101 @@ class taskEntry extends HTMLElement {
         .object {
           display: flex;
           align-items: center;
-         
+          border: 1px solid #8a8a8a;
+          border-radius: 10px;
+          width: 98%;
+          height: 120px;
+          margin: 10px;
         }
         .object:hover {
           background-color: #f2f2f2;
         }
         .Name {
           padding: 20px;
-          max-width: 200px;
+          margin-right: 10px;
+          width: 60%;
+          max-width: 60%;
+          text-align:left;
+          overflow-x: hide;
         }
         .Session {
           padding: 20px;
         }
-        #removeTask {
-          background-color: #e97;
+        #downTask{
+          transform: rotate(180deg);
+        }
+        .move-btns{
+          padding-left:15px;
+          width: 10%;
+        }
+        .move-btns button{
+          background:none;
+          outline: none;
+          padding: 10px 0px 10px 0px;
           border: none;
-          border-radius: 5px;
-          color: white;
-          width: 12%;
-          height: 9%;
+        }
+        .move-btns button svg{
+          fill: #a3a3a3;
+        }
+        .move-btns button svg:hover{
+          fill: #555;
+        }
+        .taskNumber{
+          width:20%;
+        }
+        #taskSessionNumber{
+          font-size: 20px;
           text-align: center;
-          margin-left: 80px;
+          padding: 5px;
+        } 
+        #moveToNewList{
+          width: 7.5%
+        }
+        #removeTask {
+          border: none;
+          background: none;
+          width: 7.5%;
+          height: 50%;
+          outline: none;
+        }
+        #removeTask svg{
+          fill: #818181;
+        }
+        #removeTask svg:hover{
+          fill: #555;
         }
       </style>
       <span>
       <li class="object">
-        <button onclick="" id="upTask">Up</button>
-        <button onclick="" id="downTask">Down</button>
+        <div class="move-btns">
+          <button title="Move up" onclick="" id="upTask">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              height="50" viewBox="0 0 24 14" width="50" 
+              preserveAspectRatio="xMidYMid slice">
+              <path id="arrow" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M7 14l5-5 5 5z"/>
+            </svg>
+          </button>
+          <button title="Move down" onclick="" id="downTask">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              height="50" viewBox="0 0 24 14" width="50" 
+              preserveAspectRatio="xMidYMid slice">
+              <path id="arrow" d="M0 0h24v24H0z" fill="none" transform="rotate(180)"/>
+              <path d="M7 14l5-5 5 5z"/>
+            </svg>
+          </button>
+        </div>
         <p class="Name" id="name">Task Name</p>
-        <input id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1">
+        <form class="taskNumber" action="">
+          <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1" onKeyDown="return false">
+        </form>
         <button onclick="" id="moveToNewList">Switch List</button>
-        <button onclick="" id="removeTask">Remove Task</button>
+        <button title="Delete" onclick="" id="removeTask">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 0 24 24" width="35">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+        </button>
       </li>
       </span>
       `;
@@ -97,11 +161,19 @@ function updateStorage(name, newCount) {
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
       taskList[i].sessions = newCount;
-      break;
+      saveList();
+      displayList();
+      return;
     }
   }
-  saveList();
-  displayList();
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      taskListDone[i].sessions = newCount;
+      saveList();
+      displayListDone();
+      return;
+    }
+  }
 }
 
 /**
@@ -135,6 +207,18 @@ function switchOrder(button, name, upDown) {
   displayList();
 }
 
+function decrementTopTask() {
+  if(taskList.length != 0) {
+    taskList[0].sessions = taskList[0].sessions - 1;
+    taskList[0].sessionTotal = taskList[0].sessionTotal + 1;
+    if(taskList[0].sessions == 0) {
+      switchList(null, taskList[0].name);
+    }
+    saveList();
+    displayList();
+  }
+}
+
 /**
  * Function called when removeButton is clicked. Removes the list entry the
  * removeButton is attached to
@@ -156,6 +240,7 @@ function Task(name, sessionCount) {
   this.name = name;
   this.sessions = sessionCount;
   this.done = false;
+  this.sessionTotal = 0;
 }
 
 /**
@@ -170,15 +255,18 @@ function putTaskInList(name, sessionCount) {
 }
 
 /**
- * 
- * @param {*} name 
+ * Switch Item from Done/To-Do
+ * @param {button} button - The Button of the item being switched
+ * @param {string} name - The  name of the item being switched
  */
 
  function switchList(button, name) {
    for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
       taskList.done = true;
-      button.innerHTML = 'Move to Done';
+      if(button != null) {
+        button.innerHTML = "Move to Done";
+      }
       taskListDone.push(taskList[i]);
       taskList.splice(i, 1);
       saveList();
@@ -189,11 +277,13 @@ function putTaskInList(name, sessionCount) {
   for (let i = 0; i < taskListDone.length; i++) {
     if (name == taskListDone[i].name) {
       taskList.done = false;
-      button.innerHTML = "Move to To-Do";
+      if (button != null) {
+        button.innerHTML = "Move to To-Do";
+      }
       taskList.push(taskListDone[i]);
       taskListDone.splice(i, 1);
       saveList();
-      displayList();
+      displayListDone();
       return;
     }
   }
@@ -208,12 +298,20 @@ function putTaskInList(name, sessionCount) {
 function removeTask(name) {
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
-      taskList.splice(i, 1);
-      break;
+      taskList.splice(i,1);
+      saveList();
+      displayList();
+      return;
     }
   }
-  saveList();
-  displayList();
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      taskListDone.splice(i, 1);
+      saveList();
+      displayListDone();
+      return;
+    }
+  }
 }
 
 /**
@@ -234,9 +332,26 @@ function addTask() {
     }
   }
   var sessionCount = document.getElementById('sessionNumber').value;
+  if(sessionCount < 0) {
+    sessionCount.value = 0;
+    return;
+  }
+  if (sessionCount > 10) {
+    sessionCount.value = 10;
+    return;
+  }
   if (name != null) {
     putTaskInList(name, sessionCount);
   }
+
+  /*Some styling stuff - resetting form after adding */
+  let taskBox = document.getElementById('addTaskInput');
+  taskBox.value = '';
+  let seshNum = document.getElementById('sessionNumber');
+  seshNum.value = '1';
+  // close the modal upon creation
+  let modal = document.getElementById('addModal');
+  modal.style.display = "none";
 }
 
 /**
@@ -267,6 +382,13 @@ function saveList() {
  * Displays all the task list current on the web page
  */
 function displayList() {
+  //Some CSS related thingy
+  let toDoBtn = document.getElementById('to-do');
+  toDoBtn.className = 'activeList';
+  let doneBtn = document.getElementById('done');
+  doneBtn.className = '';
+  updateColors();
+  //End of CSS
   var taskFile = document.getElementById('tasks');
   // console.log(taskList);
   taskFile.innerHTML = '';
@@ -281,16 +403,59 @@ function displayList() {
  * Displays all the task list done on the web page
  */
 function displayListDone() {
-  var taskFile = document.getElementById('tasks');
+  //Some CSS related thingy
+  let doneBtn = document.getElementById("done");
+  doneBtn.className = 'activeList';
+  let toDoBtn = document.getElementById("to-do");
+  toDoBtn.className = '';
+  updateColors();
+  //End of CSS
+  var taskFile = document.getElementById("tasks");
   // console.log(taskList);
-  taskFile.innerHTML = '';
+  taskFile.innerHTML = "";
   for (let i = 0; i < taskListDone.length; i++) {
     var currentTask = taskListDone[i];
+    currentTask.sessions = currentTask.sessionTotal;
     let newTask = new taskEntry(); //So code factor is happy
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
   }
 }
 
+/*Styling-related funtion for updating button colors*/
+function updateColors(){
+  let workSesh = document.getElementById("workTime");
+  let breakSesh = document.getElementById("shortBreak");
+  let longSesh = document.getElementById("longBreak");
+  let toDoBtn = document.getElementById('to-do');
+  let doneBtn = document.getElementById('done');
+  if(workSesh.className == "active"){
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#e97878";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#e97878";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+  }
+  if(breakSesh.className == "active"){
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#5883ce";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#5883ce";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+  }
+  if(longSesh.className =="active"){
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#2947b5";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#2947b5";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+  }
+}
 
-customElements.define('task-item', taskEntry);
+customElements.define("task-item", taskEntry);
