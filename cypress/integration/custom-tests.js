@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-/* eslint-disable jest/no-commented-out-tests */
+// /* eslint-disable jest/no-commented-out-tests */
 //describe('Test Work Timer Button', () => {
 //  beforeEach(() => {
 //    cy.visit('http://127.0.0.1:5500/index.html');
@@ -102,7 +102,7 @@
 //     });
 //   });
 
-// eslint-disable-next-line jest/no-commented-out-tests
+// //eslint-disable-next-line jest/no-commented-out-tests
 //   it('When Long Break button is clicked, check if start button change to dark blue', () => {
 //     cy.get('#longBreak').click();
 

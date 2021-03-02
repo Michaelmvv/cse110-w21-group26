@@ -4,8 +4,9 @@
         "es2021": true,
         "node": true
     },
-    "extends": ["eslint:recommended","plugin:jest/recommended"],
-    "plugins": ["jest"],
+    "extends": ["eslint:recommended",
+        "plugin:cypress/recommended"],
+    "plugins": ["cypress"],
     "parserOptions": {
         "ecmaVersion": 12
     },
