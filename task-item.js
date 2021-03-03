@@ -1,3 +1,7 @@
+/* global saveList, displayList, decrementTopTask */
+/**Variable storing the list of tasks as a JSON object */
+let taskList = [];
+let taskListDone = [];
 class taskEntry extends HTMLElement {
   /**
    * Constructor for the taskEntry HTMLElement, containing the name, session
@@ -12,34 +16,122 @@ class taskEntry extends HTMLElement {
         .object {
           display: flex;
           align-items: center;
-         
+          border: 1px solid #8a8a8a;
+          border-radius: 10px;
+          width: 98%;
+          height: 120px;
+          margin: 10px;
         }
         .object:hover {
           background-color: #f2f2f2;
         }
         .Name {
           padding: 20px;
-          max-width: 200px;
+          margin-right: 10px;
+          width: 60%;
+          max-width: 60%;
+          text-align:left;
+          overflow-x: hide;
         }
         .Session {
           padding: 20px;
         }
-        #removeTask {
-          background-color: #e97;
+        #downTask{
+          transform: rotate(180deg);
+        }
+        .move-btns{
+          padding-left:15px;
+          width: 10%;
+          max-width: 10%;
+        }
+        .move-btns button{
+          background:none;
+          outline: none;
+          padding: 10px 0px 10px 0px;
           border: none;
-          border-radius: 5px;
-          color: white;
-          width: 12%;
-          height: 9%;
+          display:flex;
+        }
+        .move-btns button svg{
+          fill: #a3a3a3;
+        }
+        .move-btns button svg:hover{
+          fill: #555;
+        }
+        .taskNumber{
+          width:20%;
+        }
+        #taskSessionNumber{
+          font-size: 20px;
           text-align: center;
-          margin-left: 80px;
+          padding: 5px;
+        } 
+        #moveToNewList{
+          width: 7.5%
+          outline: none;
+          background: none;
+          border:none;
+        }
+        #moveToNewList:hover{
+          outline: none;
+          background: none;
+          border:none;
+        }
+        #moveToNewList svg{
+          fill: #919191;
+        }
+        #moveToNewList svg:hover{
+          fill: #444;
+        }
+        #removeTask {
+          border: none;
+          background: none;
+          width: 7.5%;
+          height: 50%;
+          outline: none;
+        }
+        #removeTask svg{
+          fill: #919191;
+        }
+        #removeTask svg:hover{
+          fill: #555;
         }
       </style>
       <span>
       <li class="object">
+        <div class="move-btns">
+          <button class="up-btn" title="Move up" onclick="" id="upTask">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              height="50" viewBox="0 0 24 14" width="50" 
+              preserveAspectRatio="xMidYMid slice">
+              <path id="arrow" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M7 14l5-5 5 5z"/>
+            </svg>
+          </button>
+          <button class="down-btn" title="Move down" onclick="" id="downTask">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              height="50" viewBox="0 0 24 14" width="50" 
+              preserveAspectRatio="xMidYMid slice">
+              <path id="arrow" d="M0 0h24v24H0z" fill="none" transform="rotate(180)"/>
+              <path d="M7 14l5-5 5 5z"/>
+            </svg>
+          </button>
+        </div>
         <p class="Name" id="name">Task Name</p>
-        <p class="Session" id="session"> 0 </p>
-        <button onclick="" id="removeTask">Remove Task</button>
+        <form class="taskNumber" action="">
+          <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1" onKeyDown="return false">
+        </form>
+        <button onclick="" title="Move to Other List" id="moveToNewList">
+          <svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 24 24" width="50">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
+          </svg>
+        </button>
+        <button title="Delete" onclick="" id="removeTask">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 0 24 24" width="35">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+        </button>
       </li>
       </span>
       `;
@@ -55,12 +147,96 @@ class taskEntry extends HTMLElement {
   async syncName(description) {
     let taskName = this.root.getElementById('name');
     taskName.textContent = description.name;
-    let sessionCount = this.root.getElementById('session');
-    sessionCount.textContent = description.sessions;
-    let button = this.root.getElementById('removeTask');
-    button.addEventListener('click', function() {
+    let sessionCount = this.root.getElementById('taskSessionNumber');
+    sessionCount.addEventListener('change', function() {
+      updateStorage(taskName.textContent, sessionCount.value)
+    })
+    sessionCount.value = description.sessions;
+    let buttonRemove = this.root.getElementById('removeTask');
+    buttonRemove.addEventListener('click', function() {
       removeButton(this, taskName.textContent);
     });
+    let buttonSwitch = this.root.getElementById('moveToNewList');
+    buttonSwitch.addEventListener('click', function() {
+      switchList(this, taskName.textContent);
+    });
+    let buttonUp = this.root.getElementById('upTask');
+    buttonUp.addEventListener('click', function() {
+      switchOrder(this, taskName.textContent, true);
+    });
+    let buttonDown = this.root.getElementById('downTask');
+    buttonDown.addEventListener('click', function() {
+      switchOrder(this, taskName.textContent, false);
+    });
+  }
+}
+
+/**
+ *  Updates local storage with new value of remaining sessions count
+ * 
+ * @param {string} name - Name of Task
+ * @param {int} newCount - New remaining sessions count
+ * 
+ */
+function updateStorage(name, newCount) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      taskList[i].sessions = newCount;
+      saveList();
+      displayList();
+      return;
+    }
+  }
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      taskListDone[i].sessions = newCount;
+      saveList();
+      displayListDone();
+      return;
+    }
+  }
+}
+
+/**
+ * Function called to switch order of tasks in task list implementation
+ * @param {HTMLElement} button - The HTML button object this function is being
+ *     attached to
+ * @param {string} name - The name of the list entry that is being removed
+ * @param {string} upDown - Whether the selected task will be moved up or down
+ * 
+ */
+function switchOrder(button, name, upDown) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      if(upDown) {
+        if(i != 0) {
+          var current = taskList[i];
+          taskList[i] = taskList[i-1];
+          taskList[i-1] = current;
+        }
+      } else {
+        if(i != taskList.length - 1) {
+          current = taskList[i];
+          taskList[i] = taskList[i+1];
+          taskList[i+1] = current;
+        }
+      }
+      break;
+    }
+  }
+  saveList();
+  displayList();
+}
+
+function decrementTopTask() {
+  if(taskList.length != 0) {
+    taskList[0].sessions = taskList[0].sessions - 1;
+    taskList[0].sessionTotal = taskList[0].sessionTotal + 1;
+    if(taskList[0].sessions == 0) {
+      switchList(null, taskList[0].name);
+    }
+    saveList();
+    displayList();
   }
 }
 
@@ -71,10 +247,239 @@ class taskEntry extends HTMLElement {
  *     attached to
  * @param {string} name - The name of the list entry that is being removed
  */
-
 function removeButton(button, name) {
-  // removeTask(name);
-  console.log('Remove');
+  removeTask(name);
+  console.log('Removed ' + name);
 }
 
-customElements.define('task-item', taskEntry);
+/**
+ * Create A Task Object - to be folded into taskEntry class
+ * @constructor
+ * @param {string} name - Name of Task
+ */
+function Task(name, sessionCount) {
+  this.name = name;
+  this.sessions = sessionCount;
+  this.done = false;
+  this.sessionTotal = 0;
+}
+
+/**
+ * Create the Task Object and add it to list/save in local storage
+ * @param {string} name - Name of Task
+ */
+function putTaskInList(name, sessionCount) {
+  let t = new Task(name, sessionCount);
+  taskList.push(t);
+  saveList();
+  displayList();
+}
+
+/**
+ * Switch Item from Done/To-Do
+ * @param {button} button - The Button of the item being switched
+ * @param {string} name - The  name of the item being switched
+ */
+
+ function switchList(button, name) {
+   for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      taskList[i].done = true;
+      if(button != null) {
+        button.innerHTML = "Move to Done";
+      }
+      taskListDone.push(taskList[i]);
+      taskList.splice(i, 1);
+      saveList();
+      displayList();
+      return;
+    }
+  }
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      taskListDone[i].done = false;
+      if (button != null) {
+        button.innerHTML = "Move to To-Do";
+      }
+      taskListDone[i].sessions = 1;
+      taskList.push(taskListDone[i]);
+      taskListDone.splice(i, 1);
+      saveList();
+      displayListDone();
+      return;
+    }
+  }
+ }
+
+
+
+/**
+ * Remove the task object by list
+ * @param {string} name - Name of Task
+ */
+function removeTask(name) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      taskList.splice(i,1);
+      saveList();
+      displayList();
+      return;
+    }
+  }
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      taskListDone.splice(i, 1);
+      saveList();
+      displayListDone();
+      return;
+    }
+  }
+}
+
+/**
+ * Add an user entered task into the list
+ */
+function addTask() {
+  var name = document.getElementById('addTaskInput').value;
+  for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      alert("You cannot have the same name as a previous task");
+      return;
+    }
+  }
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      alert("You cannot have the same name as a previous task");
+      return;
+    }
+  }
+  var sessionCount = document.getElementById('sessionNumber').value;
+  if(sessionCount < 0) {
+    sessionCount.value = 0;
+    return;
+  }
+  if (sessionCount > 10) {
+    sessionCount.value = 10;
+    return;
+  }
+  if (!name.trim().length) {
+    alert("You need to enter a valid task name.");
+    return;
+  }
+  putTaskInList(name, sessionCount);
+  /*Some styling stuff - resetting form after adding */
+  let taskBox = document.getElementById('addTaskInput');
+  taskBox.value = '';
+  let seshNum = document.getElementById('sessionNumber');
+  seshNum.value = '1';
+  // close the modal upon creation
+  let modal = document.getElementById('addModal');
+  modal.style.display = "none";
+}
+
+/**
+ * Accesses local storage to populate taskList and sets to empty if not found
+ */
+function getList() {
+  if (localStorage.getItem('taskListCurrent-JSON') != null) {
+    taskList = JSON.parse(localStorage.getItem('taskListCurrent-JSON'));
+  } else {
+    taskList = [];
+  }
+  if (localStorage.getItem('taskListDone-JSON') != null) {
+    taskListDone = JSON.parse(localStorage.getItem('taskListDone-JSON'));
+  } else {
+    taskListDone = [];
+  }
+}
+
+/**
+ * Save taskList in a string version to local storage
+ */
+function saveList() {
+  localStorage.setItem('taskListCurrent-JSON', JSON.stringify(taskList));
+  localStorage.setItem('taskListDone-JSON', JSON.stringify(taskListDone));
+}
+
+/**
+ * Displays all the task list current on the web page
+ */
+function displayList() {
+  //Some CSS related thingy
+  let toDoBtn = document.getElementById('to-do');
+  toDoBtn.className = 'activeList';
+  let doneBtn = document.getElementById('done');
+  doneBtn.className = '';
+  updateColors();
+  //End of CSS
+  var taskFile = document.getElementById('tasks');
+  // console.log(taskList);
+  taskFile.innerHTML = '';
+  for (let i = 0; i < taskList.length; i++) {
+    var currentTask = taskList[i];
+    //currentTask.sessions = currentTask.originalSessions;
+    let newTask = new taskEntry(); //So code factor is happy
+    newTask.syncName(currentTask);
+    taskFile.appendChild(newTask);
+  }
+}
+/**
+ * Displays all the task list done on the web page
+ */
+function displayListDone() {
+  //Some CSS related thingy
+  let doneBtn = document.getElementById("done");
+  doneBtn.className = 'activeList';
+  let toDoBtn = document.getElementById("to-do");
+  toDoBtn.className = '';
+  updateColors();
+  //End of CSS
+  var taskFile = document.getElementById("tasks");
+  // console.log(taskList);
+  taskFile.innerHTML = "";
+  for (let i = 0; i < taskListDone.length; i++) {
+    var currentTask = taskListDone[i];
+    currentTask.sessions = currentTask.sessionTotal;
+    let newTask = new taskEntry();
+    newTask.syncName(currentTask);
+    taskFile.appendChild(newTask);
+  }
+}
+
+/*Styling-related funtion for updating button colors*/
+function updateColors(){
+  let workSesh = document.getElementById("workTime");
+  let breakSesh = document.getElementById("shortBreak");
+  let longSesh = document.getElementById("longBreak");
+  let toDoBtn = document.getElementById('to-do');
+  let doneBtn = document.getElementById('done');
+  if(workSesh.className == "active"){
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#e97878";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#e97878";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+  }
+  if(breakSesh.className == "active"){
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#5883ce";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#5883ce";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+  }
+  if(longSesh.className =="active"){
+    if(toDoBtn.className == 'activeList'){
+      toDoBtn.style.backgroundColor = "#2947b5";
+      doneBtn.style.backgroundColor = "#ccc";
+    }else{
+      doneBtn.style.backgroundColor = "#2947b5";
+      toDoBtn.style.backgroundColor = "#ccc";
+    }
+  }
+}
+
+customElements.define("task-item", taskEntry);
