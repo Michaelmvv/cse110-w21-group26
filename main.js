@@ -12,9 +12,11 @@ let sessionsBeforeLongBreak = 4;  // user seleciton
 
 /**
  * Number of sessions until long break
+ * Attributed to bone666138 on freesound.com, audio file Analog Alarm Clock
+ * https://freesound.org/people/bone666138/sounds/198841/
  */
 let sessionCountDown = sessionsBeforeLongBreak;
-let sound = new Audio('alarm1.flac');
+let sound = new Audio('alarm.wav');
 
 /**
  * keeps track if timer is a work or a break timer.
@@ -27,13 +29,12 @@ let timerLength = [];
 
 /**
  * Onload function. Adds eventListeners to buttons, sets update function to run
- * every 1000 ms loads taskList contents from local storage, and displays
+o * every 1000 ms loads taskList contents from local storage, and displays
  * taskList contents
  */
 window.onload = () => {
   // window.addEventListener('beforeunload',unloadChecker);
   window.onbeforeunload = unloadChecker;
-  ``
   timerText = document.getElementById('timer');
   document.getElementById('StartButton').addEventListener('click', startTimer);
   document.getElementById('StopButton').addEventListener('click', stopTimer);
@@ -42,9 +43,52 @@ window.onload = () => {
   document.getElementById('longBreak').addEventListener('click', setLongTime);
   document.getElementById('shortBreak').addEventListener('click', setShortTime);
 
-  document.getElementById('longBreakTimeInput').addEventListener('change',{
-      
+  if(window.localStorage.getItem('darkModeOn') !== null) {
+    document.getElementById('darkMode').checked = (window.localStorage.getItem('darkModeOn').charAt(0) == 't');
+    darkMode();
+  }
+
+  if(window.localStorage.getItem('longInterval') !== null) {
+    document.getElementById('longBreakTimeInput').value = window.localStorage.getItem('longInterval');
+  }
+  if(window.localStorage.getItem('shortInterval') !== null) {
+    document.getElementById('shortBreakTimeInput').value = window.localStorage.getItem('shortInterval');
+  }
+  if(window.localStorage.getItem('workInterval') !== null) {
+    document.getElementById('workTimeInput').value = window.localStorage.getItem('workInterval');
+    document.getElementById('timer').textContent = toHuman(parseInt(window.localStorage.getItem('workInterval'))*60*1000);
+  }
+  if(window.localStorage.getItem('savedVolume') !== null) {
+    document.getElementById('volume').value = window.localStorage.getItem('savedVolume');
+    sound.volume = parseInt(window.localStorage.getItem('savedVolume')) / 100; //converts 0-100 range to 0-1 range
+  }
+
+  if(window.localStorage.getItem('autoOn') !== null) {
+    document.getElementById('autoSwitch').checked = (window.localStorage.getItem('autoOn').charAt(0) == 't')
+  }
+
+  document.getElementById('longBreakTimeInput').addEventListener('change', function(){
+    window.localStorage.setItem('longInterval',document.getElementById('longBreakTimeInput').value);
   });
+  document.getElementById('shortBreakTimeInput').addEventListener('change', function(){
+    window.localStorage.setItem('shortInterval',document.getElementById('shortBreakTimeInput').value);
+  });
+  document.getElementById('workTimeInput').addEventListener('change', function(){
+    window.localStorage.setItem('workInterval',document.getElementById('workTimeInput').value);
+  });
+
+  document.getElementById('volume').addEventListener('change', function(){
+    window.localStorage.setItem('savedVolume',(document.getElementById('volume').value));
+    sound.volume = parseInt(document.getElementById('volume').value) / 100; //converts 0-100 range to 0-1 range
+  });
+
+  document.getElementById('darkMode').addEventListener('click', function(){
+    window.localStorage.setItem('darkModeOn',document.getElementById('darkMode').checked);
+  });
+  document.getElementById('autoSwitch').addEventListener('click', function(){
+    window.localStorage.setItem('autoOn',document.getElementById('autoSwitch').checked);
+  });
+
   timerLength = document.getElementById('workTimeInput').value;
   setInterval(update, 1000);
 
@@ -117,6 +161,7 @@ function updateTimerText() {
 
 /**
  * The update function is called once per second
+ * It determines if the timer has finished counting down the current timer period
  */
 function update() {
   if (countingDown) {
@@ -124,6 +169,7 @@ function update() {
       updateTimerText();
     } else {
       updateSession();
+      sound.play();
     }
   }
 }
@@ -196,7 +242,6 @@ function toHuman(ms) {
   }
   var str =
       pad(currentTime.getUTCMinutes()) + ':' + pad(currentTime.getUTCSeconds());
-
   return str;
 }
 
