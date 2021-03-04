@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomo Timer</title>
     <!-- <script src="main.js"></script> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
   </head>
 
@@ -189,7 +186,6 @@
         </div>
 
         <div class="dropdown-content">
-
           <div class="dropdown-item">
             <label for="longBreakTimeInput">Long Break</label>
             <input
@@ -210,7 +206,7 @@
               style="width: 60px"
             /><span style="margin-left: 5px">min</span>
           </div>
-          
+
           <div class="dropdown-item">
             <label for="workTimeInput">Work Time</label>
             <input
@@ -242,9 +238,7 @@
             <!-- auto switch need to add js functions -->
             <label for="auto"> Auto</label>
             <label class="switch">
-              <input 
-                type="checkbox"
-                id="autoSwitch" />
+              <input type="checkbox" id="autoSwitch" />
               <span class="slider round"></span>
             </label>
           </div>
@@ -314,14 +308,15 @@
       </div>
 
       <div id="pomoList" class="header">
-
-        <button id="addBtn" onclick="openModal()" class="addBtn"> Add Task</button>
+        <button id="addBtn" onclick="openModal()" class="addBtn">
+          Add Task
+        </button>
 
         <div id="addModal" class="modal">
           <div class="modal-content">
             <div style="display: block">
               <span class="close" style="margin-top: -10px">&times;</span>
-              <h3>Create Task</p>
+              <h3>Create Task</h3>
             </div>
             <div class="form-group">
               <input type="text" id="addTaskInput" placeholder="Name of Task" />
@@ -343,7 +338,6 @@
         </div>
         <ul id="tasks"></ul>
       </div>
-      
     </div>
 
     <script src="main.js"></script>
