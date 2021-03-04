@@ -10,7 +10,7 @@ class taskEntry extends HTMLElement {
    */
   constructor() {
     // Always call super first in constructor
-    const template = document.createElement('template');
+    const template = document.createElement("template");
     template.innerHTML = `  
       <style>
         .object {
@@ -136,7 +136,7 @@ class taskEntry extends HTMLElement {
       </span>
       `;
     super();
-    this.root = this.attachShadow({mode: 'open'});
+    this.root = this.attachShadow({ mode: "open" });
     this.root.appendChild(template.content.cloneNode(true));
   }
   /**
@@ -145,27 +145,27 @@ class taskEntry extends HTMLElement {
    *     count
    */
   async syncName(description) {
-    let taskName = this.root.getElementById('name');
+    let taskName = this.root.getElementById("name");
     taskName.textContent = description.name;
-    let sessionCount = this.root.getElementById('taskSessionNumber');
-    sessionCount.addEventListener('change', function() {
-      updateStorage(taskName.textContent, sessionCount.value)
-    })
+    let sessionCount = this.root.getElementById("taskSessionNumber");
+    sessionCount.addEventListener("change", function () {
+      updateStorage(taskName.textContent, sessionCount.value);
+    });
     sessionCount.value = description.sessions;
-    let buttonRemove = this.root.getElementById('removeTask');
-    buttonRemove.addEventListener('click', function() {
+    let buttonRemove = this.root.getElementById("removeTask");
+    buttonRemove.addEventListener("click", function () {
       removeButton(this, taskName.textContent);
     });
-    let buttonSwitch = this.root.getElementById('moveToNewList');
-    buttonSwitch.addEventListener('click', function() {
+    let buttonSwitch = this.root.getElementById("moveToNewList");
+    buttonSwitch.addEventListener("click", function () {
       switchList(this, taskName.textContent);
     });
-    let buttonUp = this.root.getElementById('upTask');
-    buttonUp.addEventListener('click', function() {
+    let buttonUp = this.root.getElementById("upTask");
+    buttonUp.addEventListener("click", function () {
       switchOrder(this, taskName.textContent, true);
     });
-    let buttonDown = this.root.getElementById('downTask');
-    buttonDown.addEventListener('click', function() {
+    let buttonDown = this.root.getElementById("downTask");
+    buttonDown.addEventListener("click", function () {
       switchOrder(this, taskName.textContent, false);
     });
   }
@@ -173,10 +173,10 @@ class taskEntry extends HTMLElement {
 
 /**
  *  Updates local storage with new value of remaining sessions count
- * 
+ *
  * @param {string} name - Name of Task
  * @param {int} newCount - New remaining sessions count
- * 
+ *
  */
 function updateStorage(name, newCount) {
   for (let i = 0; i < taskList.length; i++) {
@@ -203,22 +203,22 @@ function updateStorage(name, newCount) {
  *     attached to
  * @param {string} name - The name of the list entry that is being removed
  * @param {string} upDown - Whether the selected task will be moved up or down
- * 
+ *
  */
 function switchOrder(button, name, upDown) {
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
-      if(upDown) {
-        if(i != 0) {
+      if (upDown) {
+        if (i != 0) {
           var current = taskList[i];
-          taskList[i] = taskList[i-1];
-          taskList[i-1] = current;
+          taskList[i] = taskList[i - 1];
+          taskList[i - 1] = current;
         }
       } else {
-        if(i != taskList.length - 1) {
+        if (i != taskList.length - 1) {
           current = taskList[i];
-          taskList[i] = taskList[i+1];
-          taskList[i+1] = current;
+          taskList[i] = taskList[i + 1];
+          taskList[i + 1] = current;
         }
       }
       break;
@@ -229,10 +229,10 @@ function switchOrder(button, name, upDown) {
 }
 
 function decrementTopTask() {
-  if(taskList.length != 0) {
+  if (taskList.length != 0) {
     taskList[0].sessions = taskList[0].sessions - 1;
     taskList[0].sessionTotal = taskList[0].sessionTotal + 1;
-    if(taskList[0].sessions == 0) {
+    if (taskList[0].sessions == 0) {
       switchList(null, taskList[0].name);
     }
     saveList();
@@ -249,7 +249,7 @@ function decrementTopTask() {
  */
 function removeButton(button, name) {
   removeTask(name);
-  console.log('Removed ' + name);
+  console.log("Removed " + name);
 }
 
 /**
@@ -281,11 +281,11 @@ function putTaskInList(name, sessionCount) {
  * @param {string} name - The  name of the item being switched
  */
 
- function switchList(button, name) {
-   for (let i = 0; i < taskList.length; i++) {
+function switchList(button, name) {
+  for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
       taskList[i].done = true;
-      if(button != null) {
+      if (button != null) {
         button.innerHTML = "Move to Done";
       }
       taskListDone.push(taskList[i]);
@@ -309,9 +309,7 @@ function putTaskInList(name, sessionCount) {
       return;
     }
   }
- }
-
-
+}
 
 /**
  * Remove the task object by list
@@ -320,7 +318,7 @@ function putTaskInList(name, sessionCount) {
 function removeTask(name) {
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
-      taskList.splice(i,1);
+      taskList.splice(i, 1);
       saveList();
       displayList();
       return;
@@ -340,7 +338,7 @@ function removeTask(name) {
  * Add an user entered task into the list
  */
 function addTask() {
-  var name = document.getElementById('addTaskInput').value;
+  var name = document.getElementById("addTaskInput").value;
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
       alert("You cannot have the same name as a previous task");
@@ -353,8 +351,8 @@ function addTask() {
       return;
     }
   }
-  var sessionCount = document.getElementById('sessionNumber').value;
-  if(sessionCount < 0) {
+  var sessionCount = document.getElementById("sessionNumber").value;
+  if (sessionCount < 0) {
     sessionCount.value = 0;
     return;
   }
@@ -368,12 +366,12 @@ function addTask() {
   }
   putTaskInList(name, sessionCount);
   /*Some styling stuff - resetting form after adding */
-  let taskBox = document.getElementById('addTaskInput');
-  taskBox.value = '';
-  let seshNum = document.getElementById('sessionNumber');
-  seshNum.value = '1';
+  let taskBox = document.getElementById("addTaskInput");
+  taskBox.value = "";
+  let seshNum = document.getElementById("sessionNumber");
+  seshNum.value = "1";
   // close the modal upon creation
-  let modal = document.getElementById('addModal');
+  let modal = document.getElementById("addModal");
   modal.style.display = "none";
 }
 
@@ -381,13 +379,13 @@ function addTask() {
  * Accesses local storage to populate taskList and sets to empty if not found
  */
 function getList() {
-  if (localStorage.getItem('taskListCurrent-JSON') != null) {
-    taskList = JSON.parse(localStorage.getItem('taskListCurrent-JSON'));
+  if (localStorage.getItem("taskListCurrent-JSON") != null) {
+    taskList = JSON.parse(localStorage.getItem("taskListCurrent-JSON"));
   } else {
     taskList = [];
   }
-  if (localStorage.getItem('taskListDone-JSON') != null) {
-    taskListDone = JSON.parse(localStorage.getItem('taskListDone-JSON'));
+  if (localStorage.getItem("taskListDone-JSON") != null) {
+    taskListDone = JSON.parse(localStorage.getItem("taskListDone-JSON"));
   } else {
     taskListDone = [];
   }
@@ -397,28 +395,28 @@ function getList() {
  * Save taskList in a string version to local storage
  */
 function saveList() {
-  localStorage.setItem('taskListCurrent-JSON', JSON.stringify(taskList));
-  localStorage.setItem('taskListDone-JSON', JSON.stringify(taskListDone));
+  localStorage.setItem("taskListCurrent-JSON", JSON.stringify(taskList));
+  localStorage.setItem("taskListDone-JSON", JSON.stringify(taskListDone));
 }
 
 /**
  * Displays all the task list current on the web page
  */
 function displayList() {
-  //Some CSS related thingy
-  let toDoBtn = document.getElementById('to-do');
-  toDoBtn.className = 'activeList';
-  let doneBtn = document.getElementById('done');
-  doneBtn.className = '';
+  // Some CSS related thingy
+  let toDoBtn = document.getElementById("to-do");
+  toDoBtn.className = "activeList";
+  let doneBtn = document.getElementById("done");
+  doneBtn.className = "";
   updateColors();
-  //End of CSS
-  var taskFile = document.getElementById('tasks');
+  // End of CSS
+  var taskFile = document.getElementById("tasks");
   // console.log(taskList);
-  taskFile.innerHTML = '';
+  taskFile.innerHTML = "";
   for (let i = 0; i < taskList.length; i++) {
     var currentTask = taskList[i];
-    //currentTask.sessions = currentTask.originalSessions;
-    let newTask = new taskEntry(); //So code factor is happy
+    // currentTask.sessions = currentTask.originalSessions;
+    let newTask = new taskEntry(); // So code factor is happy
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
   }
@@ -427,13 +425,13 @@ function displayList() {
  * Displays all the task list done on the web page
  */
 function displayListDone() {
-  //Some CSS related thingy
+  // Some CSS related thingy
   let doneBtn = document.getElementById("done");
-  doneBtn.className = 'activeList';
+  doneBtn.className = "activeList";
   let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = '';
+  toDoBtn.className = "";
   updateColors();
-  //End of CSS
+  // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
   taskFile.innerHTML = "";
@@ -447,35 +445,35 @@ function displayListDone() {
 }
 
 /*Styling-related funtion for updating button colors*/
-function updateColors(){
+function updateColors() {
   let workSesh = document.getElementById("workTime");
   let breakSesh = document.getElementById("shortBreak");
   let longSesh = document.getElementById("longBreak");
-  let toDoBtn = document.getElementById('to-do');
-  let doneBtn = document.getElementById('done');
-  if(workSesh.className == "active"){
-    if(toDoBtn.className == 'activeList'){
+  let toDoBtn = document.getElementById("to-do");
+  let doneBtn = document.getElementById("done");
+  if (workSesh.className == "active") {
+    if (toDoBtn.className == "activeList") {
       toDoBtn.style.backgroundColor = "#e97878";
       doneBtn.style.backgroundColor = "#ccc";
-    }else{
+    } else {
       doneBtn.style.backgroundColor = "#e97878";
       toDoBtn.style.backgroundColor = "#ccc";
     }
   }
-  if(breakSesh.className == "active"){
-    if(toDoBtn.className == 'activeList'){
+  if (breakSesh.className == "active") {
+    if (toDoBtn.className == "activeList") {
       toDoBtn.style.backgroundColor = "#5883ce";
       doneBtn.style.backgroundColor = "#ccc";
-    }else{
+    } else {
       doneBtn.style.backgroundColor = "#5883ce";
       toDoBtn.style.backgroundColor = "#ccc";
     }
   }
-  if(longSesh.className =="active"){
-    if(toDoBtn.className == 'activeList'){
+  if (longSesh.className == "active") {
+    if (toDoBtn.className == "activeList") {
       toDoBtn.style.backgroundColor = "#2947b5";
       doneBtn.style.backgroundColor = "#ccc";
-    }else{
+    } else {
       doneBtn.style.backgroundColor = "#2947b5";
       toDoBtn.style.backgroundColor = "#ccc";
     }

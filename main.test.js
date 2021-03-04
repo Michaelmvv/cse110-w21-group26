@@ -1,8 +1,6 @@
-const allMethods = require('./main.js');
+const allMethods = require("./main.js");
 const testWorkButton = allMethods.setWorkTime;
 const testDisplay = allMethods.readTime;
-
-
 
 // describe("testing button clicks for work timer and breaks", () => {
 
@@ -36,7 +34,6 @@ const testDisplay = allMethods.readTime;
 //     /*const spy = jest.spyOn(workTimerButton,'setWorkTime');
 //     workTimerButton(mock);
 //     expect(spy).toHaveBeenCalledTimes(1); */
-
 
 //   });
 
@@ -109,7 +106,6 @@ describe("testing if ms are converted to readable time", () => {
   });
 
 });  */
-
 
 /*
 describe("testing if ms are converted to readable time", () => {
