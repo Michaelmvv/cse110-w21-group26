@@ -8,119 +8,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
+    <link rel="preload" href="images/logoLong.svg" as="image" />
+    <link rel="preload" href="images/logoShort.svg" as="image" />
   </head>
 
-  <body class="dark-mode">
+  <body class="dark-mode workTime">
     <!-- logo -->
     <div class="settingAndLogo">
       <div class="logo">
-        <svg
-          width="617"
-          height="617"
-          viewBox="20 20 500 500"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <!--rect width="617" height="617" fill="none"/-->
-          <path
-            id="logo-P1"
-            d="M169 168.5C169 155.797 179.297 145.5 192 145.5C204.703 145.5 215 155.797 215 168.5V496.5C215 509.203 204.703 519.5 192 519.5C179.297 519.5 169 509.203 169 496.5V168.5Z"
-            fill="#F14148"
-          />
-          <circle id="logo-P2" cx="311" cy="250" r="102" fill="#F14148" />
-          <path
-            id="logo-circle"
-            d="M386.5 249.773C386.5 291.747 352.474 325.773 310.5 325.773C268.526 325.773 234.5 291.747 234.5 249.773C234.5 207.8 268.526 173.773 310.5 173.773C352.474 173.773 386.5 207.8 386.5 249.773Z"
-            fill="#F68D90"
-          />
-          <rect
-            x="237"
-            y="255.15"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-90 237 255.15)"
-            fill="white"
-          />
-          <rect
-            x="303"
-            y="293"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            fill="white"
-          />
-          <rect
-            x="303"
-            y="176"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            fill="white"
-          />
-          <rect
-            x="257"
-            y="199.884"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-45 257 199.884)"
-            fill="white"
-          />
-          <rect
-            x="338"
-            y="278.884"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-45 338 278.884)"
-            fill="white"
-          />
-          <rect
-            x="345.884"
-            y="221.45"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-135 345.884 221.45)"
-            fill="white"
-          />
-          <rect
-            x="259.884"
-            y="300.45"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-135 259.884 300.45)"
-            fill="white"
-          />
-          <rect
-            x="354"
-            y="255.15"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-90 354 255.15)"
-            fill="white"
-          />
-          <line
-            x1="308.5"
-            y1="182"
-            x2="308.5"
-            y2="250"
-            stroke="black"
-            stroke-width="5"
-          />
-          <line
-            x1="347.055"
-            y1="251"
-            x2="305.945"
-            y2="251"
-            stroke="black"
-            stroke-width="5"
-          />
-        </svg>
-        <!--img src="images/logo.svg" alt="logo" height="80" width="80" /-->
+        <img
+          id="logoSVG"
+          label="logoImg"
+          src="images/logo.svg"
+          alt="logo"
+          height="80"
+          width="80"
+        />
       </div>
       <!-- settings -->
       <div

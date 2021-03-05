@@ -40,9 +40,9 @@ button {
   margin: 4% 9%;
 }
 
-button:hover {
+/* button:hover {
   background-color: #c96567;
-}
+} */
 
 button.active {
   background-color: #c96567;
@@ -150,15 +150,7 @@ label {
 .notWork:hover {
   background-color: #9e5a63;
 }
-.shortCircle {
-  stroke: #5883ce;
-}
-.longCircle {
-  stroke: #2947b5;
-}
-.workCircle {
-  stroke: #e97979;
-}
+
 .circleTimer {
   width: 30%;
   margin-left: 35%;
@@ -388,13 +380,13 @@ body.dark-mode #timer {
   font-size: initial;
 }
 
-.taskTabs button:hover {
+/* .taskTabs button:hover {
   background-color: #e9888888;
 }
 
 .taskTabs button.activeList {
   background-color: #e97878;
-}
+} */
 
 .modal {
   padding-top: 10px;
@@ -471,4 +463,83 @@ body.dark-mode #timer {
   height: 90px;
   max-width: 150px;
   max-height: 90px;
+}
+
+/* .shortCircle {
+  stroke: #5883ce;
+} */
+/* .longCircle {
+  stroke: #2947b5;
+} */
+/* .workCircle {
+  stroke: #e97979;
+} */
+
+/* CSS FOR SHORT BREAK */
+body.shortBreak button {
+  background-color: #5883ce;
+}
+body.shortBreak button:hover {
+  background-color: #396dc6;
+}
+body.shortBreak #shortBreak {
+  background-color: #c96567;
+}
+body.shortBreak #addTaskInput {
+  border-color: #5883ce;
+}
+body.shortBreak #circleProgress,
+body.shortBreak #pointerProgress {
+  stroke: #5883ce;
+}
+
+/* CSS FOR LONG BREAK */
+body.longBreak button {
+  background-color: #2947b5;
+}
+body.longBreak button:hover {
+  background-color: #213991;
+}
+
+body.longBreak #longBreak {
+  background-color: #c96567;
+}
+body.longBreak #addTaskInput {
+  border-color: #2947b5;
+}
+body.longBreak #circleProgress,
+body.longBreak #pointerProgress {
+  stroke: #2947b5;
+}
+
+/* CSS FOR WORK TIME */
+body.workTime button {
+  background-color: #e97878;
+}
+body.workTime button:hover {
+  background-color: #e25050;
+}
+body.workTime #workTime {
+  background-color: #c96567;
+}
+body.workTime #addTaskInput {
+  border-color: #e97878;
+}
+body.workTime #circleProgress,
+body.workTime #pointerProgress {
+  stroke: #e97979;
+}
+/* TASK LIST STUFFs */
+body .taskTabs button {
+  background-color: #ccc;
+}
+
+body.shortBreak .taskTabs button.activeList {
+  background-color: #5883ce;
+}
+body.longBreak .taskTabs button.activeList {
+  background-color: #2947b5;
+}
+body.workTime .taskTabs button.activeList {
+  background-color: #e97878;
 }
