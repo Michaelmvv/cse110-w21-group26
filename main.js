@@ -320,38 +320,23 @@ function stopTimer() {
  * @param {string} seshID
  */
 function seshClicked(seshID) {
-  // document.querySelectorAll(".active").forEach(function (item) {
-  //   item.className = "";
-  // });
-
   /* Changing color scheme of buttons depending on which button is clicked*/
   let session = document.getElementById(seshID);
-  let circle = document.getElementById("circleProgress");
-  let circlePointer = document.getElementById("pointerProgress");
   let logo = document.getElementById("logoSVG");
   session.className = "active";
   // hover effect need to address
   if (seshID == "shortBreak") {
     document.body.classList.add("shortBreak");
     document.body.classList.remove("longBreak", "workTime");
-
     logo.src = "images/logoShort.svg";
-    circlePointer.className.baseVal = "shortCircle";
-    circle.className.baseVal = "shortCircle";
   } else if (seshID == "longBreak") {
     document.body.classList.add("longBreak");
     document.body.classList.remove("shortBreak", "workTime");
-
     logo.src = "images/logoLong.svg";
-    circlePointer.className.baseVal = "longCircle";
-    circle.className.baseVal = "longCircle";
   } else {
     document.body.classList.add("workTime");
     document.body.classList.remove("shortBreak", "longBreak");
-
     logo.src = "images/logo.svg";
-    circlePointer.className.baseVal = "workCircle";
-    circle.className.baseVal = "workCircle";
   }
 }
 

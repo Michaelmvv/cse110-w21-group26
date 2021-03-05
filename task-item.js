@@ -404,10 +404,8 @@ function saveList() {
  */
 function displayList() {
   // Some CSS related thingy
-  let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = "activeList";
-  let doneBtn = document.getElementById("done");
-  doneBtn.className = "";
+  document.getElementById("to-do").className = "activeList";
+  document.getElementById("done").className = "";
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
@@ -425,10 +423,8 @@ function displayList() {
  */
 function displayListDone() {
   // Some CSS related thingy
-  let doneBtn = document.getElementById("done");
-  doneBtn.className = "activeList";
-  let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = "";
+  document.getElementById("done").className = "activeList";
+  document.getElementById("to-do").className = "";
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
