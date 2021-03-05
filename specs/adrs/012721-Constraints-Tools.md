@@ -8,7 +8,7 @@ Technical Story: [We need to finalize the constraints that we have for the proje
 
 ## Context and Problem Statement
 
-[To test the robustness of our Pomodoro timer, we will stick to testing frameworks used in the scope of this course like Cypress for user interface testing, unit testing, and code coverage.]
+[To test the robustness of our Pomodoro timer, we will stick to testing frameworks used in the scope of this course like Cypress for e2e testing and unit testing]
 
 ## Decision Drivers <!-- optional -->
 
@@ -32,7 +32,7 @@ UPDATE on 2/17/2021 - We will be using Jest as our testing framework.
 UPDATE on 2/25/2021 - In addition to Jest, we will be using Cypress as another testing framework.
 UPDATE on 2/27/2021 - We are removing Jest as a testing framework and will solely use Cypress.
 
-Chosen option: We have decided to use options 1 and option 4. Option 1 is chosen because CodeFactor was one of the few free code quality tools for our CI/CD pipeline for a private GitHub repository instead of a GitHub organization. We chose option 4 because after exploring this testing framework, Cypress allows us to test user interface interactions in addition to unit testing and code coverage. We will not be using Jest because originally we were using it for unit testing and code coverage but since Cypress is able to do that as well, we are only using Cypress.
+Chosen option: We have decided to use options 1 and option 4. Option 1 is chosen because CodeFactor was one of the few free code quality tools for our CI/CD pipeline for a private GitHub repository instead of a GitHub organization. We chose option 4 because after exploring this testing framework, Cypress allows us to test user interface interactions in addition to unit testing. We will not be using Jest because originally we were using it for unit testing but since Cypress is able to do that as well, we are only using Cypress.
 <br/>
 
 
@@ -63,14 +63,14 @@ Chosen option: We have decided to use options 1 and option 4. Option 1 is chosen
 ### [option 3: Use Jest for our testing framework.]
 
 * Good, because Jest is easy to set up locally and on our CI/CD Pipeline
-* Good, because Jest has official documentation we can use as a resource for unit testing and code coverage.
+* Good, because Jest has official documentation we can use as a resource for unit testing.
 * Bad, because Jest is harder to test button clicks and DOM changes; easier to test functions that have a return value.
 * Bad, because Jest may interfere with Cypress tests (solved by configuring Jest to ignore Cypress test files).
 
 ### [option 4: Use Cypress as our testing framework.]
 
 * Good, because Cypress allows testing user interactions with our interface easily.
-* Good, because Cypress allows unit testing and code coverage.
+* Good, because Cypress allows unit testing.
 * Bad, because it may interfere with our previous testing framework, Jest (solved by checking whether module exists in our main JavaScript file for the module.exports line needed for Jest).
 
 <!-- markdownlint-disable-file MD013 -->
