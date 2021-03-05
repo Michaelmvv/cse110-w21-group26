@@ -120,6 +120,7 @@ class taskEntry extends HTMLElement {
         <form class="taskNumber" action="">
           <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1" onKeyDown="return false">
         </form>
+        <button onclick="" title="Work on This Task" id="workTask"> Work on This Task </button>
         <button onclick="" title="Move to Other List" id="moveToNewList">
           <svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 24 24" width="50">
             <path d="M0 0h24v24H0z" fill="none"/>
@@ -156,6 +157,15 @@ class taskEntry extends HTMLElement {
     buttonRemove.addEventListener("click", function () {
       removeButton(this, taskName.textContent);
     });
+    let buttonWork = this.root.getElementById("workTask");
+    if (description.done == true) {
+      buttonWork.style.display = "none";
+    } else {
+      buttonWork.style.display = "block";
+      buttonWork.addEventListener("click", function () {
+        workOnThisButton(this, taskName.textContent);
+      });
+    }
     let buttonSwitch = this.root.getElementById("moveToNewList");
     buttonSwitch.addEventListener("click", function () {
       switchList(this, taskName.textContent);
@@ -198,6 +208,17 @@ function updateStorage(name, newCount) {
 }
 
 /**
+ * Return Current Working task, else return null
+ */
+function getCurrentTask() {
+  if (taskList.length == 0) {
+    return null;
+  } else {
+    return taskList[0].name;
+  }
+}
+
+/**
  * Function called to switch order of tasks in task list implementation
  * @param {HTMLElement} button - The HTML button object this function is being
  *     attached to
@@ -221,13 +242,57 @@ function switchOrder(button, name, upDown) {
           taskList[i + 1] = current;
         }
       }
-      break;
+      saveList();
+      displayList();
+      return;
     }
   }
-  saveList();
-  displayList();
+
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (name == taskListDone[i].name) {
+      if (upDown) {
+        if (i != 0) {
+          let currentTask = taskListDone[i];
+          taskListDone[i] = taskListDone[i - 1];
+          taskListDone[i - 1] = currentTask;
+        }
+      } else {
+        if (i != taskListDone.length - 1) {
+          let currentTask = taskListDone[i];
+          taskListDone[i] = taskListDone[i + 1];
+          taskListDone[i + 1] = currentTask;
+        }
+      }
+      saveList();
+      displayListDone();
+      return;
+    }
+  }
 }
 
+/**
+ * Select Task to work on, repeat call on switchOrder to move it up
+ * @param {HTMLElement} button - Button of the task you want to change
+ * @param {String} name - Name of the task
+ */
+function workOnThisButton(button, name) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (name == taskList[i].name) {
+      var count = i;
+      while (count != 0) {
+        switchOrder(button, name, true);
+        count--;
+      }
+      saveList();
+      displayList();
+      return;
+    }
+  }
+}
+
+/**
+ * Decrememnt the Top Task Pomo Sessions left
+ */
 function decrementTopTask() {
   if (taskList.length != 0) {
     taskList[0].sessions = taskList[0].sessions - 1;
