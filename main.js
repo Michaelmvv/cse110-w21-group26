@@ -428,18 +428,12 @@ function updateCircle(val, time) {
  */
 function darkMode() {
   let dark = document.getElementById("darkMode");
-  let timerText = document.getElementById("timer");
-  let taskListBackground = document.getElementById("pomoList");
   let settingsLogo = document.getElementById("settingsLogo");
   if (dark.checked) {
-    document.body.style.backgroundColor = "#363636";
-    timerText.style.fill = "#c3c3c3";
-    taskListBackground.style.backgroundColor = "#c4c4c4";
+    document.body.classList.add("dark-mode");
     settingsLogo.setAttribute("fill", "#c3c3c3");
   } else {
-    document.body.style.backgroundColor = "#f2f2f2";
-    timerText.style.fill = "#363636";
-    taskListBackground.style.backgroundColor = "#ffffff";
+    document.body.classList.remove("dark-mode");
     settingsLogo.setAttribute("fill", "#444444");
   }
 }

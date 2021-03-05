@@ -13,6 +13,13 @@ body {
   /* width: 85%; */
 }
 
+body.dark-mode {
+  background: #363636;
+}
+body.dark-mode #pomoList {
+  background: #c4c4c4;
+}
+
 h2 {
   margin-top: 50px;
   font-size: 20px;
@@ -319,6 +326,9 @@ input:checked + .slider:before {
   font-size: 50px;
   padding: 10%;
   margin-right: 0;
+}
+body.dark-mode #timer {
+  fill: #c3c3c3;
 }
 
 /* Circle Timer components style */
