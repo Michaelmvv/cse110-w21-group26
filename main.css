@@ -306,8 +306,10 @@ input:checked + .slider:before {
   padding: 10%;
   margin-right: 0;
 }
-body.dark-mode #timer {
+
+body.dark-mode text {
   fill: #c3c3c3;
+  color: #c3c3c3
 }
 
 /* Circle Timer components style */
@@ -336,6 +338,10 @@ body.dark-mode #timer {
   overflow-y: scroll;
   height: 80%;
 }
+#taskIndicator{
+  padding: 10px;
+}
+
 
 .task-list {
   width: 80%;
@@ -382,13 +388,13 @@ body.dark-mode #timer {
   display: none;
   margin-left: 10%;
   margin-right: 15%;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   overflow: auto;
   background-color: #ffffff;
   border: 1px solid #888;
   border-radius: 10px;
-  margin-top: -70%;
+  /* margin-top: -70%; */
 }
 
 .modal button {
@@ -520,3 +526,4 @@ body.longBreak .taskTabs button.activeList {
 body.workTime .taskTabs button.activeList {
   background-color: #e97878;
 }
+

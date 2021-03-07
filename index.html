@@ -8,8 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
+    <link href="introjs.css" rel="stylesheet" />
     <link rel="preload" href="images/logoLong.svg" as="image" />
     <link rel="preload" href="images/logoShort.svg" as="image" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   </head>
 
   <body class="dark-mode workTime">
@@ -26,8 +28,11 @@
         />
       </div>
       <!-- settings -->
+      <button onclick="" id="tutorialBtn">HELP</button>
       <div
         class="setting dropdown"
+        data-step="1"
+        data-intro="Here is the setting menu"
         onmouseover="{
         let settingsLogo = document.getElementById('settingsLogo');
         settingsLogo.style.transition='transform 0.5s';
@@ -72,15 +77,18 @@
             </g>
           </svg>
         </div>
-
-        <div class="dropdown-content">
+        <div
+          class="dropdown-content"
+          data-intro="Here is the setting menu where you can change the timer length"
+        >
           <div class="dropdown-item">
-            <label for="longBreakTimeInput">Long Break</label>
+            <label for="workTimeInput">Work Time</label>
             <input
               class="settingLengthInput"
-              id="longBreakTimeInput"
+              id="workTimeInput"
               type="number"
-              value="15"
+              value="25"
+              style="width: 60px"
             /><span style="margin-left: 5px">min</span>
           </div>
 
@@ -94,19 +102,17 @@
               style="width: 60px"
             /><span style="margin-left: 5px">min</span>
           </div>
-
           <div class="dropdown-item">
-            <label for="workTimeInput">Work Time</label>
+            <label for="longBreakTimeInput">Long Break</label>
             <input
               class="settingLengthInput"
-              id="workTimeInput"
+              id="longBreakTimeInput"
               type="number"
-              value="25"
-              style="width: 60px"
+              value="15"
             /><span style="margin-left: 5px">min</span>
           </div>
+
           <!-- volume controller, need to add js function -->
-          <!-- do we still want the volume despite we can modify using laptop? -->
           <div class="dropdown-item">
             <label for="volume">Volume</label>
             <input type="range" min="1" max="100" value="50" id="volume" />
@@ -114,7 +120,10 @@
           <!-- darkmode and auto switch -->
           <div class="dropdown-item">
             <label for="darkMode"> Dark Mode</label>
-            <label class="switch">
+            <label
+              class="switch"
+              data-intro="Turn on Dark Mode for a new Color Scheme"
+            >
               <input
                 type="checkbox"
                 class="hiddenCheckbox"
@@ -125,7 +134,10 @@
             </label>
             <!-- auto switch need to add js functions -->
             <label for="auto"> Auto</label>
-            <label class="switch">
+            <label
+              class="switch"
+              data-intro="Auto - Pomodoro Session will run by itself. Manual - Select each session yourself"
+            >
               <input type="checkbox" id="autoSwitch" />
               <span class="slider round"></span>
             </label>
@@ -148,14 +160,22 @@
         Long Break
       </button>
     </div>
+    <!-- <div style="margin: auto; width: 50%; padding: 10px; text-align: center">
+      <text
+        text-anchor="middle"
+        alignment-baseline="middle"
+        style="justify-content: center; text-align: center"
+        >Current Task</text
+      >
+    </div> -->
 
-    <div class="circle">
+    <div class="circle" data-intro="Here is the time remaining">
       <!-- viewBox is part of svg class -->
       <svg class="circleTimer" viewBox="0 0 220 220">
         <!-- translate positions the circle timer fill inside the circle timer-->
         <g transform="translate(110,110)">
           <circle class="circleTimerFill" r="100" />
-
+          <text id="taskIndicator" text-anchor="middle" y="-50px">No Task</text>
           <text id="timer" text-anchor="middle" alignment-baseline="middle">
             25:00
           </text>
@@ -189,14 +209,31 @@
     <!-- <h2 style="text-align: center">PomoList</h2> -->
     <div class="task-list">
       <div class="taskTabs">
-        <button onclick="displayList()" id="to-do" class="activeList">
+        <button
+          onclick="displayList()"
+          id="to-do"
+          class="activeList"
+          data-intro="See your current To-Do Tasks"
+        >
           To-Do
         </button>
-        <button onclick="displayListDone()" id="done" class=" ">Done</button>
+        <button
+          onclick="displayListDone()"
+          id="done"
+          class=" "
+          data-intro="See your done tasks"
+        >
+          Done
+        </button>
       </div>
 
       <div id="pomoList" class="header">
-        <button id="addBtn" onclick="openModal()" class="addBtn">
+        <button
+          id="addBtn"
+          onclick="openModal()"
+          class="addBtn"
+          data-intro="Add your tasks here!"
+        >
           Add Task
         </button>
 
@@ -230,5 +267,6 @@
 
     <script src="main.js"></script>
     <script src="task-item.js"></script>
+    <script src="intro.js"></script>
   </body>
 </html>
