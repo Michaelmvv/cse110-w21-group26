@@ -48,7 +48,7 @@ window.onload = () => {
       window.localStorage.getItem("darkModeOn").charAt(0) == "t";
     darkMode();
   }
-
+  darkMode();
   if (window.localStorage.getItem("longInterval") !== null) {
     document.getElementById(
       "longBreakTimeInput"

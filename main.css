@@ -361,7 +361,7 @@ body.dark-mode #timer {
   text-align: center;
   padding: 14px 16px;
   flex: 1;
-  transition: 0.3s;
+  /* transition: 0.3s; */
   margin: auto;
   border-radius: unset;
   font-size: initial;
