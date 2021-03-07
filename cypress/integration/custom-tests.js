@@ -14,6 +14,9 @@ describe("Test Work Timer Button", () => {
   });
 
   it("Testing work timer when work time input is 5, timer should display 05:00", () => {
+    // cy.get(".setting").trigger("mouseover");
+    // cy.get("#dropdown-content").trigger("mouseover");
+    // cy.get("#dropdown-content").should("be.visible");
     cy.get("#workTimeInput")
       .type("{selectall}{backspace}5", { force: true })
       .trigger("change", { force: true });
