@@ -379,7 +379,7 @@ tr.introjs-showElement > th {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
   clear: both;
-  margin: 0 auto 0;
+  margin: 0 auto;
   padding: 0;
   display: inline-block;
 }

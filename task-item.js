@@ -198,8 +198,8 @@ class taskEntry extends HTMLElement {
     }
     let buttonSwitch = this.root.getElementById("moveToNewList");
     let temp = this.root.getElementById("moveToNewList").querySelector("svg");
-    if(description.done == true) {
-          temp.setAttribute('xmlns', '');
+    if (description.done == true) {
+      temp.setAttribute("xmlns", "");
     }
     buttonSwitch.addEventListener("click", function () {
       switchList(this, taskName.textContent);
@@ -212,7 +212,7 @@ class taskEntry extends HTMLElement {
     buttonDown.addEventListener("click", function () {
       switchOrder(this, taskName.textContent, false);
     });
-    if(description.firstTask === true){
+    if (description.firstTask === true) {
       this.root.getElementById("element").classList.add("first");
     }
   }
@@ -249,13 +249,13 @@ function updateStorage(name, newCount) {
  * Return Current Working task, else return null
  */
 function getCurrentTask() {
-  let taskIndicator = document.getElementById('taskIndicator');
+  let taskIndicator = document.getElementById("taskIndicator");
   if (taskList.length == 0) {
     taskIndicator.textContent = "No Task Selected";
     return null;
   } else {
-    if((taskList[0].name).length >= 11) {
-      taskIndicator.textContent = ((taskList[0].name).substring(0,10) + "...");
+    if (taskList[0].name.length >= 11) {
+      taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";
     } else {
       taskIndicator.textContent = taskList[0].name;
     }
@@ -528,8 +528,8 @@ function displayList() {
     var currentTask = taskList[i];
     // currentTask.sessions = currentTask.originalSessions;
     let newTask = new taskEntry(); // So code factor is happy
-    currentTask.firstTask = i===0;
-   
+    currentTask.firstTask = i === 0;
+
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
   }

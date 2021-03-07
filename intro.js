@@ -9,10 +9,13 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.introJs = factory());
-}(this, (function () { 'use strict';
+  typeof exports === "object" && typeof module !== "undefined"
+    ? (module.exports = factory())
+    : typeof define === "function" && define.amd
+    ? define(factory)
+    : ((global = global || self), (global.introJs = factory()));
+})(this, function () {
+  "use strict";
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -23,7 +26,12 @@
       };
     } else {
       _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        return obj &&
+          typeof Symbol === "function" &&
+          obj.constructor === Symbol &&
+          obj !== Symbol.prototype
+          ? "symbol"
+          : typeof obj;
       };
     }
 
@@ -61,10 +69,13 @@
    * @param String key
    * @return Object
    */
-  var stamp = function () {
+  var stamp = (function () {
     var keys = {};
     return function stamp(obj) {
-      var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "introjs-stamp";
+      var key =
+        arguments.length > 1 && arguments[1] !== undefined
+          ? arguments[1]
+          : "introjs-stamp";
       // each group increments from 0
       keys[key] = keys[key] || 0; // stamp only once per object
 
@@ -75,7 +86,7 @@
 
       return obj[key];
     };
-  }();
+  })();
 
   /**
    * Iterates arrays
@@ -107,7 +118,7 @@
    * off - remove event
    */
 
-  var DOMEvent = function () {
+  var DOMEvent = (function () {
     function DOMEvent() {
       var events_key = "introjs_event";
       /**
@@ -121,7 +132,9 @@
        */
 
       this._id = function (obj, type, listener, context) {
-        return type + stamp(listener) + (context ? "_".concat(stamp(context)) : "");
+        return (
+          type + stamp(listener) + (context ? "_".concat(stamp(context)) : "")
+        );
       };
       /**
        * Adds event listener
@@ -133,7 +146,6 @@
        * @param useCapture Boolean
        * @return null
        */
-
 
       this.on = function (obj, type, listener, context, useCapture) {
         var id = this._id.apply(this, arguments);
@@ -162,7 +174,6 @@
        * @return null
        */
 
-
       this.off = function (obj, type, listener, context, useCapture) {
         var id = this._id.apply(this, arguments);
 
@@ -183,12 +194,23 @@
     }
 
     return new DOMEvent();
-  }();
+  })();
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+  var commonjsGlobal =
+    typeof globalThis !== "undefined"
+      ? globalThis
+      : typeof window !== "undefined"
+      ? window
+      : typeof global !== "undefined"
+      ? global
+      : typeof self !== "undefined"
+      ? self
+      : {};
 
   function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+    return (
+      (module = { exports: {} }), fn(module, module.exports), module.exports
+    );
   }
 
   var check = function (it) {
@@ -198,12 +220,15 @@
   // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
   var global_1 =
     // eslint-disable-next-line no-undef
-    check(typeof globalThis == 'object' && globalThis) ||
-    check(typeof window == 'object' && window) ||
-    check(typeof self == 'object' && self) ||
-    check(typeof commonjsGlobal == 'object' && commonjsGlobal) ||
+    check(typeof globalThis == "object" && globalThis) ||
+    check(typeof window == "object" && window) ||
+    check(typeof self == "object" && self) ||
+    check(typeof commonjsGlobal == "object" && commonjsGlobal) ||
     // eslint-disable-next-line no-new-func
-    (function () { return this; })() || Function('return this')();
+    (function () {
+      return this;
+    })() ||
+    Function("return this")();
 
   var fails = function (exec) {
     try {
@@ -215,24 +240,33 @@
 
   // Detect IE8's incomplete defineProperty implementation
   var descriptors = !fails(function () {
-    return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
+    return (
+      Object.defineProperty({}, 1, {
+        get: function () {
+          return 7;
+        },
+      })[1] != 7
+    );
   });
 
   var nativePropertyIsEnumerable = {}.propertyIsEnumerable;
   var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 
   // Nashorn ~ JDK8 bug
-  var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({ 1: 2 }, 1);
+  var NASHORN_BUG =
+    getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({ 1: 2 }, 1);
 
   // `Object.prototype.propertyIsEnumerable` method implementation
   // https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
-  var f = NASHORN_BUG ? function propertyIsEnumerable(V) {
-    var descriptor = getOwnPropertyDescriptor(this, V);
-    return !!descriptor && descriptor.enumerable;
-  } : nativePropertyIsEnumerable;
+  var f = NASHORN_BUG
+    ? function propertyIsEnumerable(V) {
+        var descriptor = getOwnPropertyDescriptor(this, V);
+        return !!descriptor && descriptor.enumerable;
+      }
+    : nativePropertyIsEnumerable;
 
   var objectPropertyIsEnumerable = {
-  	f: f
+    f: f,
   };
 
   var createPropertyDescriptor = function (bitmap, value) {
@@ -240,7 +274,7 @@
       enumerable: !(bitmap & 1),
       configurable: !(bitmap & 2),
       writable: !(bitmap & 4),
-      value: value
+      value: value,
     };
   };
 
@@ -250,16 +284,18 @@
     return toString.call(it).slice(8, -1);
   };
 
-  var split = ''.split;
+  var split = "".split;
 
   // fallback for non-array-like ES3 and non-enumerable old V8 strings
   var indexedObject = fails(function () {
     // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
     // eslint-disable-next-line no-prototype-builtins
-    return !Object('z').propertyIsEnumerable(0);
-  }) ? function (it) {
-    return classofRaw(it) == 'String' ? split.call(it, '') : Object(it);
-  } : Object;
+    return !Object("z").propertyIsEnumerable(0);
+  })
+    ? function (it) {
+        return classofRaw(it) == "String" ? split.call(it, "") : Object(it);
+      }
+    : Object;
 
   // `RequireObjectCoercible` abstract operation
   // https://tc39.es/ecma262/#sec-requireobjectcoercible
@@ -270,14 +306,12 @@
 
   // toObject with fallback for non-array-like ES3 strings
 
-
-
   var toIndexedObject = function (it) {
     return indexedObject(requireObjectCoercible(it));
   };
 
   var isObject = function (it) {
-    return typeof it === 'object' ? it !== null : typeof it === 'function';
+    return typeof it === "object" ? it !== null : typeof it === "function";
   };
 
   // `ToPrimitive` abstract operation
@@ -287,9 +321,23 @@
   var toPrimitive = function (input, PREFERRED_STRING) {
     if (!isObject(input)) return input;
     var fn, val;
-    if (PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
-    if (typeof (fn = input.valueOf) == 'function' && !isObject(val = fn.call(input))) return val;
-    if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+    if (
+      PREFERRED_STRING &&
+      typeof (fn = input.toString) == "function" &&
+      !isObject((val = fn.call(input)))
+    )
+      return val;
+    if (
+      typeof (fn = input.valueOf) == "function" &&
+      !isObject((val = fn.call(input)))
+    )
+      return val;
+    if (
+      !PREFERRED_STRING &&
+      typeof (fn = input.toString) == "function" &&
+      !isObject((val = fn.call(input)))
+    )
+      return val;
     throw TypeError("Can't convert object to primitive value");
   };
 
@@ -308,71 +356,100 @@
   };
 
   // Thank's IE8 for his funny defineProperty
-  var ie8DomDefine = !descriptors && !fails(function () {
-    return Object.defineProperty(documentCreateElement('div'), 'a', {
-      get: function () { return 7; }
-    }).a != 7;
-  });
+  var ie8DomDefine =
+    !descriptors &&
+    !fails(function () {
+      return (
+        Object.defineProperty(documentCreateElement("div"), "a", {
+          get: function () {
+            return 7;
+          },
+        }).a != 7
+      );
+    });
 
   var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 
   // `Object.getOwnPropertyDescriptor` method
   // https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-  var f$1 = descriptors ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
-    O = toIndexedObject(O);
-    P = toPrimitive(P, true);
-    if (ie8DomDefine) try {
-      return nativeGetOwnPropertyDescriptor(O, P);
-    } catch (error) { /* empty */ }
-    if (has(O, P)) return createPropertyDescriptor(!objectPropertyIsEnumerable.f.call(O, P), O[P]);
-  };
+  var f$1 = descriptors
+    ? nativeGetOwnPropertyDescriptor
+    : function getOwnPropertyDescriptor(O, P) {
+        O = toIndexedObject(O);
+        P = toPrimitive(P, true);
+        if (ie8DomDefine)
+          try {
+            return nativeGetOwnPropertyDescriptor(O, P);
+          } catch (error) {
+            /* empty */
+          }
+        if (has(O, P))
+          return createPropertyDescriptor(
+            !objectPropertyIsEnumerable.f.call(O, P),
+            O[P]
+          );
+      };
 
   var objectGetOwnPropertyDescriptor = {
-  	f: f$1
+    f: f$1,
   };
 
   var anObject = function (it) {
     if (!isObject(it)) {
-      throw TypeError(String(it) + ' is not an object');
-    } return it;
+      throw TypeError(String(it) + " is not an object");
+    }
+    return it;
   };
 
   var nativeDefineProperty = Object.defineProperty;
 
   // `Object.defineProperty` method
   // https://tc39.es/ecma262/#sec-object.defineproperty
-  var f$2 = descriptors ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
-    anObject(O);
-    P = toPrimitive(P, true);
-    anObject(Attributes);
-    if (ie8DomDefine) try {
-      return nativeDefineProperty(O, P, Attributes);
-    } catch (error) { /* empty */ }
-    if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
-    if ('value' in Attributes) O[P] = Attributes.value;
-    return O;
-  };
+  var f$2 = descriptors
+    ? nativeDefineProperty
+    : function defineProperty(O, P, Attributes) {
+        anObject(O);
+        P = toPrimitive(P, true);
+        anObject(Attributes);
+        if (ie8DomDefine)
+          try {
+            return nativeDefineProperty(O, P, Attributes);
+          } catch (error) {
+            /* empty */
+          }
+        if ("get" in Attributes || "set" in Attributes)
+          throw TypeError("Accessors not supported");
+        if ("value" in Attributes) O[P] = Attributes.value;
+        return O;
+      };
 
   var objectDefineProperty = {
-  	f: f$2
+    f: f$2,
   };
 
-  var createNonEnumerableProperty = descriptors ? function (object, key, value) {
-    return objectDefineProperty.f(object, key, createPropertyDescriptor(1, value));
-  } : function (object, key, value) {
-    object[key] = value;
-    return object;
-  };
+  var createNonEnumerableProperty = descriptors
+    ? function (object, key, value) {
+        return objectDefineProperty.f(
+          object,
+          key,
+          createPropertyDescriptor(1, value)
+        );
+      }
+    : function (object, key, value) {
+        object[key] = value;
+        return object;
+      };
 
   var setGlobal = function (key, value) {
     try {
       createNonEnumerableProperty(global_1, key, value);
     } catch (error) {
       global_1[key] = value;
-    } return value;
+    }
+    return value;
   };
 
-  var SHARED = '__core-js_shared__';
+  var SHARED = "__core-js_shared__";
   var store = global_1[SHARED] || setGlobal(SHARED, {});
 
   var sharedStore = store;
@@ -380,7 +457,7 @@
   var functionToString = Function.toString;
 
   // this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
-  if (typeof sharedStore.inspectSource != 'function') {
+  if (typeof sharedStore.inspectSource != "function") {
     sharedStore.inspectSource = function (it) {
       return functionToString.call(it);
     };
@@ -390,26 +467,35 @@
 
   var WeakMap = global_1.WeakMap;
 
-  var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
+  var nativeWeakMap =
+    typeof WeakMap === "function" && /native code/.test(inspectSource(WeakMap));
 
   var shared = createCommonjsModule(function (module) {
-  (module.exports = function (key, value) {
-    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
-  })('versions', []).push({
-    version: '3.8.3',
-    mode:  'global',
-    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
-  });
+    (module.exports = function (key, value) {
+      return (
+        sharedStore[key] ||
+        (sharedStore[key] = value !== undefined ? value : {})
+      );
+    })("versions", []).push({
+      version: "3.8.3",
+      mode: "global",
+      copyright: "© 2021 Denis Pushkarev (zloirock.ru)",
+    });
   });
 
   var id = 0;
   var postfix = Math.random();
 
   var uid = function (key) {
-    return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
+    return (
+      "Symbol(" +
+      String(key === undefined ? "" : key) +
+      ")_" +
+      (++id + postfix).toString(36)
+    );
   };
 
-  var keys = shared('keys');
+  var keys = shared("keys");
 
   var sharedKey = function (key) {
     return keys[key] || (keys[key] = uid(key));
@@ -428,8 +514,9 @@
     return function (it) {
       var state;
       if (!isObject(it) || (state = get(it)).type !== TYPE) {
-        throw TypeError('Incompatible receiver, ' + TYPE + ' required');
-      } return state;
+        throw TypeError("Incompatible receiver, " + TYPE + " required");
+      }
+      return state;
     };
   };
 
@@ -450,7 +537,7 @@
       return wmhas.call(store$1, it);
     };
   } else {
-    var STATE = sharedKey('state');
+    var STATE = sharedKey("state");
     hiddenKeys[STATE] = true;
     set = function (it, metadata) {
       metadata.facade = it;
@@ -470,54 +557,59 @@
     get: get,
     has: has$1,
     enforce: enforce,
-    getterFor: getterFor
+    getterFor: getterFor,
   };
 
   var redefine = createCommonjsModule(function (module) {
-  var getInternalState = internalState.get;
-  var enforceInternalState = internalState.enforce;
-  var TEMPLATE = String(String).split('String');
+    var getInternalState = internalState.get;
+    var enforceInternalState = internalState.enforce;
+    var TEMPLATE = String(String).split("String");
 
-  (module.exports = function (O, key, value, options) {
-    var unsafe = options ? !!options.unsafe : false;
-    var simple = options ? !!options.enumerable : false;
-    var noTargetGet = options ? !!options.noTargetGet : false;
-    var state;
-    if (typeof value == 'function') {
-      if (typeof key == 'string' && !has(value, 'name')) {
-        createNonEnumerableProperty(value, 'name', key);
+    (module.exports = function (O, key, value, options) {
+      var unsafe = options ? !!options.unsafe : false;
+      var simple = options ? !!options.enumerable : false;
+      var noTargetGet = options ? !!options.noTargetGet : false;
+      var state;
+      if (typeof value == "function") {
+        if (typeof key == "string" && !has(value, "name")) {
+          createNonEnumerableProperty(value, "name", key);
+        }
+        state = enforceInternalState(value);
+        if (!state.source) {
+          state.source = TEMPLATE.join(typeof key == "string" ? key : "");
+        }
       }
-      state = enforceInternalState(value);
-      if (!state.source) {
-        state.source = TEMPLATE.join(typeof key == 'string' ? key : '');
+      if (O === global_1) {
+        if (simple) O[key] = value;
+        else setGlobal(key, value);
+        return;
+      } else if (!unsafe) {
+        delete O[key];
+      } else if (!noTargetGet && O[key]) {
+        simple = true;
       }
-    }
-    if (O === global_1) {
       if (simple) O[key] = value;
-      else setGlobal(key, value);
-      return;
-    } else if (!unsafe) {
-      delete O[key];
-    } else if (!noTargetGet && O[key]) {
-      simple = true;
-    }
-    if (simple) O[key] = value;
-    else createNonEnumerableProperty(O, key, value);
-  // add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
-  })(Function.prototype, 'toString', function toString() {
-    return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
-  });
+      else createNonEnumerableProperty(O, key, value);
+      // add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
+    })(Function.prototype, "toString", function toString() {
+      return (
+        (typeof this == "function" && getInternalState(this).source) ||
+        inspectSource(this)
+      );
+    });
   });
 
   var path = global_1;
 
   var aFunction = function (variable) {
-    return typeof variable == 'function' ? variable : undefined;
+    return typeof variable == "function" ? variable : undefined;
   };
 
   var getBuiltIn = function (namespace, method) {
-    return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global_1[namespace])
-      : path[namespace] && path[namespace][method] || global_1[namespace] && global_1[namespace][method];
+    return arguments.length < 2
+      ? aFunction(path[namespace]) || aFunction(global_1[namespace])
+      : (path[namespace] && path[namespace][method]) ||
+          (global_1[namespace] && global_1[namespace][method]);
   };
 
   var ceil = Math.ceil;
@@ -526,7 +618,9 @@
   // `ToInteger` abstract operation
   // https://tc39.es/ecma262/#sec-tointeger
   var toInteger = function (argument) {
-    return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
+    return isNaN((argument = +argument))
+      ? 0
+      : (argument > 0 ? floor : ceil)(argument);
   };
 
   var min = Math.min;
@@ -534,7 +628,7 @@
   // `ToLength` abstract operation
   // https://tc39.es/ecma262/#sec-tolength
   var toLength = function (argument) {
-    return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+    return argument > 0 ? min(toInteger(argument), 0x1fffffffffffff) : 0; // 2 ** 53 - 1 == 9007199254740991
   };
 
   var max = Math.max;
@@ -557,14 +651,19 @@
       var value;
       // Array#includes uses SameValueZero equality algorithm
       // eslint-disable-next-line no-self-compare
-      if (IS_INCLUDES && el != el) while (length > index) {
-        value = O[index++];
-        // eslint-disable-next-line no-self-compare
-        if (value != value) return true;
-      // Array#indexOf ignores holes, Array#includes - not
-      } else for (;length > index; index++) {
-        if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
-      } return !IS_INCLUDES && -1;
+      if (IS_INCLUDES && el != el)
+        while (length > index) {
+          value = O[index++];
+          // eslint-disable-next-line no-self-compare
+          if (value != value) return true;
+          // Array#indexOf ignores holes, Array#includes - not
+        }
+      else
+        for (; length > index; index++) {
+          if ((IS_INCLUDES || index in O) && O[index] === el)
+            return IS_INCLUDES || index || 0;
+        }
+      return !IS_INCLUDES && -1;
     };
   };
 
@@ -574,11 +673,10 @@
     includes: createMethod(true),
     // `Array.prototype.indexOf` method
     // https://tc39.es/ecma262/#sec-array.prototype.indexof
-    indexOf: createMethod(false)
+    indexOf: createMethod(false),
   };
 
   var indexOf = arrayIncludes.indexOf;
-
 
   var objectKeysInternal = function (object, names) {
     var O = toIndexedObject(object);
@@ -587,47 +685,54 @@
     var key;
     for (key in O) !has(hiddenKeys, key) && has(O, key) && result.push(key);
     // Don't enum bug & hidden keys
-    while (names.length > i) if (has(O, key = names[i++])) {
-      ~indexOf(result, key) || result.push(key);
-    }
+    while (names.length > i)
+      if (has(O, (key = names[i++]))) {
+        ~indexOf(result, key) || result.push(key);
+      }
     return result;
   };
 
   // IE8- don't enum bug keys
   var enumBugKeys = [
-    'constructor',
-    'hasOwnProperty',
-    'isPrototypeOf',
-    'propertyIsEnumerable',
-    'toLocaleString',
-    'toString',
-    'valueOf'
+    "constructor",
+    "hasOwnProperty",
+    "isPrototypeOf",
+    "propertyIsEnumerable",
+    "toLocaleString",
+    "toString",
+    "valueOf",
   ];
 
-  var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype');
+  var hiddenKeys$1 = enumBugKeys.concat("length", "prototype");
 
   // `Object.getOwnPropertyNames` method
   // https://tc39.es/ecma262/#sec-object.getownpropertynames
-  var f$3 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-    return objectKeysInternal(O, hiddenKeys$1);
-  };
+  var f$3 =
+    Object.getOwnPropertyNames ||
+    function getOwnPropertyNames(O) {
+      return objectKeysInternal(O, hiddenKeys$1);
+    };
 
   var objectGetOwnPropertyNames = {
-  	f: f$3
+    f: f$3,
   };
 
   var f$4 = Object.getOwnPropertySymbols;
 
   var objectGetOwnPropertySymbols = {
-  	f: f$4
+    f: f$4,
   };
 
   // all object keys, includes non-enumerable and symbols
-  var ownKeys = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
-    var keys = objectGetOwnPropertyNames.f(anObject(it));
-    var getOwnPropertySymbols = objectGetOwnPropertySymbols.f;
-    return getOwnPropertySymbols ? keys.concat(getOwnPropertySymbols(it)) : keys;
-  };
+  var ownKeys =
+    getBuiltIn("Reflect", "ownKeys") ||
+    function ownKeys(it) {
+      var keys = objectGetOwnPropertyNames.f(anObject(it));
+      var getOwnPropertySymbols = objectGetOwnPropertySymbols.f;
+      return getOwnPropertySymbols
+        ? keys.concat(getOwnPropertySymbols(it))
+        : keys;
+    };
 
   var copyConstructorProperties = function (target, source) {
     var keys = ownKeys(source);
@@ -635,7 +740,8 @@
     var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      if (!has(target, key)) defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+      if (!has(target, key))
+        defineProperty(target, key, getOwnPropertyDescriptor(source, key));
     }
   };
 
@@ -643,28 +749,26 @@
 
   var isForced = function (feature, detection) {
     var value = data[normalize(feature)];
-    return value == POLYFILL ? true
-      : value == NATIVE ? false
-      : typeof detection == 'function' ? fails(detection)
+    return value == POLYFILL
+      ? true
+      : value == NATIVE
+      ? false
+      : typeof detection == "function"
+      ? fails(detection)
       : !!detection;
   };
 
-  var normalize = isForced.normalize = function (string) {
-    return String(string).replace(replacement, '.').toLowerCase();
-  };
+  var normalize = (isForced.normalize = function (string) {
+    return String(string).replace(replacement, ".").toLowerCase();
+  });
 
-  var data = isForced.data = {};
-  var NATIVE = isForced.NATIVE = 'N';
-  var POLYFILL = isForced.POLYFILL = 'P';
+  var data = (isForced.data = {});
+  var NATIVE = (isForced.NATIVE = "N");
+  var POLYFILL = (isForced.POLYFILL = "P");
 
   var isForced_1 = isForced;
 
   var getOwnPropertyDescriptor$1 = objectGetOwnPropertyDescriptor.f;
-
-
-
-
-
 
   /*
     options.target      - name of the target object
@@ -692,38 +796,42 @@
     } else {
       target = (global_1[TARGET] || {}).prototype;
     }
-    if (target) for (key in source) {
-      sourceProperty = source[key];
-      if (options.noTargetGet) {
-        descriptor = getOwnPropertyDescriptor$1(target, key);
-        targetProperty = descriptor && descriptor.value;
-      } else targetProperty = target[key];
-      FORCED = isForced_1(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
-      // contained in target
-      if (!FORCED && targetProperty !== undefined) {
-        if (typeof sourceProperty === typeof targetProperty) continue;
-        copyConstructorProperties(sourceProperty, targetProperty);
+    if (target)
+      for (key in source) {
+        sourceProperty = source[key];
+        if (options.noTargetGet) {
+          descriptor = getOwnPropertyDescriptor$1(target, key);
+          targetProperty = descriptor && descriptor.value;
+        } else targetProperty = target[key];
+        FORCED = isForced_1(
+          GLOBAL ? key : TARGET + (STATIC ? "." : "#") + key,
+          options.forced
+        );
+        // contained in target
+        if (!FORCED && targetProperty !== undefined) {
+          if (typeof sourceProperty === typeof targetProperty) continue;
+          copyConstructorProperties(sourceProperty, targetProperty);
+        }
+        // add a flag to not completely full polyfills
+        if (options.sham || (targetProperty && targetProperty.sham)) {
+          createNonEnumerableProperty(sourceProperty, "sham", true);
+        }
+        // extend global
+        redefine(target, key, sourceProperty, options);
       }
-      // add a flag to not completely full polyfills
-      if (options.sham || (targetProperty && targetProperty.sham)) {
-        createNonEnumerableProperty(sourceProperty, 'sham', true);
-      }
-      // extend global
-      redefine(target, key, sourceProperty, options);
-    }
   };
 
   // `RegExp.prototype.flags` getter implementation
   // https://tc39.es/ecma262/#sec-get-regexp.prototype.flags
   var regexpFlags = function () {
     var that = anObject(this);
-    var result = '';
-    if (that.global) result += 'g';
-    if (that.ignoreCase) result += 'i';
-    if (that.multiline) result += 'm';
-    if (that.dotAll) result += 's';
-    if (that.unicode) result += 'u';
-    if (that.sticky) result += 'y';
+    var result = "";
+    if (that.global) result += "g";
+    if (that.ignoreCase) result += "i";
+    if (that.multiline) result += "m";
+    if (that.dotAll) result += "s";
+    if (that.unicode) result += "u";
+    if (that.sticky) result += "y";
     return result;
   };
 
@@ -735,21 +843,21 @@
 
   var UNSUPPORTED_Y = fails(function () {
     // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
-    var re = RE('a', 'y');
+    var re = RE("a", "y");
     re.lastIndex = 2;
-    return re.exec('abcd') != null;
+    return re.exec("abcd") != null;
   });
 
   var BROKEN_CARET = fails(function () {
     // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
-    var re = RE('^r', 'gy');
+    var re = RE("^r", "gy");
     re.lastIndex = 2;
-    return re.exec('str') != null;
+    return re.exec("str") != null;
   });
 
   var regexpStickyHelpers = {
-  	UNSUPPORTED_Y: UNSUPPORTED_Y,
-  	BROKEN_CARET: BROKEN_CARET
+    UNSUPPORTED_Y: UNSUPPORTED_Y,
+    BROKEN_CARET: BROKEN_CARET,
   };
 
   var nativeExec = RegExp.prototype.exec;
@@ -763,15 +871,16 @@
   var UPDATES_LAST_INDEX_WRONG = (function () {
     var re1 = /a/;
     var re2 = /b*/g;
-    nativeExec.call(re1, 'a');
-    nativeExec.call(re2, 'a');
+    nativeExec.call(re1, "a");
+    nativeExec.call(re2, "a");
     return re1.lastIndex !== 0 || re2.lastIndex !== 0;
   })();
 
-  var UNSUPPORTED_Y$1 = regexpStickyHelpers.UNSUPPORTED_Y || regexpStickyHelpers.BROKEN_CARET;
+  var UNSUPPORTED_Y$1 =
+    regexpStickyHelpers.UNSUPPORTED_Y || regexpStickyHelpers.BROKEN_CARET;
 
   // nonparticipating capturing group, copied from es5-shim's String#split patch.
-  var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+  var NPCG_INCLUDED = /()??/.exec("")[1] !== undefined;
 
   var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y$1;
 
@@ -786,25 +895,28 @@
       var strCopy = str;
 
       if (sticky) {
-        flags = flags.replace('y', '');
-        if (flags.indexOf('g') === -1) {
-          flags += 'g';
+        flags = flags.replace("y", "");
+        if (flags.indexOf("g") === -1) {
+          flags += "g";
         }
 
         strCopy = String(str).slice(re.lastIndex);
         // Support anchored sticky behavior.
-        if (re.lastIndex > 0 && (!re.multiline || re.multiline && str[re.lastIndex - 1] !== '\n')) {
-          source = '(?: ' + source + ')';
-          strCopy = ' ' + strCopy;
+        if (
+          re.lastIndex > 0 &&
+          (!re.multiline || (re.multiline && str[re.lastIndex - 1] !== "\n"))
+        ) {
+          source = "(?: " + source + ")";
+          strCopy = " " + strCopy;
           charsAdded++;
         }
         // ^(? + rx + ) is needed, in combination with some str slicing, to
         // simulate the 'y' flag.
-        reCopy = new RegExp('^(?:' + source + ')', flags);
+        reCopy = new RegExp("^(?:" + source + ")", flags);
       }
 
       if (NPCG_INCLUDED) {
-        reCopy = new RegExp('^' + source + '$(?!\\s)', flags);
+        reCopy = new RegExp("^" + source + "$(?!\\s)", flags);
       }
       if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
 
@@ -838,42 +950,47 @@
 
   // `RegExp.prototype.exec` method
   // https://tc39.es/ecma262/#sec-regexp.prototype.exec
-  _export({ target: 'RegExp', proto: true, forced: /./.exec !== regexpExec }, {
-    exec: regexpExec
-  });
+  _export(
+    { target: "RegExp", proto: true, forced: /./.exec !== regexpExec },
+    {
+      exec: regexpExec,
+    }
+  );
 
-  var nativeSymbol = !!Object.getOwnPropertySymbols && !fails(function () {
-    // Chrome 38 Symbol has incorrect toString conversion
-    // eslint-disable-next-line no-undef
-    return !String(Symbol());
-  });
+  var nativeSymbol =
+    !!Object.getOwnPropertySymbols &&
+    !fails(function () {
+      // Chrome 38 Symbol has incorrect toString conversion
+      // eslint-disable-next-line no-undef
+      return !String(Symbol());
+    });
 
-  var useSymbolAsUid = nativeSymbol
+  var useSymbolAsUid =
+    nativeSymbol &&
     // eslint-disable-next-line no-undef
-    && !Symbol.sham
+    !Symbol.sham &&
     // eslint-disable-next-line no-undef
-    && typeof Symbol.iterator == 'symbol';
+    typeof Symbol.iterator == "symbol";
 
-  var WellKnownSymbolsStore = shared('wks');
+  var WellKnownSymbolsStore = shared("wks");
   var Symbol$1 = global_1.Symbol;
-  var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid;
+  var createWellKnownSymbol = useSymbolAsUid
+    ? Symbol$1
+    : (Symbol$1 && Symbol$1.withoutSetter) || uid;
 
   var wellKnownSymbol = function (name) {
     if (!has(WellKnownSymbolsStore, name)) {
-      if (nativeSymbol && has(Symbol$1, name)) WellKnownSymbolsStore[name] = Symbol$1[name];
-      else WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
-    } return WellKnownSymbolsStore[name];
+      if (nativeSymbol && has(Symbol$1, name))
+        WellKnownSymbolsStore[name] = Symbol$1[name];
+      else
+        WellKnownSymbolsStore[name] = createWellKnownSymbol("Symbol." + name);
+    }
+    return WellKnownSymbolsStore[name];
   };
 
   // TODO: Remove from `core-js@4` since it's moved to entry points
 
-
-
-
-
-
-
-  var SPECIES = wellKnownSymbol('species');
+  var SPECIES = wellKnownSymbol("species");
 
   var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
     // #replace needs built-in support for named groups.
@@ -882,23 +999,23 @@
     var re = /./;
     re.exec = function () {
       var result = [];
-      result.groups = { a: '7' };
+      result.groups = { a: "7" };
       return result;
     };
-    return ''.replace(re, '$<a>') !== '7';
+    return "".replace(re, "$<a>") !== "7";
   });
 
   // IE <= 11 replaces $0 with the whole match, as if it was $&
   // https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
   var REPLACE_KEEPS_$0 = (function () {
-    return 'a'.replace(/./, '$0') === '$0';
+    return "a".replace(/./, "$0") === "$0";
   })();
 
-  var REPLACE = wellKnownSymbol('replace');
+  var REPLACE = wellKnownSymbol("replace");
   // Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
   var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
     if (/./[REPLACE]) {
-      return /./[REPLACE]('a', '$0') === '';
+      return /./[REPLACE]("a", "$0") === "";
     }
     return false;
   })();
@@ -908,9 +1025,11 @@
   var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
     var re = /(?:)/;
     var originalExec = re.exec;
-    re.exec = function () { return originalExec.apply(this, arguments); };
-    var result = 'ab'.split(re);
-    return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
+    re.exec = function () {
+      return originalExec.apply(this, arguments);
+    };
+    var result = "ab".split(re);
+    return result.length !== 2 || result[0] !== "a" || result[1] !== "b";
   });
 
   var fixRegexpWellKnownSymbolLogic = function (KEY, length, exec, sham) {
@@ -919,75 +1038,101 @@
     var DELEGATES_TO_SYMBOL = !fails(function () {
       // String methods call symbol-named RegEp methods
       var O = {};
-      O[SYMBOL] = function () { return 7; };
-      return ''[KEY](O) != 7;
+      O[SYMBOL] = function () {
+        return 7;
+      };
+      return ""[KEY](O) != 7;
     });
 
-    var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails(function () {
-      // Symbol-named RegExp methods call .exec
-      var execCalled = false;
-      var re = /a/;
+    var DELEGATES_TO_EXEC =
+      DELEGATES_TO_SYMBOL &&
+      !fails(function () {
+        // Symbol-named RegExp methods call .exec
+        var execCalled = false;
+        var re = /a/;
 
-      if (KEY === 'split') {
-        // We can't use real regex here since it causes deoptimization
-        // and serious performance degradation in V8
-        // https://github.com/zloirock/core-js/issues/306
-        re = {};
-        // RegExp[@@split] doesn't call the regex's exec method, but first creates
-        // a new one. We need to return the patched regex when creating the new one.
-        re.constructor = {};
-        re.constructor[SPECIES] = function () { return re; };
-        re.flags = '';
-        re[SYMBOL] = /./[SYMBOL];
-      }
+        if (KEY === "split") {
+          // We can't use real regex here since it causes deoptimization
+          // and serious performance degradation in V8
+          // https://github.com/zloirock/core-js/issues/306
+          re = {};
+          // RegExp[@@split] doesn't call the regex's exec method, but first creates
+          // a new one. We need to return the patched regex when creating the new one.
+          re.constructor = {};
+          re.constructor[SPECIES] = function () {
+            return re;
+          };
+          re.flags = "";
+          re[SYMBOL] = /./[SYMBOL];
+        }
 
-      re.exec = function () { execCalled = true; return null; };
+        re.exec = function () {
+          execCalled = true;
+          return null;
+        };
 
-      re[SYMBOL]('');
-      return !execCalled;
-    });
+        re[SYMBOL]("");
+        return !execCalled;
+      });
 
     if (
       !DELEGATES_TO_SYMBOL ||
       !DELEGATES_TO_EXEC ||
-      (KEY === 'replace' && !(
-        REPLACE_SUPPORTS_NAMED_GROUPS &&
-        REPLACE_KEEPS_$0 &&
-        !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
-      )) ||
-      (KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
+      (KEY === "replace" &&
+        !(
+          REPLACE_SUPPORTS_NAMED_GROUPS &&
+          REPLACE_KEEPS_$0 &&
+          !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+        )) ||
+      (KEY === "split" && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
     ) {
       var nativeRegExpMethod = /./[SYMBOL];
-      var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
-        if (regexp.exec === regexpExec) {
-          if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
-            // The native String method already delegates to @@method (this
-            // polyfilled function), leasing to infinite recursion.
-            // We avoid it by directly calling the native @@method method.
-            return { done: true, value: nativeRegExpMethod.call(regexp, str, arg2) };
+      var methods = exec(
+        SYMBOL,
+        ""[KEY],
+        function (nativeMethod, regexp, str, arg2, forceStringMethod) {
+          if (regexp.exec === regexpExec) {
+            if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+              // The native String method already delegates to @@method (this
+              // polyfilled function), leasing to infinite recursion.
+              // We avoid it by directly calling the native @@method method.
+              return {
+                done: true,
+                value: nativeRegExpMethod.call(regexp, str, arg2),
+              };
+            }
+            return { done: true, value: nativeMethod.call(str, regexp, arg2) };
           }
-          return { done: true, value: nativeMethod.call(str, regexp, arg2) };
+          return { done: false };
+        },
+        {
+          REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
+          REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE,
         }
-        return { done: false };
-      }, {
-        REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
-        REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
-      });
+      );
       var stringMethod = methods[0];
       var regexMethod = methods[1];
 
       redefine(String.prototype, KEY, stringMethod);
-      redefine(RegExp.prototype, SYMBOL, length == 2
-        // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
-        // 21.2.5.11 RegExp.prototype[@@split](string, limit)
-        ? function (string, arg) { return regexMethod.call(string, this, arg); }
-        // 21.2.5.6 RegExp.prototype[@@match](string)
-        // 21.2.5.9 RegExp.prototype[@@search](string)
-        : function (string) { return regexMethod.call(string, this); }
+      redefine(
+        RegExp.prototype,
+        SYMBOL,
+        length == 2
+          ? // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+            // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+            function (string, arg) {
+              return regexMethod.call(string, this, arg);
+            }
+          : // 21.2.5.6 RegExp.prototype[@@match](string)
+            // 21.2.5.9 RegExp.prototype[@@search](string)
+            function (string) {
+              return regexMethod.call(string, this);
+            }
       );
     }
 
-    if (sham) createNonEnumerableProperty(RegExp.prototype[SYMBOL], 'sham', true);
+    if (sham)
+      createNonEnumerableProperty(RegExp.prototype[SYMBOL], "sham", true);
   };
 
   // `String.prototype.{ codePointAt, at }` methods implementation
@@ -997,12 +1142,20 @@
       var position = toInteger(pos);
       var size = S.length;
       var first, second;
-      if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+      if (position < 0 || position >= size)
+        return CONVERT_TO_STRING ? "" : undefined;
       first = S.charCodeAt(position);
-      return first < 0xD800 || first > 0xDBFF || position + 1 === size
-        || (second = S.charCodeAt(position + 1)) < 0xDC00 || second > 0xDFFF
-          ? CONVERT_TO_STRING ? S.charAt(position) : first
-          : CONVERT_TO_STRING ? S.slice(position, position + 2) : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+      return first < 0xd800 ||
+        first > 0xdbff ||
+        position + 1 === size ||
+        (second = S.charCodeAt(position + 1)) < 0xdc00 ||
+        second > 0xdfff
+        ? CONVERT_TO_STRING
+          ? S.charAt(position)
+          : first
+        : CONVERT_TO_STRING
+        ? S.slice(position, position + 2)
+        : ((first - 0xd800) << 10) + (second - 0xdc00) + 0x10000;
     };
   };
 
@@ -1012,7 +1165,7 @@
     codeAt: createMethod$1(false),
     // `String.prototype.at` method
     // https://github.com/mathiasbynens/String.prototype.at
-    charAt: createMethod$1(true)
+    charAt: createMethod$1(true),
   };
 
   var charAt = stringMultibyte.charAt;
@@ -1027,63 +1180,78 @@
   // https://tc39.es/ecma262/#sec-regexpexec
   var regexpExecAbstract = function (R, S) {
     var exec = R.exec;
-    if (typeof exec === 'function') {
+    if (typeof exec === "function") {
       var result = exec.call(R, S);
-      if (typeof result !== 'object') {
-        throw TypeError('RegExp exec method returned something other than an Object or null');
+      if (typeof result !== "object") {
+        throw TypeError(
+          "RegExp exec method returned something other than an Object or null"
+        );
       }
       return result;
     }
 
-    if (classofRaw(R) !== 'RegExp') {
-      throw TypeError('RegExp#exec called on incompatible receiver');
+    if (classofRaw(R) !== "RegExp") {
+      throw TypeError("RegExp#exec called on incompatible receiver");
     }
 
     return regexpExec.call(R, S);
   };
 
   // @@match logic
-  fixRegexpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCallNative) {
-    return [
-      // `String.prototype.match` method
-      // https://tc39.es/ecma262/#sec-string.prototype.match
-      function match(regexp) {
-        var O = requireObjectCoercible(this);
-        var matcher = regexp == undefined ? undefined : regexp[MATCH];
-        return matcher !== undefined ? matcher.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
-      },
-      // `RegExp.prototype[@@match]` method
-      // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
-      function (regexp) {
-        var res = maybeCallNative(nativeMatch, regexp, this);
-        if (res.done) return res.value;
+  fixRegexpWellKnownSymbolLogic(
+    "match",
+    1,
+    function (MATCH, nativeMatch, maybeCallNative) {
+      return [
+        // `String.prototype.match` method
+        // https://tc39.es/ecma262/#sec-string.prototype.match
+        function match(regexp) {
+          var O = requireObjectCoercible(this);
+          var matcher = regexp == undefined ? undefined : regexp[MATCH];
+          return matcher !== undefined
+            ? matcher.call(regexp, O)
+            : new RegExp(regexp)[MATCH](String(O));
+        },
+        // `RegExp.prototype[@@match]` method
+        // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
+        function (regexp) {
+          var res = maybeCallNative(nativeMatch, regexp, this);
+          if (res.done) return res.value;
 
-        var rx = anObject(regexp);
-        var S = String(this);
+          var rx = anObject(regexp);
+          var S = String(this);
 
-        if (!rx.global) return regexpExecAbstract(rx, S);
+          if (!rx.global) return regexpExecAbstract(rx, S);
 
-        var fullUnicode = rx.unicode;
-        rx.lastIndex = 0;
-        var A = [];
-        var n = 0;
-        var result;
-        while ((result = regexpExecAbstract(rx, S)) !== null) {
-          var matchStr = String(result[0]);
-          A[n] = matchStr;
-          if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
-          n++;
-        }
-        return n === 0 ? null : A;
-      }
-    ];
-  });
+          var fullUnicode = rx.unicode;
+          rx.lastIndex = 0;
+          var A = [];
+          var n = 0;
+          var result;
+          while ((result = regexpExecAbstract(rx, S)) !== null) {
+            var matchStr = String(result[0]);
+            A[n] = matchStr;
+            if (matchStr === "")
+              rx.lastIndex = advanceStringIndex(
+                S,
+                toLength(rx.lastIndex),
+                fullUnicode
+              );
+            n++;
+          }
+          return n === 0 ? null : A;
+        },
+      ];
+    }
+  );
 
   // `IsArray` abstract operation
   // https://tc39.es/ecma262/#sec-isarray
-  var isArray = Array.isArray || function isArray(arg) {
-    return classofRaw(arg) == 'Array';
-  };
+  var isArray =
+    Array.isArray ||
+    function isArray(arg) {
+      return classofRaw(arg) == "Array";
+    };
 
   // `ToObject` abstract operation
   // https://tc39.es/ecma262/#sec-toobject
@@ -1093,11 +1261,16 @@
 
   var createProperty = function (object, key, value) {
     var propertyKey = toPrimitive(key);
-    if (propertyKey in object) objectDefineProperty.f(object, propertyKey, createPropertyDescriptor(0, value));
+    if (propertyKey in object)
+      objectDefineProperty.f(
+        object,
+        propertyKey,
+        createPropertyDescriptor(0, value)
+      );
     else object[propertyKey] = value;
   };
 
-  var SPECIES$1 = wellKnownSymbol('species');
+  var SPECIES$1 = wellKnownSymbol("species");
 
   // `ArraySpeciesCreate` abstract operation
   // https://tc39.es/ecma262/#sec-arrayspeciescreate
@@ -1106,15 +1279,17 @@
     if (isArray(originalArray)) {
       C = originalArray.constructor;
       // cross-realm fallback
-      if (typeof C == 'function' && (C === Array || isArray(C.prototype))) C = undefined;
+      if (typeof C == "function" && (C === Array || isArray(C.prototype)))
+        C = undefined;
       else if (isObject(C)) {
         C = C[SPECIES$1];
         if (C === null) C = undefined;
       }
-    } return new (C === undefined ? Array : C)(length === 0 ? 0 : length);
+    }
+    return new (C === undefined ? Array : C)(length === 0 ? 0 : length);
   };
 
-  var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
+  var engineUserAgent = getBuiltIn("navigator", "userAgent") || "";
 
   var process = global_1.process;
   var versions = process && process.versions;
@@ -1122,7 +1297,7 @@
   var match, version;
 
   if (v8) {
-    match = v8.split('.');
+    match = v8.split(".");
     version = match[0] + match[1];
   } else if (engineUserAgent) {
     match = engineUserAgent.match(/Edge\/(\d+)/);
@@ -1134,36 +1309,41 @@
 
   var engineV8Version = version && +version;
 
-  var SPECIES$2 = wellKnownSymbol('species');
+  var SPECIES$2 = wellKnownSymbol("species");
 
   var arrayMethodHasSpeciesSupport = function (METHOD_NAME) {
     // We can't use this feature detection in V8 since it causes
     // deoptimization and serious performance degradation
     // https://github.com/zloirock/core-js/issues/677
-    return engineV8Version >= 51 || !fails(function () {
-      var array = [];
-      var constructor = array.constructor = {};
-      constructor[SPECIES$2] = function () {
-        return { foo: 1 };
-      };
-      return array[METHOD_NAME](Boolean).foo !== 1;
-    });
+    return (
+      engineV8Version >= 51 ||
+      !fails(function () {
+        var array = [];
+        var constructor = (array.constructor = {});
+        constructor[SPECIES$2] = function () {
+          return { foo: 1 };
+        };
+        return array[METHOD_NAME](Boolean).foo !== 1;
+      })
+    );
   };
 
-  var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
-  var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
-  var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
+  var IS_CONCAT_SPREADABLE = wellKnownSymbol("isConcatSpreadable");
+  var MAX_SAFE_INTEGER = 0x1fffffffffffff;
+  var MAXIMUM_ALLOWED_INDEX_EXCEEDED = "Maximum allowed index exceeded";
 
   // We can't use this feature detection in V8 since it causes
   // deoptimization and serious performance degradation
   // https://github.com/zloirock/core-js/issues/679
-  var IS_CONCAT_SPREADABLE_SUPPORT = engineV8Version >= 51 || !fails(function () {
-    var array = [];
-    array[IS_CONCAT_SPREADABLE] = false;
-    return array.concat()[0] !== array;
-  });
+  var IS_CONCAT_SPREADABLE_SUPPORT =
+    engineV8Version >= 51 ||
+    !fails(function () {
+      var array = [];
+      array[IS_CONCAT_SPREADABLE] = false;
+      return array.concat()[0] !== array;
+    });
 
-  var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+  var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport("concat");
 
   var isConcatSpreadable = function (O) {
     if (!isObject(O)) return false;
@@ -1176,237 +1356,309 @@
   // `Array.prototype.concat` method
   // https://tc39.es/ecma262/#sec-array.prototype.concat
   // with adding support of @@isConcatSpreadable and @@species
-  _export({ target: 'Array', proto: true, forced: FORCED }, {
-    concat: function concat(arg) { // eslint-disable-line no-unused-vars
-      var O = toObject(this);
-      var A = arraySpeciesCreate(O, 0);
-      var n = 0;
-      var i, k, length, len, E;
-      for (i = -1, length = arguments.length; i < length; i++) {
-        E = i === -1 ? O : arguments[i];
-        if (isConcatSpreadable(E)) {
-          len = toLength(E.length);
-          if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
-          for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
-        } else {
-          if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
-          createProperty(A, n++, E);
+  _export(
+    { target: "Array", proto: true, forced: FORCED },
+    {
+      concat: function concat(arg) {
+        // eslint-disable-line no-unused-vars
+        var O = toObject(this);
+        var A = arraySpeciesCreate(O, 0);
+        var n = 0;
+        var i, k, length, len, E;
+        for (i = -1, length = arguments.length; i < length; i++) {
+          E = i === -1 ? O : arguments[i];
+          if (isConcatSpreadable(E)) {
+            len = toLength(E.length);
+            if (n + len > MAX_SAFE_INTEGER)
+              throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+            for (k = 0; k < len; k++, n++)
+              if (k in E) createProperty(A, n, E[k]);
+          } else {
+            if (n >= MAX_SAFE_INTEGER)
+              throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+            createProperty(A, n++, E);
+          }
         }
-      }
-      A.length = n;
-      return A;
+        A.length = n;
+        return A;
+      },
     }
-  });
+  );
 
-  var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+  var TO_STRING_TAG = wellKnownSymbol("toStringTag");
   var test = {};
 
-  test[TO_STRING_TAG] = 'z';
+  test[TO_STRING_TAG] = "z";
 
-  var toStringTagSupport = String(test) === '[object z]';
+  var toStringTagSupport = String(test) === "[object z]";
 
-  var TO_STRING_TAG$1 = wellKnownSymbol('toStringTag');
+  var TO_STRING_TAG$1 = wellKnownSymbol("toStringTag");
   // ES3 wrong here
-  var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
+  var CORRECT_ARGUMENTS =
+    classofRaw(
+      (function () {
+        return arguments;
+      })()
+    ) == "Arguments";
 
   // fallback for IE11 Script Access Denied error
   var tryGet = function (it, key) {
     try {
       return it[key];
-    } catch (error) { /* empty */ }
+    } catch (error) {
+      /* empty */
+    }
   };
 
   // getting tag from ES6+ `Object.prototype.toString`
-  var classof = toStringTagSupport ? classofRaw : function (it) {
-    var O, tag, result;
-    return it === undefined ? 'Undefined' : it === null ? 'Null'
-      // @@toStringTag case
-      : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG$1)) == 'string' ? tag
-      // builtinTag case
-      : CORRECT_ARGUMENTS ? classofRaw(O)
-      // ES3 arguments fallback
-      : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
-  };
+  var classof = toStringTagSupport
+    ? classofRaw
+    : function (it) {
+        var O, tag, result;
+        return it === undefined
+          ? "Undefined"
+          : it === null
+          ? "Null"
+          : // @@toStringTag case
+          typeof (tag = tryGet((O = Object(it)), TO_STRING_TAG$1)) == "string"
+          ? tag
+          : // builtinTag case
+          CORRECT_ARGUMENTS
+          ? classofRaw(O)
+          : // ES3 arguments fallback
+          (result = classofRaw(O)) == "Object" && typeof O.callee == "function"
+          ? "Arguments"
+          : result;
+      };
 
   // `Object.prototype.toString` method implementation
   // https://tc39.es/ecma262/#sec-object.prototype.tostring
-  var objectToString = toStringTagSupport ? {}.toString : function toString() {
-    return '[object ' + classof(this) + ']';
-  };
+  var objectToString = toStringTagSupport
+    ? {}.toString
+    : function toString() {
+        return "[object " + classof(this) + "]";
+      };
 
   // `Object.prototype.toString` method
   // https://tc39.es/ecma262/#sec-object.prototype.tostring
   if (!toStringTagSupport) {
-    redefine(Object.prototype, 'toString', objectToString, { unsafe: true });
+    redefine(Object.prototype, "toString", objectToString, { unsafe: true });
   }
 
-  var TO_STRING = 'toString';
+  var TO_STRING = "toString";
   var RegExpPrototype = RegExp.prototype;
   var nativeToString = RegExpPrototype[TO_STRING];
 
-  var NOT_GENERIC = fails(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
+  var NOT_GENERIC = fails(function () {
+    return nativeToString.call({ source: "a", flags: "b" }) != "/a/b";
+  });
   // FF44- RegExp#toString has a wrong name
   var INCORRECT_NAME = nativeToString.name != TO_STRING;
 
   // `RegExp.prototype.toString` method
   // https://tc39.es/ecma262/#sec-regexp.prototype.tostring
   if (NOT_GENERIC || INCORRECT_NAME) {
-    redefine(RegExp.prototype, TO_STRING, function toString() {
-      var R = anObject(this);
-      var p = String(R.source);
-      var rf = R.flags;
-      var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype) ? regexpFlags.call(R) : rf);
-      return '/' + p + '/' + f;
-    }, { unsafe: true });
+    redefine(
+      RegExp.prototype,
+      TO_STRING,
+      function toString() {
+        var R = anObject(this);
+        var p = String(R.source);
+        var rf = R.flags;
+        var f = String(
+          rf === undefined &&
+            R instanceof RegExp &&
+            !("flags" in RegExpPrototype)
+            ? regexpFlags.call(R)
+            : rf
+        );
+        return "/" + p + "/" + f;
+      },
+      { unsafe: true }
+    );
   }
 
-  var MATCH = wellKnownSymbol('match');
+  var MATCH = wellKnownSymbol("match");
 
   // `IsRegExp` abstract operation
   // https://tc39.es/ecma262/#sec-isregexp
   var isRegexp = function (it) {
     var isRegExp;
-    return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : classofRaw(it) == 'RegExp');
+    return (
+      isObject(it) &&
+      ((isRegExp = it[MATCH]) !== undefined
+        ? !!isRegExp
+        : classofRaw(it) == "RegExp")
+    );
   };
 
   var aFunction$1 = function (it) {
-    if (typeof it != 'function') {
-      throw TypeError(String(it) + ' is not a function');
-    } return it;
+    if (typeof it != "function") {
+      throw TypeError(String(it) + " is not a function");
+    }
+    return it;
   };
 
-  var SPECIES$3 = wellKnownSymbol('species');
+  var SPECIES$3 = wellKnownSymbol("species");
 
   // `SpeciesConstructor` abstract operation
   // https://tc39.es/ecma262/#sec-speciesconstructor
   var speciesConstructor = function (O, defaultConstructor) {
     var C = anObject(O).constructor;
     var S;
-    return C === undefined || (S = anObject(C)[SPECIES$3]) == undefined ? defaultConstructor : aFunction$1(S);
+    return C === undefined || (S = anObject(C)[SPECIES$3]) == undefined
+      ? defaultConstructor
+      : aFunction$1(S);
   };
 
   var arrayPush = [].push;
   var min$2 = Math.min;
-  var MAX_UINT32 = 0xFFFFFFFF;
+  var MAX_UINT32 = 0xffffffff;
 
   // babel-minify transpiles RegExp('x', 'y') -> /x/y and it causes SyntaxError
-  var SUPPORTS_Y = !fails(function () { return !RegExp(MAX_UINT32, 'y'); });
+  var SUPPORTS_Y = !fails(function () {
+    return !RegExp(MAX_UINT32, "y");
+  });
 
   // @@split logic
-  fixRegexpWellKnownSymbolLogic('split', 2, function (SPLIT, nativeSplit, maybeCallNative) {
-    var internalSplit;
-    if (
-      'abbc'.split(/(b)*/)[1] == 'c' ||
-      'test'.split(/(?:)/, -1).length != 4 ||
-      'ab'.split(/(?:ab)*/).length != 2 ||
-      '.'.split(/(.?)(.?)/).length != 4 ||
-      '.'.split(/()()/).length > 1 ||
-      ''.split(/.?/).length
-    ) {
-      // based on es5-shim implementation, need to rework it
-      internalSplit = function (separator, limit) {
-        var string = String(requireObjectCoercible(this));
-        var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
-        if (lim === 0) return [];
-        if (separator === undefined) return [string];
-        // If `separator` is not a regex, use native split
-        if (!isRegexp(separator)) {
-          return nativeSplit.call(string, separator, lim);
-        }
-        var output = [];
-        var flags = (separator.ignoreCase ? 'i' : '') +
-                    (separator.multiline ? 'm' : '') +
-                    (separator.unicode ? 'u' : '') +
-                    (separator.sticky ? 'y' : '');
-        var lastLastIndex = 0;
-        // Make `global` and avoid `lastIndex` issues by working with a copy
-        var separatorCopy = new RegExp(separator.source, flags + 'g');
-        var match, lastIndex, lastLength;
-        while (match = regexpExec.call(separatorCopy, string)) {
-          lastIndex = separatorCopy.lastIndex;
-          if (lastIndex > lastLastIndex) {
-            output.push(string.slice(lastLastIndex, match.index));
-            if (match.length > 1 && match.index < string.length) arrayPush.apply(output, match.slice(1));
-            lastLength = match[0].length;
-            lastLastIndex = lastIndex;
-            if (output.length >= lim) break;
+  fixRegexpWellKnownSymbolLogic(
+    "split",
+    2,
+    function (SPLIT, nativeSplit, maybeCallNative) {
+      var internalSplit;
+      if (
+        "abbc".split(/(b)*/)[1] == "c" ||
+        "test".split(/(?:)/, -1).length != 4 ||
+        "ab".split(/(?:ab)*/).length != 2 ||
+        ".".split(/(.?)(.?)/).length != 4 ||
+        ".".split(/()()/).length > 1 ||
+        "".split(/.?/).length
+      ) {
+        // based on es5-shim implementation, need to rework it
+        internalSplit = function (separator, limit) {
+          var string = String(requireObjectCoercible(this));
+          var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
+          if (lim === 0) return [];
+          if (separator === undefined) return [string];
+          // If `separator` is not a regex, use native split
+          if (!isRegexp(separator)) {
+            return nativeSplit.call(string, separator, lim);
           }
-          if (separatorCopy.lastIndex === match.index) separatorCopy.lastIndex++; // Avoid an infinite loop
-        }
-        if (lastLastIndex === string.length) {
-          if (lastLength || !separatorCopy.test('')) output.push('');
-        } else output.push(string.slice(lastLastIndex));
-        return output.length > lim ? output.slice(0, lim) : output;
-      };
-    // Chakra, V8
-    } else if ('0'.split(undefined, 0).length) {
-      internalSplit = function (separator, limit) {
-        return separator === undefined && limit === 0 ? [] : nativeSplit.call(this, separator, limit);
-      };
-    } else internalSplit = nativeSplit;
-
-    return [
-      // `String.prototype.split` method
-      // https://tc39.es/ecma262/#sec-string.prototype.split
-      function split(separator, limit) {
-        var O = requireObjectCoercible(this);
-        var splitter = separator == undefined ? undefined : separator[SPLIT];
-        return splitter !== undefined
-          ? splitter.call(separator, O, limit)
-          : internalSplit.call(String(O), separator, limit);
-      },
-      // `RegExp.prototype[@@split]` method
-      // https://tc39.es/ecma262/#sec-regexp.prototype-@@split
-      //
-      // NOTE: This cannot be properly polyfilled in engines that don't support
-      // the 'y' flag.
-      function (regexp, limit) {
-        var res = maybeCallNative(internalSplit, regexp, this, limit, internalSplit !== nativeSplit);
-        if (res.done) return res.value;
-
-        var rx = anObject(regexp);
-        var S = String(this);
-        var C = speciesConstructor(rx, RegExp);
-
-        var unicodeMatching = rx.unicode;
-        var flags = (rx.ignoreCase ? 'i' : '') +
-                    (rx.multiline ? 'm' : '') +
-                    (rx.unicode ? 'u' : '') +
-                    (SUPPORTS_Y ? 'y' : 'g');
-
-        // ^(? + rx + ) is needed, in combination with some S slicing, to
-        // simulate the 'y' flag.
-        var splitter = new C(SUPPORTS_Y ? rx : '^(?:' + rx.source + ')', flags);
-        var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
-        if (lim === 0) return [];
-        if (S.length === 0) return regexpExecAbstract(splitter, S) === null ? [S] : [];
-        var p = 0;
-        var q = 0;
-        var A = [];
-        while (q < S.length) {
-          splitter.lastIndex = SUPPORTS_Y ? q : 0;
-          var z = regexpExecAbstract(splitter, SUPPORTS_Y ? S : S.slice(q));
-          var e;
-          if (
-            z === null ||
-            (e = min$2(toLength(splitter.lastIndex + (SUPPORTS_Y ? 0 : q)), S.length)) === p
-          ) {
-            q = advanceStringIndex(S, q, unicodeMatching);
-          } else {
-            A.push(S.slice(p, q));
-            if (A.length === lim) return A;
-            for (var i = 1; i <= z.length - 1; i++) {
-              A.push(z[i]);
-              if (A.length === lim) return A;
+          var output = [];
+          var flags =
+            (separator.ignoreCase ? "i" : "") +
+            (separator.multiline ? "m" : "") +
+            (separator.unicode ? "u" : "") +
+            (separator.sticky ? "y" : "");
+          var lastLastIndex = 0;
+          // Make `global` and avoid `lastIndex` issues by working with a copy
+          var separatorCopy = new RegExp(separator.source, flags + "g");
+          var match, lastIndex, lastLength;
+          while ((match = regexpExec.call(separatorCopy, string))) {
+            lastIndex = separatorCopy.lastIndex;
+            if (lastIndex > lastLastIndex) {
+              output.push(string.slice(lastLastIndex, match.index));
+              if (match.length > 1 && match.index < string.length)
+                arrayPush.apply(output, match.slice(1));
+              lastLength = match[0].length;
+              lastLastIndex = lastIndex;
+              if (output.length >= lim) break;
             }
-            q = p = e;
+            if (separatorCopy.lastIndex === match.index)
+              separatorCopy.lastIndex++; // Avoid an infinite loop
           }
-        }
-        A.push(S.slice(p));
-        return A;
-      }
-    ];
-  }, !SUPPORTS_Y);
+          if (lastLastIndex === string.length) {
+            if (lastLength || !separatorCopy.test("")) output.push("");
+          } else output.push(string.slice(lastLastIndex));
+          return output.length > lim ? output.slice(0, lim) : output;
+        };
+        // Chakra, V8
+      } else if ("0".split(undefined, 0).length) {
+        internalSplit = function (separator, limit) {
+          return separator === undefined && limit === 0
+            ? []
+            : nativeSplit.call(this, separator, limit);
+        };
+      } else internalSplit = nativeSplit;
+
+      return [
+        // `String.prototype.split` method
+        // https://tc39.es/ecma262/#sec-string.prototype.split
+        function split(separator, limit) {
+          var O = requireObjectCoercible(this);
+          var splitter = separator == undefined ? undefined : separator[SPLIT];
+          return splitter !== undefined
+            ? splitter.call(separator, O, limit)
+            : internalSplit.call(String(O), separator, limit);
+        },
+        // `RegExp.prototype[@@split]` method
+        // https://tc39.es/ecma262/#sec-regexp.prototype-@@split
+        //
+        // NOTE: This cannot be properly polyfilled in engines that don't support
+        // the 'y' flag.
+        function (regexp, limit) {
+          var res = maybeCallNative(
+            internalSplit,
+            regexp,
+            this,
+            limit,
+            internalSplit !== nativeSplit
+          );
+          if (res.done) return res.value;
+
+          var rx = anObject(regexp);
+          var S = String(this);
+          var C = speciesConstructor(rx, RegExp);
+
+          var unicodeMatching = rx.unicode;
+          var flags =
+            (rx.ignoreCase ? "i" : "") +
+            (rx.multiline ? "m" : "") +
+            (rx.unicode ? "u" : "") +
+            (SUPPORTS_Y ? "y" : "g");
+
+          // ^(? + rx + ) is needed, in combination with some S slicing, to
+          // simulate the 'y' flag.
+          var splitter = new C(
+            SUPPORTS_Y ? rx : "^(?:" + rx.source + ")",
+            flags
+          );
+          var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
+          if (lim === 0) return [];
+          if (S.length === 0)
+            return regexpExecAbstract(splitter, S) === null ? [S] : [];
+          var p = 0;
+          var q = 0;
+          var A = [];
+          while (q < S.length) {
+            splitter.lastIndex = SUPPORTS_Y ? q : 0;
+            var z = regexpExecAbstract(splitter, SUPPORTS_Y ? S : S.slice(q));
+            var e;
+            if (
+              z === null ||
+              (e = min$2(
+                toLength(splitter.lastIndex + (SUPPORTS_Y ? 0 : q)),
+                S.length
+              )) === p
+            ) {
+              q = advanceStringIndex(S, q, unicodeMatching);
+            } else {
+              A.push(S.slice(p, q));
+              if (A.length === lim) return A;
+              for (var i = 1; i <= z.length - 1; i++) {
+                A.push(z[i]);
+                if (A.length === lim) return A;
+              }
+              q = p = e;
+            }
+          }
+          A.push(S.slice(p));
+          return A;
+        },
+      ];
+    },
+    !SUPPORTS_Y
+  );
 
   /**
    * Append a class to an element
@@ -1459,9 +1711,10 @@
       propValue = element.currentStyle[propName];
     } else if (document.defaultView && document.defaultView.getComputedStyle) {
       //Others
-      propValue = document.defaultView.getComputedStyle(element, null).getPropertyValue(propName);
+      propValue = document.defaultView
+        .getComputedStyle(element, null)
+        .getPropertyValue(propName);
     } //Prevent exception in IE
-
 
     if (propValue && propValue.toLowerCase) {
       return propValue.toLowerCase();
@@ -1484,7 +1737,12 @@
     addClass(element, "introjs-showElement");
     var currentElementPosition = getPropValue(element, "position");
 
-    if (currentElementPosition !== "absolute" && currentElementPosition !== "relative" && currentElementPosition !== "sticky" && currentElementPosition !== "fixed") {
+    if (
+      currentElementPosition !== "absolute" &&
+      currentElementPosition !== "relative" &&
+      currentElementPosition !== "sticky" &&
+      currentElementPosition !== "fixed"
+    ) {
       //change to new intro item
       addClass(element, "introjs-relativePosition");
     }
@@ -1503,14 +1761,17 @@
     var overflowRegex = /(auto|scroll)/;
     if (style.position === "fixed") return document.body;
 
-    for (var parent = element; parent = parent.parentElement;) {
+    for (var parent = element; (parent = parent.parentElement); ) {
       style = window.getComputedStyle(parent);
 
       if (excludeStaticParent && style.position === "static") {
         continue;
       }
 
-      if (overflowRegex.test(style.overflow + style.overflowY + style.overflowX)) return parent;
+      if (
+        overflowRegex.test(style.overflow + style.overflowY + style.overflowX)
+      )
+        return parent;
     }
 
     return document.body;
@@ -1542,13 +1803,13 @@
     if (window.innerWidth !== undefined) {
       return {
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
       };
     } else {
       var D = document.documentElement;
       return {
         width: D.clientWidth,
-        height: D.clientHeight
+        height: D.clientHeight,
       };
     }
   }
@@ -1563,8 +1824,12 @@
    */
   function elementInViewport(el) {
     var rect = el.getBoundingClientRect();
-    return rect.top >= 0 && rect.left >= 0 && rect.bottom + 80 <= window.innerHeight && // add 80 to get the text right
-    rect.right <= window.innerWidth;
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom + 80 <= window.innerHeight && // add 80 to get the text right
+      rect.right <= window.innerWidth
+    );
   }
 
   /**
@@ -1595,10 +1860,20 @@
       // the center of the target element or tooltip.
 
       if (top < 0 || element.clientHeight > winHeight) {
-        window.scrollBy(0, rect.top - (winHeight / 2 - rect.height / 2) - this._options.scrollPadding); // 30px padding from edge to look nice
+        window.scrollBy(
+          0,
+          rect.top -
+            (winHeight / 2 - rect.height / 2) -
+            this._options.scrollPadding
+        ); // 30px padding from edge to look nice
         //Scroll down
       } else {
-        window.scrollBy(0, rect.top - (winHeight / 2 - rect.height / 2) + this._options.scrollPadding); // 30px padding from edge to look nice
+        window.scrollBy(
+          0,
+          rect.top -
+            (winHeight / 2 - rect.height / 2) +
+            this._options.scrollPadding
+        ); // 30px padding from edge to look nice
       }
     }
   }
@@ -1633,7 +1908,7 @@
       top: x.top + scrollTop,
       width: x.width,
       height: x.height,
-      left: x.left + scrollLeft
+      left: x.left + scrollLeft,
     };
   }
 
@@ -1661,12 +1936,19 @@
   }
 
   var floor$1 = Math.floor;
-  var replace = ''.replace;
+  var replace = "".replace;
   var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d\d?|<[^>]*>)/g;
   var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d\d?)/g;
 
   // https://tc39.es/ecma262/#sec-getsubstitution
-  var getSubstitution = function (matched, str, position, captures, namedCaptures, replacement) {
+  var getSubstitution = function (
+    matched,
+    str,
+    position,
+    captures,
+    namedCaptures,
+    replacement
+  ) {
     var tailPos = position + matched.length;
     var m = captures.length;
     var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
@@ -1677,25 +1959,33 @@
     return replace.call(replacement, symbols, function (match, ch) {
       var capture;
       switch (ch.charAt(0)) {
-        case '$': return '$';
-        case '&': return matched;
-        case '`': return str.slice(0, position);
-        case "'": return str.slice(tailPos);
-        case '<':
+        case "$":
+          return "$";
+        case "&":
+          return matched;
+        case "`":
+          return str.slice(0, position);
+        case "'":
+          return str.slice(tailPos);
+        case "<":
           capture = namedCaptures[ch.slice(1, -1)];
           break;
-        default: // \d\d?
+        default:
+          // \d\d?
           var n = +ch;
           if (n === 0) return match;
           if (n > m) {
             var f = floor$1(n / 10);
             if (f === 0) return match;
-            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+            if (f <= m)
+              return captures[f - 1] === undefined
+                ? ch.charAt(1)
+                : captures[f - 1] + ch.charAt(1);
             return match;
           }
           capture = captures[n - 1];
       }
-      return capture === undefined ? '' : capture;
+      return capture === undefined ? "" : capture;
     });
   };
 
@@ -1707,86 +1997,117 @@
   };
 
   // @@replace logic
-  fixRegexpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
-    var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
-    var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
-    var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
+  fixRegexpWellKnownSymbolLogic(
+    "replace",
+    2,
+    function (REPLACE, nativeReplace, maybeCallNative, reason) {
+      var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE =
+        reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
+      var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
+      var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+        ? "$"
+        : "$0";
 
-    return [
-      // `String.prototype.replace` method
-      // https://tc39.es/ecma262/#sec-string.prototype.replace
-      function replace(searchValue, replaceValue) {
-        var O = requireObjectCoercible(this);
-        var replacer = searchValue == undefined ? undefined : searchValue[REPLACE];
-        return replacer !== undefined
-          ? replacer.call(searchValue, O, replaceValue)
-          : nativeReplace.call(String(O), searchValue, replaceValue);
-      },
-      // `RegExp.prototype[@@replace]` method
-      // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
-      function (regexp, replaceValue) {
-        if (
-          (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0) ||
-          (typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
-        ) {
-          var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
-          if (res.done) return res.value;
-        }
-
-        var rx = anObject(regexp);
-        var S = String(this);
-
-        var functionalReplace = typeof replaceValue === 'function';
-        if (!functionalReplace) replaceValue = String(replaceValue);
-
-        var global = rx.global;
-        if (global) {
-          var fullUnicode = rx.unicode;
-          rx.lastIndex = 0;
-        }
-        var results = [];
-        while (true) {
-          var result = regexpExecAbstract(rx, S);
-          if (result === null) break;
-
-          results.push(result);
-          if (!global) break;
-
-          var matchStr = String(result[0]);
-          if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
-        }
-
-        var accumulatedResult = '';
-        var nextSourcePosition = 0;
-        for (var i = 0; i < results.length; i++) {
-          result = results[i];
-
-          var matched = String(result[0]);
-          var position = max$1(min$3(toInteger(result.index), S.length), 0);
-          var captures = [];
-          // NOTE: This is equivalent to
-          //   captures = result.slice(1).map(maybeToString)
-          // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
-          // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
-          // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
-          for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
-          var namedCaptures = result.groups;
-          if (functionalReplace) {
-            var replacerArgs = [matched].concat(captures, position, S);
-            if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
-            var replacement = String(replaceValue.apply(undefined, replacerArgs));
-          } else {
-            replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+      return [
+        // `String.prototype.replace` method
+        // https://tc39.es/ecma262/#sec-string.prototype.replace
+        function replace(searchValue, replaceValue) {
+          var O = requireObjectCoercible(this);
+          var replacer =
+            searchValue == undefined ? undefined : searchValue[REPLACE];
+          return replacer !== undefined
+            ? replacer.call(searchValue, O, replaceValue)
+            : nativeReplace.call(String(O), searchValue, replaceValue);
+        },
+        // `RegExp.prototype[@@replace]` method
+        // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
+        function (regexp, replaceValue) {
+          if (
+            (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE &&
+              REPLACE_KEEPS_$0) ||
+            (typeof replaceValue === "string" &&
+              replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
+          ) {
+            var res = maybeCallNative(
+              nativeReplace,
+              regexp,
+              this,
+              replaceValue
+            );
+            if (res.done) return res.value;
           }
-          if (position >= nextSourcePosition) {
-            accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
-            nextSourcePosition = position + matched.length;
+
+          var rx = anObject(regexp);
+          var S = String(this);
+
+          var functionalReplace = typeof replaceValue === "function";
+          if (!functionalReplace) replaceValue = String(replaceValue);
+
+          var global = rx.global;
+          if (global) {
+            var fullUnicode = rx.unicode;
+            rx.lastIndex = 0;
           }
-        }
-        return accumulatedResult + S.slice(nextSourcePosition);
-      }
-    ];
-  });
+          var results = [];
+          while (true) {
+            var result = regexpExecAbstract(rx, S);
+            if (result === null) break;
+
+            results.push(result);
+            if (!global) break;
+
+            var matchStr = String(result[0]);
+            if (matchStr === "")
+              rx.lastIndex = advanceStringIndex(
+                S,
+                toLength(rx.lastIndex),
+                fullUnicode
+              );
+          }
+
+          var accumulatedResult = "";
+          var nextSourcePosition = 0;
+          for (var i = 0; i < results.length; i++) {
+            result = results[i];
+
+            var matched = String(result[0]);
+            var position = max$1(min$3(toInteger(result.index), S.length), 0);
+            var captures = [];
+            // NOTE: This is equivalent to
+            //   captures = result.slice(1).map(maybeToString)
+            // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+            // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+            // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+            for (var j = 1; j < result.length; j++)
+              captures.push(maybeToString(result[j]));
+            var namedCaptures = result.groups;
+            if (functionalReplace) {
+              var replacerArgs = [matched].concat(captures, position, S);
+              if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+              var replacement = String(
+                replaceValue.apply(undefined, replacerArgs)
+              );
+            } else {
+              replacement = getSubstitution(
+                matched,
+                S,
+                position,
+                captures,
+                namedCaptures,
+                replaceValue
+              );
+            }
+            if (position >= nextSourcePosition) {
+              accumulatedResult +=
+                S.slice(nextSourcePosition, position) + replacement;
+              nextSourcePosition = position + matched.length;
+            }
+          }
+          return accumulatedResult + S.slice(nextSourcePosition);
+        },
+      ];
+    }
+  );
 
   /**
    * Remove a class from an element
@@ -1800,9 +2121,14 @@
   function removeClass(element, classNameRegex) {
     if (element instanceof SVGElement) {
       var pre = element.getAttribute("class") || "";
-      element.setAttribute("class", pre.replace(classNameRegex, "").replace(/^\s+|\s+$/g, ""));
+      element.setAttribute(
+        "class",
+        pre.replace(classNameRegex, "").replace(/^\s+|\s+$/g, "")
+      );
     } else {
-      element.className = element.className.replace(classNameRegex, "").replace(/^\s+|\s+$/g, "");
+      element.className = element.className
+        .replace(classNameRegex, "")
+        .replace(/^\s+|\s+$/g, "");
     }
   }
 
@@ -1859,12 +2185,11 @@
         widthHeightPadding = 0;
       } //set new position to helper layer
 
-
       setStyle(helperLayer, {
         width: "".concat(elementPosition.width + widthHeightPadding, "px"),
         height: "".concat(elementPosition.height + widthHeightPadding, "px"),
         top: "".concat(elementPosition.top - widthHeightPadding / 2, "px"),
-        left: "".concat(elementPosition.left - widthHeightPadding / 2, "px")
+        left: "".concat(elementPosition.left - widthHeightPadding / 2, "px"),
       });
     }
   }
@@ -1874,18 +2199,22 @@
     aFunction$1(fn);
     if (that === undefined) return fn;
     switch (length) {
-      case 0: return function () {
-        return fn.call(that);
-      };
-      case 1: return function (a) {
-        return fn.call(that, a);
-      };
-      case 2: return function (a, b) {
-        return fn.call(that, a, b);
-      };
-      case 3: return function (a, b, c) {
-        return fn.call(that, a, b, c);
-      };
+      case 0:
+        return function () {
+          return fn.call(that);
+        };
+      case 1:
+        return function (a) {
+          return fn.call(that, a);
+        };
+      case 2:
+        return function (a, b) {
+          return fn.call(that, a, b);
+        };
+      case 3:
+        return function (a, b, c) {
+          return fn.call(that, a, b, c);
+        };
     }
     return function (/* ...args */) {
       return fn.apply(that, arguments);
@@ -1910,24 +2239,39 @@
       var length = toLength(self.length);
       var index = 0;
       var create = specificCreate || arraySpeciesCreate;
-      var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
+      var target = IS_MAP
+        ? create($this, length)
+        : IS_FILTER || IS_FILTER_OUT
+        ? create($this, 0)
+        : undefined;
       var value, result;
-      for (;length > index; index++) if (NO_HOLES || index in self) {
-        value = self[index];
-        result = boundFunction(value, index, O);
-        if (TYPE) {
-          if (IS_MAP) target[index] = result; // map
-          else if (result) switch (TYPE) {
-            case 3: return true;              // some
-            case 5: return value;             // find
-            case 6: return index;             // findIndex
-            case 2: push.call(target, value); // filter
-          } else switch (TYPE) {
-            case 4: return false;             // every
-            case 7: push.call(target, value); // filterOut
+      for (; length > index; index++)
+        if (NO_HOLES || index in self) {
+          value = self[index];
+          result = boundFunction(value, index, O);
+          if (TYPE) {
+            if (IS_MAP) target[index] = result;
+            // map
+            else if (result)
+              switch (TYPE) {
+                case 3:
+                  return true; // some
+                case 5:
+                  return value; // find
+                case 6:
+                  return index; // findIndex
+                case 2:
+                  push.call(target, value); // filter
+              }
+            else
+              switch (TYPE) {
+                case 4:
+                  return false; // every
+                case 7:
+                  push.call(target, value); // filterOut
+              }
           }
         }
-      }
       return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
     };
   };
@@ -1956,85 +2300,105 @@
     findIndex: createMethod$2(6),
     // `Array.prototype.filterOut` method
     // https://github.com/tc39/proposal-array-filtering
-    filterOut: createMethod$2(7)
+    filterOut: createMethod$2(7),
   };
 
   var defineProperty = Object.defineProperty;
   var cache = {};
 
-  var thrower = function (it) { throw it; };
+  var thrower = function (it) {
+    throw it;
+  };
 
   var arrayMethodUsesToLength = function (METHOD_NAME, options) {
     if (has(cache, METHOD_NAME)) return cache[METHOD_NAME];
     if (!options) options = {};
     var method = [][METHOD_NAME];
-    var ACCESSORS = has(options, 'ACCESSORS') ? options.ACCESSORS : false;
+    var ACCESSORS = has(options, "ACCESSORS") ? options.ACCESSORS : false;
     var argument0 = has(options, 0) ? options[0] : thrower;
     var argument1 = has(options, 1) ? options[1] : undefined;
 
-    return cache[METHOD_NAME] = !!method && !fails(function () {
-      if (ACCESSORS && !descriptors) return true;
-      var O = { length: -1 };
+    return (cache[METHOD_NAME] =
+      !!method &&
+      !fails(function () {
+        if (ACCESSORS && !descriptors) return true;
+        var O = { length: -1 };
 
-      if (ACCESSORS) defineProperty(O, 1, { enumerable: true, get: thrower });
-      else O[1] = 1;
+        if (ACCESSORS) defineProperty(O, 1, { enumerable: true, get: thrower });
+        else O[1] = 1;
 
-      method.call(O, argument0, argument1);
-    });
+        method.call(O, argument0, argument1);
+      }));
   };
 
   var $filter = arrayIteration.filter;
 
-
-
-  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport("filter");
   // Edge 14- issue
-  var USES_TO_LENGTH = arrayMethodUsesToLength('filter');
+  var USES_TO_LENGTH = arrayMethodUsesToLength("filter");
 
   // `Array.prototype.filter` method
   // https://tc39.es/ecma262/#sec-array.prototype.filter
   // with adding support of @@species
-  _export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
-    filter: function filter(callbackfn /* , thisArg */) {
-      return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  _export(
+    {
+      target: "Array",
+      proto: true,
+      forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH,
+    },
+    {
+      filter: function filter(callbackfn /* , thisArg */) {
+        return $filter(
+          this,
+          callbackfn,
+          arguments.length > 1 ? arguments[1] : undefined
+        );
+      },
     }
-  });
+  );
 
   // `Object.keys` method
   // https://tc39.es/ecma262/#sec-object.keys
-  var objectKeys = Object.keys || function keys(O) {
-    return objectKeysInternal(O, enumBugKeys);
-  };
+  var objectKeys =
+    Object.keys ||
+    function keys(O) {
+      return objectKeysInternal(O, enumBugKeys);
+    };
 
   // `Object.defineProperties` method
   // https://tc39.es/ecma262/#sec-object.defineproperties
-  var objectDefineProperties = descriptors ? Object.defineProperties : function defineProperties(O, Properties) {
-    anObject(O);
-    var keys = objectKeys(Properties);
-    var length = keys.length;
-    var index = 0;
-    var key;
-    while (length > index) objectDefineProperty.f(O, key = keys[index++], Properties[key]);
-    return O;
+  var objectDefineProperties = descriptors
+    ? Object.defineProperties
+    : function defineProperties(O, Properties) {
+        anObject(O);
+        var keys = objectKeys(Properties);
+        var length = keys.length;
+        var index = 0;
+        var key;
+        while (length > index)
+          objectDefineProperty.f(O, (key = keys[index++]), Properties[key]);
+        return O;
+      };
+
+  var html = getBuiltIn("document", "documentElement");
+
+  var GT = ">";
+  var LT = "<";
+  var PROTOTYPE = "prototype";
+  var SCRIPT = "script";
+  var IE_PROTO = sharedKey("IE_PROTO");
+
+  var EmptyConstructor = function () {
+    /* empty */
   };
 
-  var html = getBuiltIn('document', 'documentElement');
-
-  var GT = '>';
-  var LT = '<';
-  var PROTOTYPE = 'prototype';
-  var SCRIPT = 'script';
-  var IE_PROTO = sharedKey('IE_PROTO');
-
-  var EmptyConstructor = function () { /* empty */ };
-
   var scriptTag = function (content) {
-    return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+    return LT + SCRIPT + GT + content + LT + "/" + SCRIPT + GT;
   };
 
   // Create object with fake `null` prototype: use ActiveX Object with cleared prototype
   var NullProtoObjectViaActiveX = function (activeXDocument) {
-    activeXDocument.write(scriptTag(''));
+    activeXDocument.write(scriptTag(""));
     activeXDocument.close();
     var temp = activeXDocument.parentWindow.Object;
     activeXDocument = null; // avoid memory leak
@@ -2044,16 +2408,16 @@
   // Create object with fake `null` prototype: use iframe Object with cleared prototype
   var NullProtoObjectViaIFrame = function () {
     // Thrash, waste and sodomy: IE GC bug
-    var iframe = documentCreateElement('iframe');
-    var JS = 'java' + SCRIPT + ':';
+    var iframe = documentCreateElement("iframe");
+    var JS = "java" + SCRIPT + ":";
     var iframeDocument;
-    iframe.style.display = 'none';
+    iframe.style.display = "none";
     html.appendChild(iframe);
     // https://github.com/zloirock/core-js/issues/475
     iframe.src = String(JS);
     iframeDocument = iframe.contentWindow.document;
     iframeDocument.open();
-    iframeDocument.write(scriptTag('document.F=Object'));
+    iframeDocument.write(scriptTag("document.F=Object"));
     iframeDocument.close();
     return iframeDocument.F;
   };
@@ -2067,9 +2431,13 @@
   var NullProtoObject = function () {
     try {
       /* global ActiveXObject */
-      activeXDocument = document.domain && new ActiveXObject('htmlfile');
-    } catch (error) { /* ignore */ }
-    NullProtoObject = activeXDocument ? NullProtoObjectViaActiveX(activeXDocument) : NullProtoObjectViaIFrame();
+      activeXDocument = document.domain && new ActiveXObject("htmlfile");
+    } catch (error) {
+      /* ignore */
+    }
+    NullProtoObject = activeXDocument
+      ? NullProtoObjectViaActiveX(activeXDocument)
+      : NullProtoObjectViaIFrame();
     var length = enumBugKeys.length;
     while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
     return NullProtoObject();
@@ -2079,19 +2447,23 @@
 
   // `Object.create` method
   // https://tc39.es/ecma262/#sec-object.create
-  var objectCreate = Object.create || function create(O, Properties) {
-    var result;
-    if (O !== null) {
-      EmptyConstructor[PROTOTYPE] = anObject(O);
-      result = new EmptyConstructor();
-      EmptyConstructor[PROTOTYPE] = null;
-      // add "__proto__" for Object.getPrototypeOf polyfill
-      result[IE_PROTO] = O;
-    } else result = NullProtoObject();
-    return Properties === undefined ? result : objectDefineProperties(result, Properties);
-  };
+  var objectCreate =
+    Object.create ||
+    function create(O, Properties) {
+      var result;
+      if (O !== null) {
+        EmptyConstructor[PROTOTYPE] = anObject(O);
+        result = new EmptyConstructor();
+        EmptyConstructor[PROTOTYPE] = null;
+        // add "__proto__" for Object.getPrototypeOf polyfill
+        result[IE_PROTO] = O;
+      } else result = NullProtoObject();
+      return Properties === undefined
+        ? result
+        : objectDefineProperties(result, Properties);
+    };
 
-  var UNSCOPABLES = wellKnownSymbol('unscopables');
+  var UNSCOPABLES = wellKnownSymbol("unscopables");
   var ArrayPrototype = Array.prototype;
 
   // Array.prototype[@@unscopables]
@@ -2099,7 +2471,7 @@
   if (ArrayPrototype[UNSCOPABLES] == undefined) {
     objectDefineProperty.f(ArrayPrototype, UNSCOPABLES, {
       configurable: true,
-      value: objectCreate(null)
+      value: objectCreate(null),
     });
   }
 
@@ -2110,139 +2482,217 @@
 
   var $includes = arrayIncludes.includes;
 
-
-
-  var USES_TO_LENGTH$1 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
+  var USES_TO_LENGTH$1 = arrayMethodUsesToLength("indexOf", {
+    ACCESSORS: true,
+    1: 0,
+  });
 
   // `Array.prototype.includes` method
   // https://tc39.es/ecma262/#sec-array.prototype.includes
-  _export({ target: 'Array', proto: true, forced: !USES_TO_LENGTH$1 }, {
-    includes: function includes(el /* , fromIndex = 0 */) {
-      return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+  _export(
+    { target: "Array", proto: true, forced: !USES_TO_LENGTH$1 },
+    {
+      includes: function includes(el /* , fromIndex = 0 */) {
+        return $includes(
+          this,
+          el,
+          arguments.length > 1 ? arguments[1] : undefined
+        );
+      },
     }
-  });
+  );
 
   // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
-  addToUnscopables('includes');
+  addToUnscopables("includes");
 
   var arrayMethodIsStrict = function (METHOD_NAME, argument) {
     var method = [][METHOD_NAME];
-    return !!method && fails(function () {
-      // eslint-disable-next-line no-useless-call,no-throw-literal
-      method.call(null, argument || function () { throw 1; }, 1);
-    });
+    return (
+      !!method &&
+      fails(function () {
+        // eslint-disable-next-line no-useless-call,no-throw-literal
+        method.call(
+          null,
+          argument ||
+            function () {
+              throw 1;
+            },
+          1
+        );
+      })
+    );
   };
 
   var $indexOf = arrayIncludes.indexOf;
 
-
-
   var nativeIndexOf = [].indexOf;
 
   var NEGATIVE_ZERO = !!nativeIndexOf && 1 / [1].indexOf(1, -0) < 0;
-  var STRICT_METHOD = arrayMethodIsStrict('indexOf');
-  var USES_TO_LENGTH$2 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
+  var STRICT_METHOD = arrayMethodIsStrict("indexOf");
+  var USES_TO_LENGTH$2 = arrayMethodUsesToLength("indexOf", {
+    ACCESSORS: true,
+    1: 0,
+  });
 
   // `Array.prototype.indexOf` method
   // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  _export({ target: 'Array', proto: true, forced: NEGATIVE_ZERO || !STRICT_METHOD || !USES_TO_LENGTH$2 }, {
-    indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
-      return NEGATIVE_ZERO
-        // convert -0 to +0
-        ? nativeIndexOf.apply(this, arguments) || 0
-        : $indexOf(this, searchElement, arguments.length > 1 ? arguments[1] : undefined);
+  _export(
+    {
+      target: "Array",
+      proto: true,
+      forced: NEGATIVE_ZERO || !STRICT_METHOD || !USES_TO_LENGTH$2,
+    },
+    {
+      indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
+        return NEGATIVE_ZERO
+          ? // convert -0 to +0
+            nativeIndexOf.apply(this, arguments) || 0
+          : $indexOf(
+              this,
+              searchElement,
+              arguments.length > 1 ? arguments[1] : undefined
+            );
+      },
     }
-  });
+  );
 
   var nativeJoin = [].join;
 
   var ES3_STRINGS = indexedObject != Object;
-  var STRICT_METHOD$1 = arrayMethodIsStrict('join', ',');
+  var STRICT_METHOD$1 = arrayMethodIsStrict("join", ",");
 
   // `Array.prototype.join` method
   // https://tc39.es/ecma262/#sec-array.prototype.join
-  _export({ target: 'Array', proto: true, forced: ES3_STRINGS || !STRICT_METHOD$1 }, {
-    join: function join(separator) {
-      return nativeJoin.call(toIndexedObject(this), separator === undefined ? ',' : separator);
+  _export(
+    { target: "Array", proto: true, forced: ES3_STRINGS || !STRICT_METHOD$1 },
+    {
+      join: function join(separator) {
+        return nativeJoin.call(
+          toIndexedObject(this),
+          separator === undefined ? "," : separator
+        );
+      },
     }
+  );
+
+  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport("slice");
+  var USES_TO_LENGTH$3 = arrayMethodUsesToLength("slice", {
+    ACCESSORS: true,
+    0: 0,
+    1: 2,
   });
 
-  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport('slice');
-  var USES_TO_LENGTH$3 = arrayMethodUsesToLength('slice', { ACCESSORS: true, 0: 0, 1: 2 });
-
-  var SPECIES$4 = wellKnownSymbol('species');
+  var SPECIES$4 = wellKnownSymbol("species");
   var nativeSlice = [].slice;
   var max$2 = Math.max;
 
   // `Array.prototype.slice` method
   // https://tc39.es/ecma262/#sec-array.prototype.slice
   // fallback for not array-like ES3 strings and DOM objects
-  _export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$3 }, {
-    slice: function slice(start, end) {
-      var O = toIndexedObject(this);
-      var length = toLength(O.length);
-      var k = toAbsoluteIndex(start, length);
-      var fin = toAbsoluteIndex(end === undefined ? length : end, length);
-      // inline `ArraySpeciesCreate` for usage native `Array#slice` where it's possible
-      var Constructor, result, n;
-      if (isArray(O)) {
-        Constructor = O.constructor;
-        // cross-realm fallback
-        if (typeof Constructor == 'function' && (Constructor === Array || isArray(Constructor.prototype))) {
-          Constructor = undefined;
-        } else if (isObject(Constructor)) {
-          Constructor = Constructor[SPECIES$4];
-          if (Constructor === null) Constructor = undefined;
+  _export(
+    {
+      target: "Array",
+      proto: true,
+      forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$3,
+    },
+    {
+      slice: function slice(start, end) {
+        var O = toIndexedObject(this);
+        var length = toLength(O.length);
+        var k = toAbsoluteIndex(start, length);
+        var fin = toAbsoluteIndex(end === undefined ? length : end, length);
+        // inline `ArraySpeciesCreate` for usage native `Array#slice` where it's possible
+        var Constructor, result, n;
+        if (isArray(O)) {
+          Constructor = O.constructor;
+          // cross-realm fallback
+          if (
+            typeof Constructor == "function" &&
+            (Constructor === Array || isArray(Constructor.prototype))
+          ) {
+            Constructor = undefined;
+          } else if (isObject(Constructor)) {
+            Constructor = Constructor[SPECIES$4];
+            if (Constructor === null) Constructor = undefined;
+          }
+          if (Constructor === Array || Constructor === undefined) {
+            return nativeSlice.call(O, k, fin);
+          }
         }
-        if (Constructor === Array || Constructor === undefined) {
-          return nativeSlice.call(O, k, fin);
-        }
-      }
-      result = new (Constructor === undefined ? Array : Constructor)(max$2(fin - k, 0));
-      for (n = 0; k < fin; k++, n++) if (k in O) createProperty(result, n, O[k]);
-      result.length = n;
-      return result;
+        result = new (Constructor === undefined ? Array : Constructor)(
+          max$2(fin - k, 0)
+        );
+        for (n = 0; k < fin; k++, n++)
+          if (k in O) createProperty(result, n, O[k]);
+        result.length = n;
+        return result;
+      },
     }
-  });
+  );
 
   var notARegexp = function (it) {
     if (isRegexp(it)) {
       throw TypeError("The method doesn't accept regular expressions");
-    } return it;
+    }
+    return it;
   };
 
-  var MATCH$1 = wellKnownSymbol('match');
+  var MATCH$1 = wellKnownSymbol("match");
 
   var correctIsRegexpLogic = function (METHOD_NAME) {
     var regexp = /./;
     try {
-      '/./'[METHOD_NAME](regexp);
+      "/./"[METHOD_NAME](regexp);
     } catch (error1) {
       try {
         regexp[MATCH$1] = false;
-        return '/./'[METHOD_NAME](regexp);
-      } catch (error2) { /* empty */ }
-    } return false;
+        return "/./"[METHOD_NAME](regexp);
+      } catch (error2) {
+        /* empty */
+      }
+    }
+    return false;
   };
 
   // `String.prototype.includes` method
   // https://tc39.es/ecma262/#sec-string.prototype.includes
-  _export({ target: 'String', proto: true, forced: !correctIsRegexpLogic('includes') }, {
-    includes: function includes(searchString /* , position = 0 */) {
-      return !!~String(requireObjectCoercible(this))
-        .indexOf(notARegexp(searchString), arguments.length > 1 ? arguments[1] : undefined);
+  _export(
+    {
+      target: "String",
+      proto: true,
+      forced: !correctIsRegexpLogic("includes"),
+    },
+    {
+      includes: function includes(searchString /* , position = 0 */) {
+        return !!~String(requireObjectCoercible(this)).indexOf(
+          notARegexp(searchString),
+          arguments.length > 1 ? arguments[1] : undefined
+        );
+      },
     }
-  });
+  );
 
   /**
    * Set tooltip left so it doesn't go off the right side of the window
    *
    * @return boolean true, if tooltipLayerStyleLeft is ok.  false, otherwise.
    */
-  function checkRight(targetOffset, tooltipLayerStyleLeft, tooltipOffset, windowSize, tooltipLayer) {
-    if (targetOffset.left + tooltipLayerStyleLeft + tooltipOffset.width > windowSize.width) {
+  function checkRight(
+    targetOffset,
+    tooltipLayerStyleLeft,
+    tooltipOffset,
+    windowSize,
+    tooltipLayer
+  ) {
+    if (
+      targetOffset.left + tooltipLayerStyleLeft + tooltipOffset.width >
+      windowSize.width
+    ) {
       // off the right side of the window
-      tooltipLayer.left = "".concat(windowSize.width - tooltipOffset.width - targetOffset.left, "px");
+      tooltipLayer.left = "".concat(
+        windowSize.width - tooltipOffset.width - targetOffset.left,
+        "px"
+      );
       return false;
     }
 
@@ -2255,8 +2705,19 @@
    *
    * @return boolean true, if tooltipLayerStyleRight is ok.  false, otherwise.
    */
-  function checkLeft(targetOffset, tooltipLayerStyleRight, tooltipOffset, tooltipLayer) {
-    if (targetOffset.left + targetOffset.width - tooltipLayerStyleRight - tooltipOffset.width < 0) {
+  function checkLeft(
+    targetOffset,
+    tooltipLayerStyleRight,
+    tooltipOffset,
+    tooltipLayer
+  ) {
+    if (
+      targetOffset.left +
+        targetOffset.width -
+        tooltipLayerStyleRight -
+        tooltipOffset.width <
+      0
+    ) {
       // off the left side of the window
       tooltipLayer.style.left = "".concat(-targetOffset.left, "px");
       return false;
@@ -2266,65 +2727,80 @@
     return true;
   }
 
-  var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport('splice');
-  var USES_TO_LENGTH$4 = arrayMethodUsesToLength('splice', { ACCESSORS: true, 0: 0, 1: 2 });
+  var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport("splice");
+  var USES_TO_LENGTH$4 = arrayMethodUsesToLength("splice", {
+    ACCESSORS: true,
+    0: 0,
+    1: 2,
+  });
 
   var max$3 = Math.max;
   var min$4 = Math.min;
-  var MAX_SAFE_INTEGER$1 = 0x1FFFFFFFFFFFFF;
-  var MAXIMUM_ALLOWED_LENGTH_EXCEEDED = 'Maximum allowed length exceeded';
+  var MAX_SAFE_INTEGER$1 = 0x1fffffffffffff;
+  var MAXIMUM_ALLOWED_LENGTH_EXCEEDED = "Maximum allowed length exceeded";
 
   // `Array.prototype.splice` method
   // https://tc39.es/ecma262/#sec-array.prototype.splice
   // with adding support of @@species
-  _export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 || !USES_TO_LENGTH$4 }, {
-    splice: function splice(start, deleteCount /* , ...items */) {
-      var O = toObject(this);
-      var len = toLength(O.length);
-      var actualStart = toAbsoluteIndex(start, len);
-      var argumentsLength = arguments.length;
-      var insertCount, actualDeleteCount, A, k, from, to;
-      if (argumentsLength === 0) {
-        insertCount = actualDeleteCount = 0;
-      } else if (argumentsLength === 1) {
-        insertCount = 0;
-        actualDeleteCount = len - actualStart;
-      } else {
-        insertCount = argumentsLength - 2;
-        actualDeleteCount = min$4(max$3(toInteger(deleteCount), 0), len - actualStart);
-      }
-      if (len + insertCount - actualDeleteCount > MAX_SAFE_INTEGER$1) {
-        throw TypeError(MAXIMUM_ALLOWED_LENGTH_EXCEEDED);
-      }
-      A = arraySpeciesCreate(O, actualDeleteCount);
-      for (k = 0; k < actualDeleteCount; k++) {
-        from = actualStart + k;
-        if (from in O) createProperty(A, k, O[from]);
-      }
-      A.length = actualDeleteCount;
-      if (insertCount < actualDeleteCount) {
-        for (k = actualStart; k < len - actualDeleteCount; k++) {
-          from = k + actualDeleteCount;
-          to = k + insertCount;
-          if (from in O) O[to] = O[from];
-          else delete O[to];
+  _export(
+    {
+      target: "Array",
+      proto: true,
+      forced: !HAS_SPECIES_SUPPORT$2 || !USES_TO_LENGTH$4,
+    },
+    {
+      splice: function splice(start, deleteCount /* , ...items */) {
+        var O = toObject(this);
+        var len = toLength(O.length);
+        var actualStart = toAbsoluteIndex(start, len);
+        var argumentsLength = arguments.length;
+        var insertCount, actualDeleteCount, A, k, from, to;
+        if (argumentsLength === 0) {
+          insertCount = actualDeleteCount = 0;
+        } else if (argumentsLength === 1) {
+          insertCount = 0;
+          actualDeleteCount = len - actualStart;
+        } else {
+          insertCount = argumentsLength - 2;
+          actualDeleteCount = min$4(
+            max$3(toInteger(deleteCount), 0),
+            len - actualStart
+          );
         }
-        for (k = len; k > len - actualDeleteCount + insertCount; k--) delete O[k - 1];
-      } else if (insertCount > actualDeleteCount) {
-        for (k = len - actualDeleteCount; k > actualStart; k--) {
-          from = k + actualDeleteCount - 1;
-          to = k + insertCount - 1;
-          if (from in O) O[to] = O[from];
-          else delete O[to];
+        if (len + insertCount - actualDeleteCount > MAX_SAFE_INTEGER$1) {
+          throw TypeError(MAXIMUM_ALLOWED_LENGTH_EXCEEDED);
         }
-      }
-      for (k = 0; k < insertCount; k++) {
-        O[k + actualStart] = arguments[k + 2];
-      }
-      O.length = len - actualDeleteCount + insertCount;
-      return A;
+        A = arraySpeciesCreate(O, actualDeleteCount);
+        for (k = 0; k < actualDeleteCount; k++) {
+          from = actualStart + k;
+          if (from in O) createProperty(A, k, O[from]);
+        }
+        A.length = actualDeleteCount;
+        if (insertCount < actualDeleteCount) {
+          for (k = actualStart; k < len - actualDeleteCount; k++) {
+            from = k + actualDeleteCount;
+            to = k + insertCount;
+            if (from in O) O[to] = O[from];
+            else delete O[to];
+          }
+          for (k = len; k > len - actualDeleteCount + insertCount; k--)
+            delete O[k - 1];
+        } else if (insertCount > actualDeleteCount) {
+          for (k = len - actualDeleteCount; k > actualStart; k--) {
+            from = k + actualDeleteCount - 1;
+            to = k + insertCount - 1;
+            if (from in O) O[to] = O[from];
+            else delete O[to];
+          }
+        }
+        for (k = 0; k < insertCount; k++) {
+          O[k + actualStart] = arguments[k + 2];
+        }
+        O.length = len - actualDeleteCount + insertCount;
+        return A;
+      },
     }
-  });
+  );
 
   /**
    * Remove an entry from a string array if it's there, does nothing if it isn't there.
@@ -2347,11 +2823,20 @@
    * @return {String}  calculatedAlignment
    */
 
-  function _determineAutoAlignment(offsetLeft, tooltipWidth, _ref, desiredAlignment) {
+  function _determineAutoAlignment(
+    offsetLeft,
+    tooltipWidth,
+    _ref,
+    desiredAlignment
+  ) {
     var width = _ref.width;
     var halfTooltipWidth = tooltipWidth / 2;
     var winWidth = Math.min(width, window.screen.width);
-    var possibleAlignments = ["-left-aligned", "-middle-aligned", "-right-aligned"];
+    var possibleAlignments = [
+      "-left-aligned",
+      "-middle-aligned",
+      "-right-aligned",
+    ];
     var calculatedAlignment = ""; // valid left must be at least a tooltipWidth
     // away from right side
 
@@ -2360,12 +2845,13 @@
     } // valid middle must be at least half
     // width away from both sides
 
-
-    if (offsetLeft < halfTooltipWidth || winWidth - offsetLeft < halfTooltipWidth) {
+    if (
+      offsetLeft < halfTooltipWidth ||
+      winWidth - offsetLeft < halfTooltipWidth
+    ) {
       removeEntry(possibleAlignments, "-middle-aligned");
     } // valid right must be at least a tooltipWidth
     // width away from left side
-
 
     if (offsetLeft < tooltipWidth) {
       removeEntry(possibleAlignments, "-right-aligned");
@@ -2398,8 +2884,11 @@
    * @return {String}   calculatedPosition
    */
 
-
-  function _determineAutoPosition(targetElement, tooltipLayer, desiredTooltipPosition) {
+  function _determineAutoPosition(
+    targetElement,
+    tooltipLayer,
+    desiredTooltipPosition
+  ) {
     // Take a clone of position precedence. These will be the available
     var possiblePositions = this._options.positionPrecedence.slice();
 
@@ -2419,23 +2908,19 @@
       removeEntry(possiblePositions, "bottom");
     } // Check for space above
 
-
     if (targetElementRect.top - tooltipHeight < 0) {
       removeEntry(possiblePositions, "top");
     } // Check for space to the right
-
 
     if (targetElementRect.right + tooltipWidth > windowSize.width) {
       removeEntry(possiblePositions, "right");
     } // Check for space to the left
 
-
     if (targetElementRect.left - tooltipWidth < 0) {
       removeEntry(possiblePositions, "left");
     } // @var {String}  ex: 'right-aligned'
 
-
-    var desiredAlignment = function (pos) {
+    var desiredAlignment = (function (pos) {
       var hyphenIndex = pos.indexOf("-");
 
       if (hyphenIndex !== -1) {
@@ -2444,8 +2929,7 @@
       }
 
       return "";
-    }(desiredTooltipPosition || ""); // strip alignment from position
-
+    })(desiredTooltipPosition || ""); // strip alignment from position
 
     if (desiredTooltipPosition) {
       // ex: "bottom-right-aligned"
@@ -2463,9 +2947,13 @@
       }
     } // only top and bottom positions have optional alignments
 
-
     if (["top", "bottom"].includes(calculatedPosition)) {
-      calculatedPosition += _determineAutoAlignment(targetElementRect.left, tooltipWidth, windowSize, desiredAlignment);
+      calculatedPosition += _determineAutoAlignment(
+        targetElementRect.left,
+        tooltipWidth,
+        windowSize,
+        desiredAlignment
+      );
     }
 
     return calculatedPosition;
@@ -2480,7 +2968,6 @@
    * @param {HTMLElement} arrowLayer
    * @param {Boolean} hintMode
    */
-
 
   function placeTooltip(targetElement, tooltipLayer, arrowLayer, hintMode) {
     var tooltipCssClass = "";
@@ -2509,12 +2996,19 @@
       tooltipCssClass = this._options.tooltipClass;
     }
 
-    tooltipLayer.className = ["introjs-tooltip", tooltipCssClass].filter(Boolean).join(" ");
+    tooltipLayer.className = ["introjs-tooltip", tooltipCssClass]
+      .filter(Boolean)
+      .join(" ");
     tooltipLayer.setAttribute("role", "dialog");
     currentTooltipPosition = this._introItems[this._currentStep].position; // Floating is always valid, no point in calculating
 
     if (currentTooltipPosition !== "floating" && this._options.autoPosition) {
-      currentTooltipPosition = _determineAutoPosition.call(this, targetElement, tooltipLayer, currentTooltipPosition);
+      currentTooltipPosition = _determineAutoPosition.call(
+        this,
+        targetElement,
+        tooltipLayer,
+        currentTooltipPosition
+      );
     }
 
     var tooltipLayerStyleLeft;
@@ -2527,21 +3021,40 @@
       case "top-right-aligned":
         arrowLayer.className = "introjs-arrow bottom-right";
         var tooltipLayerStyleRight = 0;
-        checkLeft(targetOffset, tooltipLayerStyleRight, tooltipOffset, tooltipLayer);
+        checkLeft(
+          targetOffset,
+          tooltipLayerStyleRight,
+          tooltipOffset,
+          tooltipLayer
+        );
         tooltipLayer.style.bottom = "".concat(targetOffset.height + 20, "px");
         break;
 
       case "top-middle-aligned":
         arrowLayer.className = "introjs-arrow bottom-middle";
-        var tooltipLayerStyleLeftRight = targetOffset.width / 2 - tooltipOffset.width / 2; // a fix for middle aligned hints
+        var tooltipLayerStyleLeftRight =
+          targetOffset.width / 2 - tooltipOffset.width / 2; // a fix for middle aligned hints
 
         if (hintMode) {
           tooltipLayerStyleLeftRight += 5;
         }
 
-        if (checkLeft(targetOffset, tooltipLayerStyleLeftRight, tooltipOffset, tooltipLayer)) {
+        if (
+          checkLeft(
+            targetOffset,
+            tooltipLayerStyleLeftRight,
+            tooltipOffset,
+            tooltipLayer
+          )
+        ) {
           tooltipLayer.style.right = null;
-          checkRight(targetOffset, tooltipLayerStyleLeftRight, tooltipOffset, windowSize, tooltipLayer);
+          checkRight(
+            targetOffset,
+            tooltipLayerStyleLeftRight,
+            tooltipOffset,
+            windowSize,
+            tooltipLayer
+          );
         }
 
         tooltipLayer.style.bottom = "".concat(targetOffset.height + 20, "px");
@@ -2552,7 +3065,13 @@
       case "top":
         arrowLayer.className = "introjs-arrow bottom";
         tooltipLayerStyleLeft = hintMode ? 0 : 15;
-        checkRight(targetOffset, tooltipLayerStyleLeft, tooltipOffset, windowSize, tooltipLayer);
+        checkRight(
+          targetOffset,
+          tooltipLayerStyleLeft,
+          tooltipOffset,
+          windowSize,
+          tooltipLayer
+        );
         tooltipLayer.style.bottom = "".concat(targetOffset.height + 20, "px");
         break;
 
@@ -2563,7 +3082,10 @@
           // In this case, right would have fallen below the bottom of the screen.
           // Modify so that the bottom of the tooltip connects with the target
           arrowLayer.className = "introjs-arrow left-bottom";
-          tooltipLayer.style.top = "-".concat(tooltipOffset.height - targetOffset.height - 20, "px");
+          tooltipLayer.style.top = "-".concat(
+            tooltipOffset.height - targetOffset.height - 20,
+            "px"
+          );
         } else {
           arrowLayer.className = "introjs-arrow left";
         }
@@ -2578,7 +3100,10 @@
         if (targetOffset.top + tooltipOffset.height > windowSize.height) {
           // In this case, left would have fallen below the bottom of the screen.
           // Modify so that the bottom of the tooltip connects with the target
-          tooltipLayer.style.top = "-".concat(tooltipOffset.height - targetOffset.height - 20, "px");
+          tooltipLayer.style.top = "-".concat(
+            tooltipOffset.height - targetOffset.height - 20,
+            "px"
+          );
           arrowLayer.className = "introjs-arrow right-bottom";
         } else {
           arrowLayer.className = "introjs-arrow right";
@@ -2592,28 +3117,53 @@
 
         tooltipLayer.style.left = "50%";
         tooltipLayer.style.top = "50%";
-        tooltipLayer.style.marginLeft = "-".concat(tooltipOffset.width / 2, "px");
-        tooltipLayer.style.marginTop = "-".concat(tooltipOffset.height / 2, "px");
+        tooltipLayer.style.marginLeft = "-".concat(
+          tooltipOffset.width / 2,
+          "px"
+        );
+        tooltipLayer.style.marginTop = "-".concat(
+          tooltipOffset.height / 2,
+          "px"
+        );
         break;
 
       case "bottom-right-aligned":
         arrowLayer.className = "introjs-arrow top-right";
         tooltipLayerStyleRight = 0;
-        checkLeft(targetOffset, tooltipLayerStyleRight, tooltipOffset, tooltipLayer);
+        checkLeft(
+          targetOffset,
+          tooltipLayerStyleRight,
+          tooltipOffset,
+          tooltipLayer
+        );
         tooltipLayer.style.top = "".concat(targetOffset.height + 20, "px");
         break;
 
       case "bottom-middle-aligned":
         arrowLayer.className = "introjs-arrow top-middle";
-        tooltipLayerStyleLeftRight = targetOffset.width / 2 - tooltipOffset.width / 2; // a fix for middle aligned hints
+        tooltipLayerStyleLeftRight =
+          targetOffset.width / 2 - tooltipOffset.width / 2; // a fix for middle aligned hints
 
         if (hintMode) {
           tooltipLayerStyleLeftRight += 5;
         }
 
-        if (checkLeft(targetOffset, tooltipLayerStyleLeftRight, tooltipOffset, tooltipLayer)) {
+        if (
+          checkLeft(
+            targetOffset,
+            tooltipLayerStyleLeftRight,
+            tooltipOffset,
+            tooltipLayer
+          )
+        ) {
           tooltipLayer.style.right = null;
-          checkRight(targetOffset, tooltipLayerStyleLeftRight, tooltipOffset, windowSize, tooltipLayer);
+          checkRight(
+            targetOffset,
+            tooltipLayerStyleLeftRight,
+            tooltipOffset,
+            windowSize,
+            tooltipLayer
+          );
         }
 
         tooltipLayer.style.top = "".concat(targetOffset.height + 20, "px");
@@ -2626,7 +3176,13 @@
       default:
         arrowLayer.className = "introjs-arrow top";
         tooltipLayerStyleLeft = 0;
-        checkRight(targetOffset, tooltipLayerStyleLeft, tooltipOffset, windowSize, tooltipLayer);
+        checkRight(
+          targetOffset,
+          tooltipLayerStyleLeft,
+          tooltipOffset,
+          windowSize,
+          tooltipLayer
+        );
         tooltipLayer.style.top = "".concat(targetOffset.height + 20, "px");
     }
   }
@@ -2678,11 +3234,11 @@
     if (animate) {
       var existingOpacity = element.style.opacity || "1";
       setStyle(element, {
-        opacity: "0"
+        opacity: "0",
       });
       window.setTimeout(function () {
         setStyle(element, {
-          opacity: existingOpacity
+          opacity: existingOpacity,
         });
       }, 10);
     }
@@ -2701,7 +3257,7 @@
   function _getProgress() {
     // Steps are 0 indexed
     var currentStep = parseInt(this._currentStep + 1, 10);
-    return currentStep / this._introItems.length * 100;
+    return (currentStep / this._introItems.length) * 100;
   }
   /**
    * Add disableinteraction layer and adjust the size and position of the layer
@@ -2710,13 +3266,14 @@
    * @method _disableInteraction
    */
 
-
   function _disableInteraction() {
-    var disableInteractionLayer = document.querySelector(".introjs-disableInteraction");
+    var disableInteractionLayer = document.querySelector(
+      ".introjs-disableInteraction"
+    );
 
     if (disableInteractionLayer === null) {
       disableInteractionLayer = _createElement("div", {
-        className: "introjs-disableInteraction"
+        className: "introjs-disableInteraction",
       });
 
       this._targetElement.appendChild(disableInteractionLayer);
@@ -2732,7 +3289,6 @@
    * @param {Object} targetElement
    */
 
-
   function _showElement(targetElement) {
     var _this = this;
 
@@ -2742,7 +3298,9 @@
 
     var self = this;
     var oldHelperLayer = document.querySelector(".introjs-helperLayer");
-    var oldReferenceLayer = document.querySelector(".introjs-tooltipReferenceLayer");
+    var oldReferenceLayer = document.querySelector(
+      ".introjs-tooltipReferenceLayer"
+    );
     var highlightClass = "introjs-helperLayer";
     var nextTooltipButton;
     var prevTooltipButton;
@@ -2752,20 +3310,33 @@
       highlightClass += " ".concat(targetElement.highlightClass);
     } //check for options highlight class
 
-
     if (typeof this._options.highlightClass === "string") {
       highlightClass += " ".concat(this._options.highlightClass);
     }
 
     if (oldHelperLayer !== null) {
-      var oldHelperNumberLayer = oldReferenceLayer.querySelector(".introjs-helperNumberLayer");
-      var oldtooltipLayer = oldReferenceLayer.querySelector(".introjs-tooltiptext");
-      var oldTooltipTitleLayer = oldReferenceLayer.querySelector(".introjs-tooltip-title");
+      var oldHelperNumberLayer = oldReferenceLayer.querySelector(
+        ".introjs-helperNumberLayer"
+      );
+      var oldtooltipLayer = oldReferenceLayer.querySelector(
+        ".introjs-tooltiptext"
+      );
+      var oldTooltipTitleLayer = oldReferenceLayer.querySelector(
+        ".introjs-tooltip-title"
+      );
       var oldArrowLayer = oldReferenceLayer.querySelector(".introjs-arrow");
-      var oldtooltipContainer = oldReferenceLayer.querySelector(".introjs-tooltip");
-      skipTooltipButton = oldReferenceLayer.querySelector(".introjs-skipbutton");
-      prevTooltipButton = oldReferenceLayer.querySelector(".introjs-prevbutton");
-      nextTooltipButton = oldReferenceLayer.querySelector(".introjs-nextbutton"); //update or reset the helper highlight class
+      var oldtooltipContainer = oldReferenceLayer.querySelector(
+        ".introjs-tooltip"
+      );
+      skipTooltipButton = oldReferenceLayer.querySelector(
+        ".introjs-skipbutton"
+      );
+      prevTooltipButton = oldReferenceLayer.querySelector(
+        ".introjs-prevbutton"
+      );
+      nextTooltipButton = oldReferenceLayer.querySelector(
+        ".introjs-nextbutton"
+      ); //update or reset the helper highlight class
 
       oldHelperLayer.className = highlightClass; //hide the tooltip
 
@@ -2786,67 +3357,98 @@
       self._lastShowElementTimer = window.setTimeout(function () {
         // set current step to the label
         if (oldHelperNumberLayer !== null) {
-          oldHelperNumberLayer.innerHTML = "".concat(targetElement.step, " of ").concat(_this._introItems.length);
+          oldHelperNumberLayer.innerHTML = ""
+            .concat(targetElement.step, " of ")
+            .concat(_this._introItems.length);
         } // set current tooltip text
-
 
         oldtooltipLayer.innerHTML = targetElement.intro; // set current tooltip title
 
         oldTooltipTitleLayer.innerHTML = targetElement.title; //set the tooltip position
 
         oldtooltipContainer.style.display = "block";
-        placeTooltip.call(self, targetElement.element, oldtooltipContainer, oldArrowLayer); //change active bullet
+        placeTooltip.call(
+          self,
+          targetElement.element,
+          oldtooltipContainer,
+          oldArrowLayer
+        ); //change active bullet
 
         if (self._options.showBullets) {
-          oldReferenceLayer.querySelector(".introjs-bullets li > a.active").className = "";
-          oldReferenceLayer.querySelector(".introjs-bullets li > a[data-stepnumber=\"".concat(targetElement.step, "\"]")).className = "active";
+          oldReferenceLayer.querySelector(
+            ".introjs-bullets li > a.active"
+          ).className = "";
+          oldReferenceLayer.querySelector(
+            '.introjs-bullets li > a[data-stepnumber="'.concat(
+              targetElement.step,
+              '"]'
+            )
+          ).className = "active";
         }
 
-        oldReferenceLayer.querySelector(".introjs-progress .introjs-progressbar").style.cssText = "width:".concat(_getProgress.call(self), "%;");
-        oldReferenceLayer.querySelector(".introjs-progress .introjs-progressbar").setAttribute("aria-valuenow", _getProgress.call(self)); //show the tooltip
+        oldReferenceLayer.querySelector(
+          ".introjs-progress .introjs-progressbar"
+        ).style.cssText = "width:".concat(_getProgress.call(self), "%;");
+        oldReferenceLayer
+          .querySelector(".introjs-progress .introjs-progressbar")
+          .setAttribute("aria-valuenow", _getProgress.call(self)); //show the tooltip
 
         oldtooltipContainer.style.opacity = 1; //reset button focus
 
-        if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null && /introjs-donebutton/gi.test(nextTooltipButton.className)) {
+        if (
+          typeof nextTooltipButton !== "undefined" &&
+          nextTooltipButton !== null &&
+          /introjs-donebutton/gi.test(nextTooltipButton.className)
+        ) {
           // skip button is now "done" button
           nextTooltipButton.focus();
-        } else if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
+        } else if (
+          typeof nextTooltipButton !== "undefined" &&
+          nextTooltipButton !== null
+        ) {
           //still in the tour, focus on next
           nextTooltipButton.focus();
         } // change the scroll of the window, if needed
 
-
-        scrollTo.call(self, targetElement.scrollTo, targetElement, oldtooltipLayer);
+        scrollTo.call(
+          self,
+          targetElement.scrollTo,
+          targetElement,
+          oldtooltipLayer
+        );
       }, 350); // end of old element if-else condition
     } else {
       var helperLayer = _createElement("div", {
-        className: highlightClass
+        className: highlightClass,
       });
       var referenceLayer = _createElement("div", {
-        className: "introjs-tooltipReferenceLayer"
+        className: "introjs-tooltipReferenceLayer",
       });
       var arrowLayer = _createElement("div", {
-        className: "introjs-arrow"
+        className: "introjs-arrow",
       });
       var tooltipLayer = _createElement("div", {
-        className: "introjs-tooltip"
+        className: "introjs-tooltip",
       });
       var tooltipTextLayer = _createElement("div", {
-        className: "introjs-tooltiptext"
+        className: "introjs-tooltiptext",
       });
       var tooltipHeaderLayer = _createElement("div", {
-        className: "introjs-tooltip-header"
+        className: "introjs-tooltip-header",
       });
       var tooltipTitleLayer = _createElement("h1", {
-        className: "introjs-tooltip-title"
+        className: "introjs-tooltip-title",
       });
       var bulletsLayer = _createElement("div", {
-        className: "introjs-bullets"
+        className: "introjs-bullets",
       });
       var progressLayer = _createElement("div");
       var buttonsLayer = _createElement("div");
       setStyle(helperLayer, {
-        "box-shadow": "0 0 1px 2px rgba(33, 33, 33, 0.8), rgba(33, 33, 33, ".concat(self._options.overlayOpacity.toString(), ") 0 0 0 5000px")
+        "box-shadow": "0 0 1px 2px rgba(33, 33, 33, 0.8), rgba(33, 33, 33, ".concat(
+          self._options.overlayOpacity.toString(),
+          ") 0 0 0 5000px"
+        ),
       }); // target is within a scrollable element
 
       scrollParentToElement.call(self, targetElement); //set new position to helper layer
@@ -2896,7 +3498,7 @@
       }
 
       var progressBar = _createElement("div", {
-        className: "introjs-progressbar"
+        className: "introjs-progressbar",
       });
 
       if (this._options.progressBarAdditionalClass) {
@@ -2907,7 +3509,10 @@
       progressBar.setAttribute("aria-valuemin", 0);
       progressBar.setAttribute("aria-valuemax", 100);
       progressBar.setAttribute("aria-valuenow", _getProgress.call(this));
-      progressBar.style.cssText = "width:".concat(_getProgress.call(this), "%;");
+      progressBar.style.cssText = "width:".concat(
+        _getProgress.call(this),
+        "%;"
+      );
       progressLayer.appendChild(progressBar);
       buttonsLayer.className = "introjs-tooltipbuttons";
 
@@ -2925,7 +3530,9 @@
 
       if (this._options.showStepNumbers === true) {
         helperNumberLayer.className = "introjs-helperNumberLayer";
-        helperNumberLayer.innerHTML = "".concat(targetElement.step, " of ").concat(this._introItems.length);
+        helperNumberLayer.innerHTML = ""
+          .concat(targetElement.step, " of ")
+          .concat(this._introItems.length);
         tooltipLayer.appendChild(helperNumberLayer);
       }
 
@@ -2961,13 +3568,16 @@
       prevTooltipButton.innerHTML = this._options.prevLabel; //skip button
 
       skipTooltipButton = _createElement("a", {
-        className: "introjs-skipbutton"
+        className: "introjs-skipbutton",
       });
       setAnchorAsButton(skipTooltipButton);
       skipTooltipButton.innerHTML = this._options.skipLabel;
 
       skipTooltipButton.onclick = function () {
-        if (self._introItems.length - 1 === self._currentStep && typeof self._introCompleteCallback === "function") {
+        if (
+          self._introItems.length - 1 === self._currentStep &&
+          typeof self._introCompleteCallback === "function"
+        ) {
           self._introCompleteCallback.call(self);
         }
 
@@ -2985,7 +3595,6 @@
       } // we always need the next button because this
       // button changes to "Done" in the last step of the tour
 
-
       buttonsLayer.appendChild(nextTooltipButton);
       tooltipLayer.appendChild(buttonsLayer); //set proper position
 
@@ -2994,88 +3603,161 @@
       scrollTo.call(this, targetElement.scrollTo, targetElement, tooltipLayer); //end of new element if-else condition
     } // removing previous disable interaction layer
 
-
-    var disableInteractionLayer = self._targetElement.querySelector(".introjs-disableInteraction");
+    var disableInteractionLayer = self._targetElement.querySelector(
+      ".introjs-disableInteraction"
+    );
 
     if (disableInteractionLayer) {
       disableInteractionLayer.parentNode.removeChild(disableInteractionLayer);
     } //disable interaction
 
-
     if (targetElement.disableInteraction) {
       _disableInteraction.call(self);
     } // when it's the first step of tour
 
-
     if (this._currentStep === 0 && this._introItems.length > 1) {
-      if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
-        nextTooltipButton.className = "".concat(this._options.buttonClass, " introjs-nextbutton");
+      if (
+        typeof nextTooltipButton !== "undefined" &&
+        nextTooltipButton !== null
+      ) {
+        nextTooltipButton.className = "".concat(
+          this._options.buttonClass,
+          " introjs-nextbutton"
+        );
         nextTooltipButton.innerHTML = this._options.nextLabel;
       }
 
       if (this._options.hidePrev === true) {
-        if (typeof prevTooltipButton !== "undefined" && prevTooltipButton !== null) {
-          prevTooltipButton.className = "".concat(this._options.buttonClass, " introjs-prevbutton introjs-hidden");
+        if (
+          typeof prevTooltipButton !== "undefined" &&
+          prevTooltipButton !== null
+        ) {
+          prevTooltipButton.className = "".concat(
+            this._options.buttonClass,
+            " introjs-prevbutton introjs-hidden"
+          );
         }
 
-        if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
+        if (
+          typeof nextTooltipButton !== "undefined" &&
+          nextTooltipButton !== null
+        ) {
           addClass(nextTooltipButton, "introjs-fullbutton");
         }
       } else {
-        if (typeof prevTooltipButton !== "undefined" && prevTooltipButton !== null) {
-          prevTooltipButton.className = "".concat(this._options.buttonClass, " introjs-prevbutton introjs-disabled");
+        if (
+          typeof prevTooltipButton !== "undefined" &&
+          prevTooltipButton !== null
+        ) {
+          prevTooltipButton.className = "".concat(
+            this._options.buttonClass,
+            " introjs-prevbutton introjs-disabled"
+          );
         }
       }
-    } else if (this._introItems.length - 1 === this._currentStep || this._introItems.length === 1) {
+    } else if (
+      this._introItems.length - 1 === this._currentStep ||
+      this._introItems.length === 1
+    ) {
       // last step of tour
-      if (typeof prevTooltipButton !== "undefined" && prevTooltipButton !== null) {
-        prevTooltipButton.className = "".concat(this._options.buttonClass, " introjs-prevbutton");
+      if (
+        typeof prevTooltipButton !== "undefined" &&
+        prevTooltipButton !== null
+      ) {
+        prevTooltipButton.className = "".concat(
+          this._options.buttonClass,
+          " introjs-prevbutton"
+        );
       }
 
       if (this._options.hideNext === true) {
-        if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
-          nextTooltipButton.className = "".concat(this._options.buttonClass, " introjs-nextbutton introjs-hidden");
+        if (
+          typeof nextTooltipButton !== "undefined" &&
+          nextTooltipButton !== null
+        ) {
+          nextTooltipButton.className = "".concat(
+            this._options.buttonClass,
+            " introjs-nextbutton introjs-hidden"
+          );
         }
 
-        if (typeof prevTooltipButton !== "undefined" && prevTooltipButton !== null) {
+        if (
+          typeof prevTooltipButton !== "undefined" &&
+          prevTooltipButton !== null
+        ) {
           addClass(prevTooltipButton, "introjs-fullbutton");
         }
       } else {
-        if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
+        if (
+          typeof nextTooltipButton !== "undefined" &&
+          nextTooltipButton !== null
+        ) {
           if (this._options.nextToDone === true) {
             nextTooltipButton.innerHTML = this._options.doneLabel;
-            addClass(nextTooltipButton, "".concat(this._options.buttonClass, " introjs-nextbutton introjs-donebutton"));
+            addClass(
+              nextTooltipButton,
+              "".concat(
+                this._options.buttonClass,
+                " introjs-nextbutton introjs-donebutton"
+              )
+            );
           } else {
-            nextTooltipButton.className = "".concat(this._options.buttonClass, " introjs-nextbutton introjs-disabled");
+            nextTooltipButton.className = "".concat(
+              this._options.buttonClass,
+              " introjs-nextbutton introjs-disabled"
+            );
           }
         }
       }
     } else {
       // steps between start and end
-      if (typeof prevTooltipButton !== "undefined" && prevTooltipButton !== null) {
-        prevTooltipButton.className = "".concat(this._options.buttonClass, " introjs-prevbutton");
+      if (
+        typeof prevTooltipButton !== "undefined" &&
+        prevTooltipButton !== null
+      ) {
+        prevTooltipButton.className = "".concat(
+          this._options.buttonClass,
+          " introjs-prevbutton"
+        );
       }
 
-      if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
-        nextTooltipButton.className = "".concat(this._options.buttonClass, " introjs-nextbutton");
+      if (
+        typeof nextTooltipButton !== "undefined" &&
+        nextTooltipButton !== null
+      ) {
+        nextTooltipButton.className = "".concat(
+          this._options.buttonClass,
+          " introjs-nextbutton"
+        );
         nextTooltipButton.innerHTML = this._options.nextLabel;
       }
     }
 
-    if (typeof prevTooltipButton !== "undefined" && prevTooltipButton !== null) {
+    if (
+      typeof prevTooltipButton !== "undefined" &&
+      prevTooltipButton !== null
+    ) {
       prevTooltipButton.setAttribute("role", "button");
     }
 
-    if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
+    if (
+      typeof nextTooltipButton !== "undefined" &&
+      nextTooltipButton !== null
+    ) {
       nextTooltipButton.setAttribute("role", "button");
     }
 
-    if (typeof skipTooltipButton !== "undefined" && skipTooltipButton !== null) {
+    if (
+      typeof skipTooltipButton !== "undefined" &&
+      skipTooltipButton !== null
+    ) {
       skipTooltipButton.setAttribute("role", "button");
     } //Set focus on "next" button, so that hitting Enter always moves you onto the next step
 
-
-    if (typeof nextTooltipButton !== "undefined" && nextTooltipButton !== null) {
+    if (
+      typeof nextTooltipButton !== "undefined" &&
+      nextTooltipButton !== null
+    ) {
       nextTooltipButton.focus();
     }
 
@@ -3148,9 +3830,11 @@
     var continueStep = true;
 
     if (typeof this._introBeforeChangeCallback !== "undefined") {
-      continueStep = this._introBeforeChangeCallback.call(this, nextStep && nextStep.element);
+      continueStep = this._introBeforeChangeCallback.call(
+        this,
+        nextStep && nextStep.element
+      );
     } // if `onbeforechange` returned `false`, stop displaying the element
-
 
     if (continueStep === false) {
       --this._currentStep;
@@ -3189,9 +3873,11 @@
     var continueStep = true;
 
     if (typeof this._introBeforeChangeCallback !== "undefined") {
-      continueStep = this._introBeforeChangeCallback.call(this, nextStep && nextStep.element);
+      continueStep = this._introBeforeChangeCallback.call(
+        this,
+        nextStep && nextStep.element
+      );
     } // if `onbeforechange` returned `false`, stop displaying the element
-
 
     if (continueStep === false) {
       ++this._currentStep;
@@ -3236,7 +3922,10 @@
       code = e.charCode === null ? e.keyCode : e.charCode;
     }
 
-    if ((code === "Escape" || code === 27) && this._options.exitOnEsc === true) {
+    if (
+      (code === "Escape" || code === 27) &&
+      this._options.exitOnEsc === true
+    ) {
       //escape key pressed, exit the intro
       //check if exit callback is defined
       exitIntro.call(this, this._targetElement);
@@ -3255,7 +3944,10 @@
         previousStep.call(this);
       } else if (target && target.className.match("introjs-skipbutton")) {
         //user hit enter while focusing on skip button
-        if (this._introItems.length - 1 === this._currentStep && typeof this._introCompleteCallback === "function") {
+        if (
+          this._introItems.length - 1 === this._currentStep &&
+          typeof this._introCompleteCallback === "function"
+        ) {
           this._introCompleteCallback.call(this);
         }
 
@@ -3267,7 +3959,6 @@
         //default behavior for responding to enter
         nextStep.call(this);
       } //prevent default behaviour on hitting Enter, to prevent steps being skipped in some browsers
-
 
       if (e.preventDefault) {
         e.preventDefault();
@@ -3283,14 +3974,21 @@
    * @method _cloneObject
    */
   function cloneObject(object) {
-    if (object === null || _typeof(object) !== "object" || typeof object.nodeType !== "undefined") {
+    if (
+      object === null ||
+      _typeof(object) !== "object" ||
+      typeof object.nodeType !== "undefined"
+    ) {
       return object;
     }
 
     var temp = {};
 
     for (var key in object) {
-      if (typeof window.jQuery !== "undefined" && object[key] instanceof window.jQuery) {
+      if (
+        typeof window.jQuery !== "undefined" &&
+        object[key] instanceof window.jQuery
+      ) {
         temp[key] = object[key];
       } else {
         temp[key] = cloneObject(object[key]);
@@ -3319,13 +4017,14 @@
    */
 
   function hideHint(stepId) {
-    var hint = hintQuerySelectorAll(".introjs-hint[data-step=\"".concat(stepId, "\"]"))[0];
+    var hint = hintQuerySelectorAll(
+      '.introjs-hint[data-step="'.concat(stepId, '"]')
+    )[0];
     removeHintTooltip.call(this);
 
     if (hint) {
       addClass(hint, "introjs-hidehint");
     } // call the callback function (if any)
-
 
     if (typeof this._hintCloseCallback !== "undefined") {
       this._hintCloseCallback.call(this, stepId);
@@ -3374,7 +4073,9 @@
    */
 
   function showHint(stepId) {
-    var hint = hintQuerySelectorAll(".introjs-hint[data-step=\"".concat(stepId, "\"]"))[0];
+    var hint = hintQuerySelectorAll(
+      '.introjs-hint[data-step="'.concat(stepId, '"]')
+    )[0];
 
     if (hint) {
       removeClass(hint, /introjs-hidehint/g);
@@ -3406,7 +4107,9 @@
    */
 
   function removeHint(stepId) {
-    var hint = hintQuerySelectorAll(".introjs-hint[data-step=\"".concat(stepId, "\"]"))[0];
+    var hint = hintQuerySelectorAll(
+      '.introjs-hint[data-step="'.concat(stepId, '"]')
+    )[0];
 
     if (hint) {
       hint.parentNode.removeChild(hint);
@@ -3427,7 +4130,7 @@
 
     if (hintsWrapper === null) {
       hintsWrapper = _createElement("div", {
-        className: "introjs-hints"
+        className: "introjs-hints",
       });
     }
     /**
@@ -3436,7 +4139,6 @@
      * @param {Integer} i
      * @return {Function}
      */
-
 
     var getHintClick = function getHintClick(i) {
       return function (e) {
@@ -3456,12 +4158,12 @@
 
     forEach(this._introItems, function (item, i) {
       // avoid append a hint twice
-      if (document.querySelector(".introjs-hint[data-step=\"".concat(i, "\"]"))) {
+      if (document.querySelector('.introjs-hint[data-step="'.concat(i, '"]'))) {
         return;
       }
 
       var hint = _createElement("a", {
-        className: "introjs-hint"
+        className: "introjs-hint",
       });
       setAnchorAsButton(hint);
       hint.onclick = getHintClick(i);
@@ -3470,16 +4172,15 @@
         addClass(hint, "introjs-hint-no-anim");
       } // hint's position should be fixed if the target element's position is fixed
 
-
       if (isFixed(item.element)) {
         addClass(hint, "introjs-fixedhint");
       }
 
       var hintDot = _createElement("div", {
-        className: "introjs-hint-dot"
+        className: "introjs-hint-dot",
       });
       var hintPulse = _createElement("div", {
-        className: "introjs-hint-pulse"
+        className: "introjs-hint-pulse",
       });
       hint.appendChild(hintDot);
       hint.appendChild(hintPulse);
@@ -3489,7 +4190,12 @@
       item.targetElement = item.element;
       item.element = hint; // align the hint position
 
-      alignHintPosition.call(_this4, item.hintPosition, hint, item.targetElement);
+      alignHintPosition.call(
+        _this4,
+        item.hintPosition,
+        hint,
+        item.targetElement
+      );
       hintsWrapper.appendChild(hint);
     }); // adding the hints wrapper
 
@@ -3540,26 +4246,44 @@
 
       case "middle-left":
         style.left = "".concat(offset.left, "px");
-        style.top = "".concat(offset.top + (offset.height - iconHeight) / 2, "px");
+        style.top = "".concat(
+          offset.top + (offset.height - iconHeight) / 2,
+          "px"
+        );
         break;
 
       case "middle-right":
         style.left = "".concat(offset.left + offset.width - iconWidth, "px");
-        style.top = "".concat(offset.top + (offset.height - iconHeight) / 2, "px");
+        style.top = "".concat(
+          offset.top + (offset.height - iconHeight) / 2,
+          "px"
+        );
         break;
 
       case "middle-middle":
-        style.left = "".concat(offset.left + (offset.width - iconWidth) / 2, "px");
-        style.top = "".concat(offset.top + (offset.height - iconHeight) / 2, "px");
+        style.left = "".concat(
+          offset.left + (offset.width - iconWidth) / 2,
+          "px"
+        );
+        style.top = "".concat(
+          offset.top + (offset.height - iconHeight) / 2,
+          "px"
+        );
         break;
 
       case "bottom-middle":
-        style.left = "".concat(offset.left + (offset.width - iconWidth) / 2, "px");
+        style.left = "".concat(
+          offset.left + (offset.width - iconWidth) / 2,
+          "px"
+        );
         style.top = "".concat(offset.top + offset.height - iconHeight, "px");
         break;
 
       case "top-middle":
-        style.left = "".concat(offset.left + (offset.width - iconWidth) / 2, "px");
+        style.left = "".concat(
+          offset.left + (offset.width - iconWidth) / 2,
+          "px"
+        );
         style.top = "".concat(offset.top, "px");
         break;
     }
@@ -3573,13 +4297,14 @@
    */
 
   function showHintDialog(stepId) {
-    var hintElement = document.querySelector(".introjs-hint[data-step=\"".concat(stepId, "\"]"));
+    var hintElement = document.querySelector(
+      '.introjs-hint[data-step="'.concat(stepId, '"]')
+    );
     var item = this._introItems[stepId]; // call the callback function (if any)
 
     if (typeof this._hintClickCallback !== "undefined") {
       this._hintClickCallback.call(this, hintElement, item, stepId);
     } // remove all open tooltips
-
 
     var removedStep = removeHintTooltip.call(this); // to toggle the tooltip
 
@@ -3588,7 +4313,7 @@
     }
 
     var tooltipLayer = _createElement("div", {
-      className: "introjs-tooltip"
+      className: "introjs-tooltip",
     });
     var tooltipTextLayer = _createElement("div");
     var arrowLayer = _createElement("div");
@@ -3600,8 +4325,8 @@
         e.stopPropagation();
       } //IE8 and Lower
       else {
-          e.cancelBubble = true;
-        }
+        e.cancelBubble = true;
+      }
     };
 
     tooltipTextLayer.className = "introjs-tooltiptext";
@@ -3620,8 +4345,12 @@
 
     this._currentStep = hintElement.getAttribute("data-step"); // align reference layer position
 
-    referenceLayer.className = "introjs-tooltipReferenceLayer introjs-hintReference";
-    referenceLayer.setAttribute("data-step", hintElement.getAttribute("data-step"));
+    referenceLayer.className =
+      "introjs-tooltipReferenceLayer introjs-hintReference";
+    referenceLayer.setAttribute(
+      "data-step",
+      hintElement.getAttribute("data-step")
+    );
     setHelperLayerPosition.call(this, referenceLayer);
     referenceLayer.appendChild(tooltipLayer);
     document.body.appendChild(referenceLayer); //set proper position
@@ -3666,8 +4395,10 @@
           currentItem.element = document.querySelector(currentItem.element);
         }
 
-        currentItem.hintPosition = currentItem.hintPosition || _this5._options.hintPosition;
-        currentItem.hintAnimation = currentItem.hintAnimation || _this5._options.hintAnimation;
+        currentItem.hintPosition =
+          currentItem.hintPosition || _this5._options.hintPosition;
+        currentItem.hintAnimation =
+          currentItem.hintAnimation || _this5._options.hintAnimation;
 
         if (currentItem.element !== null) {
           _this5._introItems.push(currentItem);
@@ -3679,7 +4410,6 @@
       if (!hints || !hints.length) {
         return false;
       } //first add intro items with data-step
-
 
       forEach(hints, function (currentElement) {
         // hint animation
@@ -3694,10 +4424,14 @@
         _this5._introItems.push({
           element: currentElement,
           hint: currentElement.getAttribute("data-hint"),
-          hintPosition: currentElement.getAttribute("data-hintposition") || _this5._options.hintPosition,
+          hintPosition:
+            currentElement.getAttribute("data-hintposition") ||
+            _this5._options.hintPosition,
           hintAnimation: hintAnimation,
           tooltipClass: currentElement.getAttribute("data-tooltipclass"),
-          position: currentElement.getAttribute("data-position") || _this5._options.tooltipPosition
+          position:
+            currentElement.getAttribute("data-position") ||
+            _this5._options.tooltipPosition,
         });
       });
     }
@@ -3723,8 +4457,8 @@
 
     forEach(this._introItems, function (_ref2) {
       var targetElement = _ref2.targetElement,
-          hintPosition = _ref2.hintPosition,
-          element = _ref2.element;
+        hintPosition = _ref2.hintPosition,
+        element = _ref2.element;
 
       if (typeof targetElement === "undefined") {
         return;
@@ -3741,16 +4475,29 @@
 
   function refresh() {
     // re-align intros
-    setHelperLayerPosition.call(this, document.querySelector(".introjs-helperLayer"));
-    setHelperLayerPosition.call(this, document.querySelector(".introjs-tooltipReferenceLayer"));
-    setHelperLayerPosition.call(this, document.querySelector(".introjs-disableInteraction")); // re-align tooltip
+    setHelperLayerPosition.call(
+      this,
+      document.querySelector(".introjs-helperLayer")
+    );
+    setHelperLayerPosition.call(
+      this,
+      document.querySelector(".introjs-tooltipReferenceLayer")
+    );
+    setHelperLayerPosition.call(
+      this,
+      document.querySelector(".introjs-disableInteraction")
+    ); // re-align tooltip
 
     if (this._currentStep !== undefined && this._currentStep !== null) {
       var oldArrowLayer = document.querySelector(".introjs-arrow");
       var oldtooltipContainer = document.querySelector(".introjs-tooltip");
-      placeTooltip.call(this, this._introItems[this._currentStep].element, oldtooltipContainer, oldArrowLayer);
+      placeTooltip.call(
+        this,
+        this._introItems[this._currentStep].element,
+        oldtooltipContainer,
+        oldArrowLayer
+      );
     } //re-align hints
-
 
     reAlignHints.call(this);
     return this;
@@ -3773,7 +4520,7 @@
 
     if (animate) {
       setStyle(element, {
-        opacity: "0"
+        opacity: "0",
       });
       window.setTimeout(function () {
         parentElement.removeChild(element);
@@ -3802,7 +4549,6 @@
     } // skip this check if `force` parameter is `true`
     // otherwise, if `onbeforeexit` returned `false`, don't exit the intro
 
-
     if (!force && continueExit === false) return; // remove overlay layers from the page
 
     var overlayLayers = targetElement.querySelectorAll(".introjs-overlay");
@@ -3813,13 +4559,16 @@
       });
     } //remove all helper layers
 
-
     var helperLayer = targetElement.querySelector(".introjs-helperLayer");
     removeChild(helperLayer, true);
-    var referenceLayer = targetElement.querySelector(".introjs-tooltipReferenceLayer");
+    var referenceLayer = targetElement.querySelector(
+      ".introjs-tooltipReferenceLayer"
+    );
     removeChild(referenceLayer); //remove disableInteractionLayer
 
-    var disableInteractionLayer = targetElement.querySelector(".introjs-disableInteraction");
+    var disableInteractionLayer = targetElement.querySelector(
+      ".introjs-disableInteraction"
+    );
     removeChild(disableInteractionLayer); //remove intro floating element
 
     var floatingElement = document.querySelector(".introjsFloatingElement");
@@ -3832,7 +4581,6 @@
     if (this._introExitCallback !== undefined) {
       this._introExitCallback.call(this);
     } //set the step to zero
-
 
     this._currentStep = undefined;
   }
@@ -3847,7 +4595,7 @@
 
   function addOverlayLayer(targetElm) {
     var overlayLayer = _createElement("div", {
-      className: "introjs-overlay"
+      className: "introjs-overlay",
     });
     var self = this; // check if the target element is body, we should calculate the size of overlay layer in a better way
 
@@ -3857,7 +4605,7 @@
         bottom: 0,
         left: 0,
         right: 0,
-        position: "fixed"
+        position: "fixed",
       });
     } else {
       // set overlay layer position
@@ -3868,7 +4616,7 @@
           width: "".concat(elementPosition.width, "px"),
           height: "".concat(elementPosition.height, "px"),
           top: "".concat(elementPosition.top, "px"),
-          left: "".concat(elementPosition.left, "px")
+          left: "".concat(elementPosition.left, "px"),
         });
       }
     }
@@ -3877,7 +4625,7 @@
 
     if (self._options.exitOnOverlayClick === true) {
       setStyle(overlayLayer, {
-        cursor: "pointer"
+        cursor: "pointer",
       });
 
       overlayLayer.onclick = function () {
@@ -3917,13 +4665,17 @@
           currentItem.element = document.querySelector(currentItem.element);
         } //intro without element
 
-
-        if (typeof currentItem.element === "undefined" || currentItem.element === null) {
-          var floatingElementQuery = document.querySelector(".introjsFloatingElement");
+        if (
+          typeof currentItem.element === "undefined" ||
+          currentItem.element === null
+        ) {
+          var floatingElementQuery = document.querySelector(
+            ".introjsFloatingElement"
+          );
 
           if (floatingElementQuery === null) {
             floatingElementQuery = _createElement("div", {
-              className: "introjsFloatingElement"
+              className: "introjsFloatingElement",
             });
             document.body.appendChild(floatingElementQuery);
           }
@@ -3954,10 +4706,12 @@
       forEach(allIntroSteps, function (currentElement) {
         // PR #80
         // start intro for groups of elements
-        if (group && currentElement.getAttribute("data-intro-group") !== group) {
+        if (
+          group &&
+          currentElement.getAttribute("data-intro-group") !== group
+        ) {
           return;
         } // skip hidden elements
-
 
         if (currentElement.style.display === "none") {
           return;
@@ -3966,7 +4720,9 @@
         var step = parseInt(currentElement.getAttribute("data-step"), 10);
 
         if (currentElement.hasAttribute("data-disable-interaction")) {
-          disableInteraction = !!currentElement.getAttribute("data-disable-interaction");
+          disableInteraction = !!currentElement.getAttribute(
+            "data-disable-interaction"
+          );
         } else {
           disableInteraction = _this._options.disableInteraction;
         }
@@ -3979,9 +4735,13 @@
             step: parseInt(currentElement.getAttribute("data-step"), 10),
             tooltipClass: currentElement.getAttribute("data-tooltipclass"),
             highlightClass: currentElement.getAttribute("data-highlightclass"),
-            position: currentElement.getAttribute("data-position") || _this._options.tooltipPosition,
-            scrollTo: currentElement.getAttribute("data-scrollto") || _this._options.scrollTo,
-            disableInteraction: disableInteraction
+            position:
+              currentElement.getAttribute("data-position") ||
+              _this._options.tooltipPosition,
+            scrollTo:
+              currentElement.getAttribute("data-scrollto") ||
+              _this._options.scrollTo,
+            disableInteraction: disableInteraction,
           };
         }
       }); //next add intro items without data-step
@@ -3991,7 +4751,10 @@
       forEach(allIntroSteps, function (currentElement) {
         // PR #80
         // start intro for groups of elements
-        if (group && currentElement.getAttribute("data-intro-group") !== group) {
+        if (
+          group &&
+          currentElement.getAttribute("data-intro-group") !== group
+        ) {
           return;
         }
 
@@ -4005,7 +4768,9 @@
           }
 
           if (currentElement.hasAttribute("data-disable-interaction")) {
-            disableInteraction = !!currentElement.getAttribute("data-disable-interaction");
+            disableInteraction = !!currentElement.getAttribute(
+              "data-disable-interaction"
+            );
           } else {
             disableInteraction = _this._options.disableInteraction;
           }
@@ -4017,14 +4782,17 @@
             step: _nextStep + 1,
             tooltipClass: currentElement.getAttribute("data-tooltipclass"),
             highlightClass: currentElement.getAttribute("data-highlightclass"),
-            position: currentElement.getAttribute("data-position") || _this._options.tooltipPosition,
-            scrollTo: currentElement.getAttribute("data-scrollto") || _this._options.scrollTo,
-            disableInteraction: disableInteraction
+            position:
+              currentElement.getAttribute("data-position") ||
+              _this._options.tooltipPosition,
+            scrollTo:
+              currentElement.getAttribute("data-scrollto") ||
+              _this._options.scrollTo,
+            disableInteraction: disableInteraction,
           };
         }
       });
     } //removing undefined/null elements
-
 
     var tempIntroItems = [];
 
@@ -4050,7 +4818,6 @@
       if (this._options.keyboardNavigation) {
         DOMEvent.on(window, "keydown", onKeyDown, this, true);
       } //for window resize
-
 
       DOMEvent.on(window, "resize", onResize, this, true);
     }
@@ -4162,7 +4929,7 @@
       buttonClass: "introjs-button",
 
       /* additional classes to put on progress bar */
-      progressBarAdditionalClass: false
+      progressBarAdditionalClass: false,
     };
   }
 
@@ -4187,7 +4954,6 @@
     // passing group to stamp to increment
     // from 0 onward somewhat reliably
 
-
     introJs.instances[stamp(instance, "introjs-instance")] = instance;
     return instance;
   };
@@ -4197,7 +4963,6 @@
    * @property version
    * @type String
    */
-
 
   introJs.version = version$1;
   /**
@@ -4279,7 +5044,9 @@
       if (typeof providedCallback === "function") {
         this._introBeforeChangeCallback = providedCallback;
       } else {
-        throw new Error("Provided callback for onbeforechange was not a function");
+        throw new Error(
+          "Provided callback for onbeforechange was not a function"
+        );
       }
 
       return this;
@@ -4297,7 +5064,9 @@
       if (typeof providedCallback === "function") {
         this._introAfterChangeCallback = providedCallback;
       } else {
-        throw new Error("Provided callback for onafterchange was not a function");
+        throw new Error(
+          "Provided callback for onafterchange was not a function"
+        );
       }
 
       return this;
@@ -4315,7 +5084,9 @@
       if (typeof providedCallback === "function") {
         this._hintsAddedCallback = providedCallback;
       } else {
-        throw new Error("Provided callback for onhintsadded was not a function.");
+        throw new Error(
+          "Provided callback for onhintsadded was not a function."
+        );
       }
 
       return this;
@@ -4324,7 +5095,9 @@
       if (typeof providedCallback === "function") {
         this._hintClickCallback = providedCallback;
       } else {
-        throw new Error("Provided callback for onhintclick was not a function.");
+        throw new Error(
+          "Provided callback for onhintclick was not a function."
+        );
       }
 
       return this;
@@ -4333,7 +5106,9 @@
       if (typeof providedCallback === "function") {
         this._hintCloseCallback = providedCallback;
       } else {
-        throw new Error("Provided callback for onhintclose was not a function.");
+        throw new Error(
+          "Provided callback for onhintclose was not a function."
+        );
       }
 
       return this;
@@ -4360,7 +5135,9 @@
       if (typeof providedCallback === "function") {
         this._introBeforeExitCallback = providedCallback;
       } else {
-        throw new Error("Provided callback for onbeforeexit was not a function.");
+        throw new Error(
+          "Provided callback for onbeforeexit was not a function."
+        );
       }
 
       return this;
@@ -4403,9 +5180,8 @@
       showHintDialog.call(this, stepId);
 
       return this;
-    }
+    },
   };
 
   return introJs;
-
-})));
+});

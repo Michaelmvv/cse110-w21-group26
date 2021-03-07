@@ -43,7 +43,9 @@ window.onload = () => {
   document.getElementById("longBreak").addEventListener("click", setLongTime);
   document.getElementById("shortBreak").addEventListener("click", setShortTime);
 
-  document.getElementById("tutorialBtn").addEventListener("click", startTutorial);
+  document
+    .getElementById("tutorialBtn")
+    .addEventListener("click", startTutorial);
 
   if (window.localStorage.getItem("darkModeOn") !== null) {
     document.getElementById("darkMode").checked =
@@ -180,32 +182,32 @@ function unloadChecker(e) {
  */
 
 function startTutorial() {
-let dropMenu= document.getElementsByClassName("dropdown-content")[0];
-introJs().onchange(function(targetElement) { 
-  switch (this._currentStep - 1) 
-  {
-    case 0:
-      dropMenu.style.display = 'block';
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      dropMenu.style.display="";
-      break;
-    case 4:
-      break;
-    case 5:
-      break;
-    case 6:
-      break;
-    case 7:
-      break;
-
-  }
- console.log("IntroJS Step: " + (this._currentStep+1)); 
-}).start();
+  let dropMenu = document.getElementsByClassName("dropdown-content")[0];
+  introJs()
+    .onchange(function (targetElement) {
+      switch (this._currentStep - 1) {
+        case 0:
+          dropMenu.style.display = "block";
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          dropMenu.style.display = "";
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+      }
+      console.log("IntroJS Step: " + (this._currentStep + 1));
+    })
+    .start();
 }
 
 /**
