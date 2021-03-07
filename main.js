@@ -1,4 +1,4 @@
-/* global taskEntry, getList, displayList, decrementTopTask */
+/* global getList, displayList, decrementTopTask, introJs, getCurrentTask */
 
 let endAt = 0;
 let countingDown = false;
@@ -42,6 +42,10 @@ window.onload = () => {
   document.getElementById("workTime").addEventListener("click", setWorkTime);
   document.getElementById("longBreak").addEventListener("click", setLongTime);
   document.getElementById("shortBreak").addEventListener("click", setShortTime);
+
+  document
+    .getElementById("tutorialBtn")
+    .addEventListener("click", startTutorial);
 
   if (window.localStorage.getItem("darkModeOn") !== null) {
     document.getElementById("darkMode").checked =
@@ -130,6 +134,7 @@ window.onload = () => {
 
   getList();
   displayList();
+  getCurrentTask();
 };
 
 /**
@@ -172,6 +177,38 @@ function unloadChecker(e) {
   e.retunValue = test;
   return test;
 }
+/**
+ * Start the JS Intro
+ */
+
+function startTutorial() {
+  let dropMenu = document.getElementsByClassName("dropdown-content")[0];
+  introJs()
+    .onchange(function (targetElement) {
+      switch (this._currentStep - 1) {
+        case 0:
+          dropMenu.style.display = "block";
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          dropMenu.style.display = "";
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+      }
+      console.log("IntroJS Step: " + (this._currentStep + 1));
+    })
+    .start();
+}
 
 /**
  * Timer function that keeps track of time left until end - Under consturction
@@ -180,7 +217,7 @@ function updateTimerText() {
   // timerText = document.getElementById('timer'); /** Need a local variable for
   // testing */
   timerText.textContent = toHuman(endAt - Date.now()); // sets timer text on HTML page
-
+  getCurrentTask();
   // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
   updateCircle(ms, timerLength);
