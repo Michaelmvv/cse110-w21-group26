@@ -1,7 +1,8 @@
-/* global saveList, displayList, decrementTopTask */
+/* global saveList, displayList, decrementTopTask, getList, introJs, getCurrentTask, removeTask, getTaskTutorial */
 /**Variable storing the list of tasks as a JSON object */
 let taskList = [];
 let taskListDone = [];
+let listTracker = false;
 class taskEntry extends HTMLElement {
   /**
    * Constructor for the taskEntry HTMLElement, containing the name, session
@@ -148,9 +149,9 @@ class taskEntry extends HTMLElement {
           </svg>
           </button>
         </div>
-        <p class="Name" id="name">Task Name</p>
+        <input title="Task Name" class="Name" id="name" type="text" value="Insert Task Name" />
         <form class="taskNumber" action="">
-          <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1" onKeyDown="return false">
+          <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1">
         </form>
         <button onclick="" title="Move to Other List" id="moveToNewList">
           <svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 24 24" width="50">
@@ -177,15 +178,33 @@ class taskEntry extends HTMLElement {
    */
   async syncName(description) {
     let taskName = this.root.getElementById("name");
-    taskName.textContent = description.name;
+    taskName.addEventListener("change", function () {
+      updateStorage(
+        description.originalName,
+        taskName.value,
+        description.sessions
+      );
+    });
+    taskName.value = description.name;
     let sessionCount = this.root.getElementById("taskSessionNumber");
     sessionCount.addEventListener("change", function () {
-      updateStorage(taskName.textContent, sessionCount.value);
+      if (sessionCount.value <= 0) {
+        sessionCount.value = 1;
+      }
+      if (sessionCount.value >= 11) {
+        sessionCount.value = 10;
+      }
+      sessionCount.value = Math.floor(sessionCount.value);
+      updateStorage(
+        description.originalName,
+        taskName.value,
+        Math.floor(sessionCount.value)
+      );
     });
     sessionCount.value = description.sessions;
     let buttonRemove = this.root.getElementById("removeTask");
     buttonRemove.addEventListener("click", function () {
-      removeButton(this, taskName.textContent);
+      removeButton(this, taskName.value);
     });
     let buttonWork = this.root.getElementById("workTask");
     if (description.done == true) {
@@ -193,7 +212,7 @@ class taskEntry extends HTMLElement {
     } else {
       buttonWork.style.display = "block";
       buttonWork.addEventListener("click", function () {
-        workOnThisButton(this, taskName.textContent);
+        workOnThisButton(this, taskName.value);
       });
     }
     let buttonSwitch = this.root.getElementById("moveToNewList");
@@ -202,15 +221,15 @@ class taskEntry extends HTMLElement {
       temp.setAttribute("xmlns", "");
     }
     buttonSwitch.addEventListener("click", function () {
-      switchList(this, taskName.textContent);
+      switchList(this, taskName.value);
     });
     let buttonUp = this.root.getElementById("upTask");
     buttonUp.addEventListener("click", function () {
-      switchOrder(this, taskName.textContent, true);
+      switchOrder(this, taskName.value, true);
     });
     let buttonDown = this.root.getElementById("downTask");
     buttonDown.addEventListener("click", function () {
-      switchOrder(this, taskName.textContent, false);
+      switchOrder(this, taskName.value, false);
     });
     if (description.firstTask === true) {
       this.root.getElementById("element").classList.add("first");
@@ -225,10 +244,36 @@ class taskEntry extends HTMLElement {
  * @param {int} newCount - New remaining sessions count
  *
  */
-function updateStorage(name, newCount) {
+function updateStorage(originalName, name, newCount) {
+  if (!name.trim().length) {
+    alert("You need to enter a valid task name.");
+    removeTask("New Task");
+    return;
+  }
+  for (let i = 0; i < taskList.length; i++) {
+    if (originalName != name && name == taskList[i].name) {
+      alert("You cannot have the same name as a previous task");
+      removeTask("New Task");
+      return;
+    }
+  }
+  for (let i = 0; i < taskListDone.length; i++) {
+    if (originalName != name && name == taskListDone[i].name) {
+      alert("You cannot have the same name as a previous task");
+      removeTask("New Task");
+      if (listTracker) {
+        displayList();
+      } else {
+        displayListDone();
+      }
+      return;
+    }
+  }
   getCurrentTask();
   for (let i = 0; i < taskList.length; i++) {
-    if (name == taskList[i].name) {
+    if (originalName == taskList[i].originalName) {
+      taskList[i].originalName = name;
+      taskList[i].name = name;
       taskList[i].sessions = newCount;
       saveList();
       displayList();
@@ -236,8 +281,10 @@ function updateStorage(name, newCount) {
     }
   }
   for (let i = 0; i < taskListDone.length; i++) {
-    if (name == taskListDone[i].name) {
+    if (originalName == taskList[i].originalName) {
+      taskListDone[i].originalName = name;
       taskListDone[i].sessions = newCount;
+      taskList[i].name = name;
       saveList();
       displayListDone();
       return;
@@ -374,6 +421,7 @@ function Task(name, sessionCount) {
   this.done = false;
   this.sessionTotal = 0;
   this.firstTask = false;
+  this.originalName = name;
 }
 
 /**
@@ -400,7 +448,9 @@ function switchList(button, name) {
       if (button != null) {
         button.innerHTML = "Move to Done";
       }
-      taskListDone.push(taskList[i]);
+      if (taskList[i].name != "New Task") {
+        taskListDone.push(taskList[i]);
+      }
       taskList.splice(i, 1);
       getCurrentTask();
       saveList();
@@ -459,41 +509,47 @@ function addTaskTutorial() {
  * Add an user entered task into the list
  */
 function addTask() {
-  var name = document.getElementById("addTaskInput").value;
+  // var name = document.getElementById("addTaskInput").value;
+  // for (let i = 0; i < taskList.length; i++) {
+  //   if (name == taskList[i].name) {
+  //     alert("You cannot have the same name as a previous task");
+  //     return;
+  //   }
+  // }
+  // for (let i = 0; i < taskListDone.length; i++) {
+  //   if (name == taskListDone[i].name) {
+  //     alert("You cannot have the same name as a previous task");
+  //     return;
+  //   }
+  // }
+  // var sessionCount = document.getElementById("sessionNumber").value;
+  // if (sessionCount < 0) {
+  //   sessionCount.value = 0;
+  //   return;
+  // }
+  // if (sessionCount > 10) {
+  //   sessionCount.value = 10;
+  //   return;
+  // }
+  // if (!name.trim().length) {
+  //   alert("You need to enter a valid task name.");
+  //   return;
+  // }
   for (let i = 0; i < taskList.length; i++) {
-    if (name == taskList[i].name) {
-      alert("You cannot have the same name as a previous task");
+    if ("New Task" == taskList[i].name) {
+      alert("You already have a New Task waiting to be customized");
       return;
     }
   }
-  for (let i = 0; i < taskListDone.length; i++) {
-    if (name == taskListDone[i].name) {
-      alert("You cannot have the same name as a previous task");
-      return;
-    }
-  }
-  var sessionCount = document.getElementById("sessionNumber").value;
-  if (sessionCount < 0) {
-    sessionCount.value = 0;
-    return;
-  }
-  if (sessionCount > 10) {
-    sessionCount.value = 10;
-    return;
-  }
-  if (!name.trim().length) {
-    alert("You need to enter a valid task name.");
-    return;
-  }
-  putTaskInList(name, sessionCount);
+  putTaskInList("New Task", "1");
   /*Some styling stuff - resetting form after adding */
-  let taskBox = document.getElementById("addTaskInput");
-  taskBox.value = "";
-  let seshNum = document.getElementById("sessionNumber");
-  seshNum.value = "1";
-  // close the modal upon creation
-  let modal = document.getElementById("addModal");
-  modal.style.display = "none";
+  // let taskBox = document.getElementById("addTaskInput");
+  // taskBox.value = "";
+  // let seshNum = document.getElementById("sessionNumber");
+  // seshNum.value = "1";
+  // // close the modal upon creation
+  // let modal = document.getElementById("addModal");
+  // modal.style.display = "none";
 }
 
 /**
@@ -527,6 +583,7 @@ function displayList() {
   // Some CSS related thingy
   document.getElementById("to-do").className = "activeList";
   document.getElementById("done").className = "";
+  listTracker = true;
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
@@ -548,6 +605,7 @@ function displayListDone() {
   // Some CSS related thingy
   document.getElementById("done").className = "activeList";
   document.getElementById("to-do").className = "";
+  listTracker = false;
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
