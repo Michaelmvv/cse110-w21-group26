@@ -200,6 +200,7 @@ class taskEntry extends HTMLElement {
         taskName.value,
         Math.floor(sessionCount.value)
       );
+      getCurrentTask();
     });
     sessionCount.value = description.sessions;
     let buttonRemove = this.root.getElementById("removeTask");
@@ -234,6 +235,7 @@ class taskEntry extends HTMLElement {
     if (description.firstTask === true) {
       this.root.getElementById("element").classList.add("first");
     }
+    getCurrentTask();
   }
 }
 
@@ -248,12 +250,22 @@ function updateStorage(originalName, name, newCount) {
   if (!name.trim().length) {
     alert("You need to enter a valid task name.");
     removeTask("New Task");
+    if (listTracker) {
+      displayList();
+    } else {
+      displayListDone();
+    }
     return;
   }
   for (let i = 0; i < taskList.length; i++) {
     if (originalName != name && name == taskList[i].name) {
       alert("You cannot have the same name as a previous task");
       removeTask("New Task");
+      if (listTracker) {
+        displayList();
+      } else {
+        displayListDone();
+      }
       return;
     }
   }
@@ -269,7 +281,6 @@ function updateStorage(originalName, name, newCount) {
       return;
     }
   }
-  getCurrentTask();
   for (let i = 0; i < taskList.length; i++) {
     if (originalName == taskList[i].originalName) {
       taskList[i].originalName = name;
@@ -572,6 +583,7 @@ function getList() {
  * Save taskList in a string version to local storage
  */
 function saveList() {
+  getCurrentTask();
   localStorage.setItem("taskListCurrent-JSON", JSON.stringify(taskList));
   localStorage.setItem("taskListDone-JSON", JSON.stringify(taskListDone));
 }
@@ -584,6 +596,7 @@ function displayList() {
   document.getElementById("to-do").className = "activeList";
   document.getElementById("done").className = "";
   listTracker = true;
+  getCurrentTask();
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
@@ -606,6 +619,7 @@ function displayListDone() {
   document.getElementById("done").className = "activeList";
   document.getElementById("to-do").className = "";
   listTracker = false;
+  getCurrentTask();
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
