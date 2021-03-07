@@ -447,7 +447,14 @@ function removeTask(name) {
     }
   }
 }
-
+/**
+ * Add an example task for the tutorial menu
+ */
+function addTaskTutorial() {
+  if (taskList.length == 0) {
+    putTaskInList("Task Name", "5");
+  }
+}
 /**
  * Add an user entered task into the list
  */
