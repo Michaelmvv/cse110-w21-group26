@@ -106,7 +106,7 @@
           </div>
           <div
             class="dropdown-content"
-            data-intro="Here is the setting menu where you can change the timer length"
+            data-intro="You can change the timer length of your sessions here!"
           >
             <div class="dropdown-item">
               <label for="workTimeInput">Work Time</label>
@@ -149,7 +149,7 @@
               <label for="darkMode"> Dark Mode</label>
               <label
                 class="switch"
-                data-intro="Turn on Dark Mode for a new Color Scheme"
+                data-intro="Turn on Dark Mode for a new color scheme"
               >
                 <input
                   type="checkbox"
@@ -163,7 +163,7 @@
               <label for="auto"> Auto</label>
               <label
                 class="switch"
-                data-intro="Auto - Pomodoro Session will run by itself. Manual - Select each session yourself"
+                data-intro="Auto Mode is when the pomodoro timer will run by itself. Turn it off (Manual) to select each session yourself!"
               >
                 <input type="checkbox" id="autoSwitch" />
                 <span class="slider round"></span>
@@ -197,13 +197,23 @@
       >
     </div> -->
 
-    <div class="circle" data-intro="Here is the time remaining">
+    <div
+      class="circle"
+      data-intro="Here is where you will see the time remaining"
+    >
       <!-- viewBox is part of svg class -->
       <svg class="circleTimer" viewBox="0 0 220 220">
         <!-- translate positions the circle timer fill inside the circle timer-->
         <g transform="translate(110,110)">
           <circle class="circleTimerFill" r="100" />
-          <text id="taskIndicator" text-anchor="middle" y="-50px">No Task</text>
+          <text
+            id="taskIndicator"
+            text-anchor="middle"
+            y="-50px"
+            data-intro="Here is the name of the current task you are working on"
+          >
+            No Task
+          </text>
           <text id="timer" text-anchor="middle" alignment-baseline="middle">
             25:00
           </text>
@@ -241,7 +251,7 @@
           onclick="displayList()"
           id="to-do"
           class="activeList"
-          data-intro="See your current To-Do Tasks"
+          data-intro="See your current To-Do tasks here"
         >
           To-Do
         </button>
@@ -249,7 +259,7 @@
           onclick="displayListDone()"
           id="done"
           class=" "
-          data-intro="See your done tasks"
+          data-intro="See your Done Tasks"
         >
           Done
         </button>
@@ -258,7 +268,7 @@
       <div id="pomoList" class="header">
         <button
           id="addBtn"
-          onclick="openModal()"
+          onclick="addTask()"
           class="addBtn"
           data-intro="Add your tasks here!"
         >
@@ -289,7 +299,11 @@
             <button onclick="addTask()" class="addTaskBtn">Create Task</button>
           </div>
         </div>
-        <ul id="tasks"></ul>
+        <ul
+          id="tasks"
+          data-title="Your Tasks"
+          data-intro="Use the farthest left buttons to move tasks up or down"
+        ></ul>
       </div>
     </div>
 

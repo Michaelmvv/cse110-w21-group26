@@ -1,4 +1,4 @@
-/* global getList, displayList, decrementTopTask, introJs, getCurrentTask */
+/* global getList, displayList, decrementTopTask, introJs, getCurrentTask, removeTask, addTaskTutorial */
 
 let endAt = 0;
 let countingDown = false;
@@ -183,6 +183,7 @@ function unloadChecker(e) {
 
 function startTutorial() {
   let dropMenu = document.getElementsByClassName("dropdown-content")[0];
+  let taskListTutorial = document.getElementById("tasks");
   introJs()
     .onchange(function (targetElement) {
       switch (this._currentStep - 1) {
@@ -195,6 +196,7 @@ function startTutorial() {
           break;
         case 3:
           dropMenu.style.display = "";
+          console.log("DOING");
           break;
         case 4:
           break;
@@ -204,11 +206,17 @@ function startTutorial() {
           break;
         case 7:
           break;
+        case 8:
+          addTaskTutorial();
+          // displayList();
+          break;
       }
-      console.log("IntroJS Step: " + (this._currentStep + 1));
+      console.log("IntroJS Step: " + this._currentStep);
     })
     .onexit(function () {
       dropMenu.style.display = "";
+      removeTask("Task Name");
+      displayList();
     })
     .start();
 }
