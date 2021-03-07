@@ -207,7 +207,7 @@ function startTutorial() {
       }
       console.log("IntroJS Step: " + (this._currentStep + 1));
     })
-    .onexit(() => {
+    .onexit(function () {
       dropMenu.style.display = "";
     })
     .start();
