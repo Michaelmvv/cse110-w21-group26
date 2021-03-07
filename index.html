@@ -8,123 +8,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
+    <link href="introjs.css" rel="stylesheet" />
+    <link rel="preload" href="images/logoLong.svg" as="image" />
+    <link rel="preload" href="images/logoShort.svg" as="image" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/intro.min.js"
+      integrity="sha512-NC1GtvckWJQLUHrSQp5+4ydIv6gW8kfP4Ewrwv8Y1xU1h9GTTaXDTnWl+kjHcZNCaX8ySFNSpPmtt/B4SUaDsQ=="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/introjs.min.css"
+      integrity="sha512-631ugrjzlQYCOP9P8BOLEMFspr5ooQwY3rgt8SMUa+QqtVMbY/tniEUOcABHDGjK50VExB4CNc61g5oopGqCEw=="
+      crossorigin="anonymous"
+    />
   </head>
 
-  <body>
+  <body class="dark-mode workTime">
     <!-- logo -->
     <div class="settingAndLogo">
       <div class="logo">
-        <svg
-          width="617"
-          height="617"
-          viewBox="20 20 500 500"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <!--rect width="617" height="617" fill="none"/-->
-          <path
-            id="logo-P1"
-            d="M169 168.5C169 155.797 179.297 145.5 192 145.5C204.703 145.5 215 155.797 215 168.5V496.5C215 509.203 204.703 519.5 192 519.5C179.297 519.5 169 509.203 169 496.5V168.5Z"
-            fill="#F14148"
-          />
-          <circle id="logo-P2" cx="311" cy="250" r="102" fill="#F14148" />
-          <path
-            id="logo-circle"
-            d="M386.5 249.773C386.5 291.747 352.474 325.773 310.5 325.773C268.526 325.773 234.5 291.747 234.5 249.773C234.5 207.8 268.526 173.773 310.5 173.773C352.474 173.773 386.5 207.8 386.5 249.773Z"
-            fill="#F68D90"
-          />
-          <rect
-            x="237"
-            y="255.15"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-90 237 255.15)"
-            fill="white"
-          />
-          <rect
-            x="303"
-            y="293"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            fill="white"
-          />
-          <rect
-            x="303"
-            y="176"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            fill="white"
-          />
-          <rect
-            x="257"
-            y="199.884"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-45 257 199.884)"
-            fill="white"
-          />
-          <rect
-            x="338"
-            y="278.884"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-45 338 278.884)"
-            fill="white"
-          />
-          <rect
-            x="345.884"
-            y="221.45"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-135 345.884 221.45)"
-            fill="white"
-          />
-          <rect
-            x="259.884"
-            y="300.45"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-135 259.884 300.45)"
-            fill="white"
-          />
-          <rect
-            x="354"
-            y="255.15"
-            width="11.15"
-            height="30.4985"
-            rx="5.57499"
-            transform="rotate(-90 354 255.15)"
-            fill="white"
-          />
-          <line
-            x1="308.5"
-            y1="182"
-            x2="308.5"
-            y2="250"
-            stroke="black"
-            stroke-width="5"
-          />
-          <line
-            x1="347.055"
-            y1="251"
-            x2="305.945"
-            y2="251"
-            stroke="black"
-            stroke-width="5"
-          />
-        </svg>
-        <!--img src="images/logo.svg" alt="logo" height="80" width="80" /-->
+        <img
+          id="logoSVG"
+          label="logoImg"
+          src="images/logo.svg"
+          alt="logo"
+          height="80"
+          width="80"
+        />
       </div>
       <!-- settings -->
+      <button onclick="" id="tutorialBtn">HELP</button>
       <div
         class="setting dropdown"
+        data-step="1"
+        data-intro="Here is the setting menu"
         onmouseover="{
         let settingsLogo = document.getElementById('settingsLogo');
         settingsLogo.style.transition='transform 0.5s';
@@ -167,32 +86,20 @@
                 />
               </g>
             </g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
-            <g></g>
           </svg>
         </div>
-
-        <div class="dropdown-content">
+        <div
+          class="dropdown-content"
+          data-intro="Here is the setting menu where you can change the timer length"
+        >
           <div class="dropdown-item">
-            <label for="longBreakTimeInput">Long Break</label>
+            <label for="workTimeInput">Work Time</label>
             <input
               class="settingLengthInput"
-              id="longBreakTimeInput"
+              id="workTimeInput"
               type="number"
-              value="15"
+              value="25"
+              style="width: 60px"
             /><span style="margin-left: 5px">min</span>
           </div>
 
@@ -206,19 +113,17 @@
               style="width: 60px"
             /><span style="margin-left: 5px">min</span>
           </div>
-
           <div class="dropdown-item">
-            <label for="workTimeInput">Work Time</label>
+            <label for="longBreakTimeInput">Long Break</label>
             <input
               class="settingLengthInput"
-              id="workTimeInput"
+              id="longBreakTimeInput"
               type="number"
-              value="25"
-              style="width: 60px"
+              value="15"
             /><span style="margin-left: 5px">min</span>
           </div>
+
           <!-- volume controller, need to add js function -->
-          <!-- do we still want the volume despite we can modify using laptop? -->
           <div class="dropdown-item">
             <label for="volume">Volume</label>
             <input type="range" min="1" max="100" value="50" id="volume" />
@@ -226,7 +131,10 @@
           <!-- darkmode and auto switch -->
           <div class="dropdown-item">
             <label for="darkMode"> Dark Mode</label>
-            <label class="switch">
+            <label
+              class="switch"
+              data-intro="Turn on Dark Mode for a new Color Scheme"
+            >
               <input
                 type="checkbox"
                 class="hiddenCheckbox"
@@ -237,7 +145,10 @@
             </label>
             <!-- auto switch need to add js functions -->
             <label for="auto"> Auto</label>
-            <label class="switch">
+            <label
+              class="switch"
+              data-intro="Auto - Pomodoro Session will run by itself. Manual - Select each session yourself"
+            >
               <input type="checkbox" id="autoSwitch" />
               <span class="slider round"></span>
             </label>
@@ -260,14 +171,22 @@
         Long Break
       </button>
     </div>
+    <!-- <div style="margin: auto; width: 50%; padding: 10px; text-align: center">
+      <text
+        text-anchor="middle"
+        alignment-baseline="middle"
+        style="justify-content: center; text-align: center"
+        >Current Task</text
+      >
+    </div> -->
 
-    <div class="circle">
+    <div class="circle" data-intro="Here is the time remaining">
       <!-- viewBox is part of svg class -->
       <svg class="circleTimer" viewBox="0 0 220 220">
         <!-- translate positions the circle timer fill inside the circle timer-->
         <g transform="translate(110,110)">
-          <circle class="circleTimerFill shadow" r="100" />
-
+          <circle class="circleTimerFill" r="100" />
+          <text id="taskIndicator" text-anchor="middle" y="-50px">No Task</text>
           <text id="timer" text-anchor="middle" alignment-baseline="middle">
             25:00
           </text>
@@ -301,14 +220,31 @@
     <!-- <h2 style="text-align: center">PomoList</h2> -->
     <div class="task-list">
       <div class="taskTabs">
-        <button onclick="displayList()" id="to-do" class="activeList">
+        <button
+          onclick="displayList()"
+          id="to-do"
+          class="activeList"
+          data-intro="See your current To-Do Tasks"
+        >
           To-Do
         </button>
-        <button onclick="displayListDone()" id="done" class=" ">Done</button>
+        <button
+          onclick="displayListDone()"
+          id="done"
+          class=" "
+          data-intro="See your done tasks"
+        >
+          Done
+        </button>
       </div>
 
       <div id="pomoList" class="header">
-        <button id="addBtn" onclick="openModal()" class="addBtn">
+        <button
+          id="addBtn"
+          onclick="openModal()"
+          class="addBtn"
+          data-intro="Add your tasks here!"
+        >
           Add Task
         </button>
 

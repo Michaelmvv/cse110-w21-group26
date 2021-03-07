@@ -13,6 +13,7 @@ class taskEntry extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `  
       <style>
+      
         .object {
           display: flex;
           align-items: center;
@@ -22,13 +23,14 @@ class taskEntry extends HTMLElement {
           height: 120px;
           margin: 10px;
         }
+        
         .object:hover {
           background-color: #f2f2f2;
         }
         .Name {
           padding: 20px;
           margin-right: 10px;
-          width: 60%;
+          width: 50%;
           max-width: 60%;
           text-align:left;
           overflow-x: hide;
@@ -39,23 +41,42 @@ class taskEntry extends HTMLElement {
         #downTask{
           transform: rotate(180deg);
         }
-        .move-btns{
+        .all-move-btns{
           padding-left:15px;
+          padding-right: 15px;
           width: 10%;
           max-width: 10%;
+          margin: 0px;
+          display: flex;
+          flex:2;
+        }
+        .move-btns{
+          width: 50%;
         }
         .move-btns button{
           background:none;
           outline: none;
           padding: 10px 0px 10px 0px;
           border: none;
-          display:flex;
         }
         .move-btns button svg{
           fill: #a3a3a3;
         }
         .move-btns button svg:hover{
           fill: #555;
+        }
+        #workTask{
+          background:none;
+          outline:none;
+          margin: 0px;
+          border:none;
+          padding:10px;
+        }
+        #workTask svg{
+          fill: #919191;
+        }
+        #workTask svg:hover{
+          fill: #444;
         }
         .taskNumber{
           width:20%;
@@ -95,32 +116,42 @@ class taskEntry extends HTMLElement {
         #removeTask svg:hover{
           fill: #555;
         }
+        .first{
+          border: 1px solid red;
+        }
+        
       </style>
-      <span>
-      <li class="object">
-        <div class="move-btns">
-          <button class="up-btn" title="Move up" onclick="" id="upTask">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-              height="50" viewBox="0 0 24 14" width="50" 
-              preserveAspectRatio="xMidYMid slice">
-              <path id="arrow" d="M0 0h24v24H0z" fill="none"/>
-              <path d="M7 14l5-5 5 5z"/>
-            </svg>
-          </button>
-          <button class="down-btn" title="Move down" onclick="" id="downTask">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-              height="50" viewBox="0 0 24 14" width="50" 
-              preserveAspectRatio="xMidYMid slice">
-              <path id="arrow" d="M0 0h24v24H0z" fill="none" transform="rotate(180)"/>
-              <path d="M7 14l5-5 5 5z"/>
-            </svg>
+      
+      <li id="element" class="object">
+        <div class="all-move-btns">
+          <div class="move-btns">
+            <button class="up-btn" title="Move up" onclick="" id="upTask">
+              <svg xmlns="images/arrow.svg" 
+                height="50" viewBox="0 0 24 14" width="50" 
+                preserveAspectRatio="xMidYMid slice">
+                <path id="arrow" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M7 14l5-5 5 5z"/>
+              </svg>
+            </button>
+            <button class="down-btn" title="Move down" onclick="" id="downTask">
+              <svg xmlns="images/arrow.svg" 
+                height="50" viewBox="0 0 24 14" width="50" 
+                preserveAspectRatio="xMidYMid slice">
+                <path id="arrow" d="M0 0h24v24H0z" fill="none" transform="rotate(180)"/>
+                <path d="M7 14l5-5 5 5z"/>
+              </svg>
+            </button>
+          </div>
+          <button onclick="" title="Work on This Task" id="workTask"> 
+          <svg xmlns="images/top.svg" height="70" viewBox="0 0 24 24" width="50">
+            <path d="M0 0h24v24H0z" fill="none"/><path d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z"/>
+          </svg>
           </button>
         </div>
         <p class="Name" id="name">Task Name</p>
         <form class="taskNumber" action="">
           <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1" onKeyDown="return false">
         </form>
-        <button onclick="" title="Work on This Task" id="workTask"> Work on This Task </button>
         <button onclick="" title="Move to Other List" id="moveToNewList">
           <svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 24 24" width="50">
             <path d="M0 0h24v24H0z" fill="none"/>
@@ -128,13 +159,12 @@ class taskEntry extends HTMLElement {
           </svg>
         </button>
         <button title="Delete" onclick="" id="removeTask">
-          <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 0 24 24" width="35">
+          <svg xmlns="images/delete.svg" height="35" viewBox="0 0 24 24" width="35">
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
           </svg>
         </button>
       </li>
-      </span>
       `;
     super();
     this.root = this.attachShadow({ mode: "open" });
@@ -167,6 +197,10 @@ class taskEntry extends HTMLElement {
       });
     }
     let buttonSwitch = this.root.getElementById("moveToNewList");
+    let temp = this.root.getElementById("moveToNewList").querySelector("svg");
+    if (description.done == true) {
+      temp.setAttribute("xmlns", "");
+    }
     buttonSwitch.addEventListener("click", function () {
       switchList(this, taskName.textContent);
     });
@@ -178,6 +212,9 @@ class taskEntry extends HTMLElement {
     buttonDown.addEventListener("click", function () {
       switchOrder(this, taskName.textContent, false);
     });
+    if (description.firstTask === true) {
+      this.root.getElementById("element").classList.add("first");
+    }
   }
 }
 
@@ -189,6 +226,7 @@ class taskEntry extends HTMLElement {
  *
  */
 function updateStorage(name, newCount) {
+  getCurrentTask();
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
       taskList[i].sessions = newCount;
@@ -211,9 +249,16 @@ function updateStorage(name, newCount) {
  * Return Current Working task, else return null
  */
 function getCurrentTask() {
+  let taskIndicator = document.getElementById("taskIndicator");
   if (taskList.length == 0) {
+    taskIndicator.textContent = "No Task Selected";
     return null;
   } else {
+    if (taskList[0].name.length >= 11) {
+      taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";
+    } else {
+      taskIndicator.textContent = taskList[0].name;
+    }
     return taskList[0].name;
   }
 }
@@ -242,6 +287,7 @@ function switchOrder(button, name, upDown) {
           taskList[i + 1] = current;
         }
       }
+      getCurrentTask();
       saveList();
       displayList();
       return;
@@ -327,6 +373,7 @@ function Task(name, sessionCount) {
   this.sessions = sessionCount;
   this.done = false;
   this.sessionTotal = 0;
+  this.firstTask = false;
 }
 
 /**
@@ -355,6 +402,7 @@ function switchList(button, name) {
       }
       taskListDone.push(taskList[i]);
       taskList.splice(i, 1);
+      getCurrentTask();
       saveList();
       displayList();
       return;
@@ -369,6 +417,7 @@ function switchList(button, name) {
       taskListDone[i].sessions = 1;
       taskList.push(taskListDone[i]);
       taskListDone.splice(i, 1);
+      getCurrentTask();
       saveList();
       displayListDone();
       return;
@@ -469,11 +518,8 @@ function saveList() {
  */
 function displayList() {
   // Some CSS related thingy
-  let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = "activeList";
-  let doneBtn = document.getElementById("done");
-  doneBtn.className = "";
-  updateColors();
+  document.getElementById("to-do").className = "activeList";
+  document.getElementById("done").className = "";
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
@@ -482,6 +528,8 @@ function displayList() {
     var currentTask = taskList[i];
     // currentTask.sessions = currentTask.originalSessions;
     let newTask = new taskEntry(); // So code factor is happy
+    currentTask.firstTask = i === 0;
+
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
   }
@@ -491,57 +539,19 @@ function displayList() {
  */
 function displayListDone() {
   // Some CSS related thingy
-  let doneBtn = document.getElementById("done");
-  doneBtn.className = "activeList";
-  let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = "";
-  updateColors();
+  document.getElementById("done").className = "activeList";
+  document.getElementById("to-do").className = "";
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
   taskFile.innerHTML = "";
   for (let i = 0; i < taskListDone.length; i++) {
     var currentTask = taskListDone[i];
+    currentTask.firstTask = false;
     currentTask.sessions = currentTask.sessionTotal;
     let newTask = new taskEntry();
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
-  }
-}
-
-/*Styling-related funtion for updating button colors*/
-function updateColors() {
-  let workSesh = document.getElementById("workTime");
-  let breakSesh = document.getElementById("shortBreak");
-  let longSesh = document.getElementById("longBreak");
-  let toDoBtn = document.getElementById("to-do");
-  let doneBtn = document.getElementById("done");
-  if (workSesh.className == "active") {
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#e97878";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#e97878";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-  }
-  if (breakSesh.className == "active") {
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#5883ce";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#5883ce";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-  }
-  if (longSesh.className == "active") {
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#2947b5";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#2947b5";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
   }
 }
 

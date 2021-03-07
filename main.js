@@ -1,4 +1,4 @@
-/* global taskEntry, getList, displayList, decrementTopTask */
+/* global getList, displayList, decrementTopTask, introJs, getCurrentTask */
 
 let endAt = 0;
 let countingDown = false;
@@ -43,12 +43,16 @@ window.onload = () => {
   document.getElementById("longBreak").addEventListener("click", setLongTime);
   document.getElementById("shortBreak").addEventListener("click", setShortTime);
 
+  document
+    .getElementById("tutorialBtn")
+    .addEventListener("click", startTutorial);
+
   if (window.localStorage.getItem("darkModeOn") !== null) {
     document.getElementById("darkMode").checked =
       window.localStorage.getItem("darkModeOn").charAt(0) == "t";
     darkMode();
   }
-
+  darkMode();
   if (window.localStorage.getItem("longInterval") !== null) {
     document.getElementById(
       "longBreakTimeInput"
@@ -130,6 +134,7 @@ window.onload = () => {
 
   getList();
   displayList();
+  getCurrentTask();
 };
 
 /**
@@ -172,6 +177,38 @@ function unloadChecker(e) {
   e.retunValue = test;
   return test;
 }
+/**
+ * Start the JS Intro
+ */
+
+function startTutorial() {
+  let dropMenu = document.getElementsByClassName("dropdown-content")[0];
+  introJs()
+    .onchange(function (targetElement) {
+      switch (this._currentStep - 1) {
+        case 0:
+          dropMenu.style.display = "block";
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          dropMenu.style.display = "";
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+      }
+      console.log("IntroJS Step: " + (this._currentStep + 1));
+    })
+    .start();
+}
 
 /**
  * Timer function that keeps track of time left until end - Under consturction
@@ -180,7 +217,7 @@ function updateTimerText() {
   // timerText = document.getElementById('timer'); /** Need a local variable for
   // testing */
   timerText.textContent = toHuman(endAt - Date.now()); // sets timer text on HTML page
-
+  getCurrentTask();
   // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
   updateCircle(ms, timerLength);
@@ -320,88 +357,23 @@ function stopTimer() {
  * @param {string} seshID
  */
 function seshClicked(seshID) {
-  document.querySelectorAll(".active").forEach(function (item) {
-    item.className = "";
-  });
-
   /* Changing color scheme of buttons depending on which button is clicked*/
   let session = document.getElementById(seshID);
-  let circle = document.getElementById("circleProgress");
-  let circlePointer = document.getElementById("pointerProgress");
-  let start = document.getElementById("StartButton");
-  let end = document.getElementById("StopButton");
-  let short = document.getElementById("shortBreak");
-  let long = document.getElementById("longBreak");
-  let work = document.getElementById("workTime");
-  // Task list Components
-  let toDoBtn = document.getElementById("to-do");
-  let doneBtn = document.getElementById("done");
-  let addTaskBtn = document.getElementById("addBtn");
-  let taskInput = document.getElementById("addTaskInput");
-  // Logo Components
-  let logoP1 = document.getElementById("logo-P1");
-  let logoP2 = document.getElementById("logo-P2");
-  let logoCircle = document.getElementById("logo-circle");
-
+  let logo = document.getElementById("logoSVG");
   session.className = "active";
   // hover effect need to address
   if (seshID == "shortBreak") {
-    long.className = "notShortbreak";
-    work.className = "notShortbreak";
-    start.className = "notShortbreak";
-    end.className = "notShortbreak";
-    addTaskBtn.style.backgroundColor = "#5883ce";
-    taskInput.style.borderColor = "#5883ce";
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#5883ce";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#5883ce";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-    logoP1.style.fill = "#5883ce";
-    logoP2.style.fill = "#5883ce";
-    logoCircle.style.fill = "#7D97BC";
-    circlePointer.className.baseVal = "shortCircle";
-    circle.className.baseVal = "shortCircle";
+    document.body.classList.add("shortBreak");
+    document.body.classList.remove("longBreak", "workTime");
+    logo.src = "images/logoShort.svg";
   } else if (seshID == "longBreak") {
-    short.className = "notLongbreak";
-    work.className = "notLongbreak";
-    start.className = "notLongbreak";
-    end.className = "notLongbreak";
-    addTaskBtn.style.backgroundColor = "#2947b5";
-    taskInput.style.borderColor = "#2947b5";
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#2947b5";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#2947b5";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-    logoP1.style.fill = "#2947b5";
-    logoP2.style.fill = "#2947b5";
-    logoCircle.style.fill = "#5C6DA8";
-    circlePointer.className.baseVal = "longCircle";
-    circle.className.baseVal = "longCircle";
+    document.body.classList.add("longBreak");
+    document.body.classList.remove("shortBreak", "workTime");
+    logo.src = "images/logoLong.svg";
   } else {
-    short.className = "notWork";
-    long.className = "notWork";
-    start.className = "notWork";
-    end.className = "notWork";
-    addTaskBtn.style.backgroundColor = "#e97878";
-    taskInput.style.borderColor = "#e97878";
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#e97878";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#e97878";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-    logoP1.style.fill = "#F14148";
-    logoP2.style.fill = "#F14148";
-    logoCircle.style.fill = "#F68D90";
-    circlePointer.className.baseVal = "workCircle";
-    circle.className.baseVal = "workCircle";
+    document.body.classList.add("workTime");
+    document.body.classList.remove("shortBreak", "longBreak");
+    logo.src = "images/logo.svg";
   }
 }
 
@@ -428,18 +400,12 @@ function updateCircle(val, time) {
  */
 function darkMode() {
   let dark = document.getElementById("darkMode");
-  let timerText = document.getElementById("timer");
-  let taskListBackground = document.getElementById("pomoList");
   let settingsLogo = document.getElementById("settingsLogo");
   if (dark.checked) {
-    document.body.style.backgroundColor = "#363636";
-    timerText.style.fill = "#c3c3c3";
-    taskListBackground.style.backgroundColor = "#c4c4c4";
+    document.body.classList.add("dark-mode");
     settingsLogo.setAttribute("fill", "#c3c3c3");
   } else {
-    document.body.style.backgroundColor = "#f2f2f2";
-    timerText.style.fill = "#363636";
-    taskListBackground.style.backgroundColor = "#ffffff";
+    document.body.classList.remove("dark-mode");
     settingsLogo.setAttribute("fill", "#444444");
   }
 }
