@@ -57,7 +57,14 @@ label {
   display: flex;
   justify-content: space-between;
   width: 95%;
+  margin: auto;
 }
+
+.settings-help{
+  display: flex;
+  align-items: center;
+}
+
 .setting {
   text-align: right;
   margin: 50px 10px 10px;
@@ -231,6 +238,22 @@ input:checked + .slider:before {
 
 /* ------------------------------------------- */
 /* IDs */
+#tutorialBtn{
+  background:none;
+  border: none;
+  outline: none;
+  padding: 0px 10px 0px 10px;
+  margin:50px 10px 10px;
+}
+
+#tutorialBtn svg{
+  fill: #555;
+}
+
+#tutorialBtn svg:hover{
+  fill: #333;
+  cursor: pointer;
+}
 
 #addTaskInput {
   width: 300px;
