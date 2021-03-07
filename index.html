@@ -8,20 +8,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
-    <link href="introjs.css" rel="stylesheet" />
     <link rel="preload" href="images/logoLong.svg" as="image" />
     <link rel="preload" href="images/logoShort.svg" as="image" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <script
+      async
       src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/intro.min.js"
       integrity="sha512-NC1GtvckWJQLUHrSQp5+4ydIv6gW8kfP4Ewrwv8Y1xU1h9GTTaXDTnWl+kjHcZNCaX8ySFNSpPmtt/B4SUaDsQ=="
       crossorigin="anonymous"
     ></script>
     <link
-      rel="stylesheet"
+      rel="preload"
       href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/introjs.min.css"
-      integrity="sha512-631ugrjzlQYCOP9P8BOLEMFspr5ooQwY3rgt8SMUa+QqtVMbY/tniEUOcABHDGjK50VExB4CNc61g5oopGqCEw=="
-      crossorigin="anonymous"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
   </head>
 
@@ -40,47 +40,56 @@
       </div>
       <!-- settings -->
       <div class="settings-help">
-      <button onclick="" class="tutorialBtn" id="tutorialBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="40" viewBox="0 0 24 24" width="40">
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8
-           3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
-        </svg>
-      </button>
-      <div
-        class="setting dropdown"
-        data-step="1"
-        data-intro="Here is the setting menu"
-        onmouseover="{
+        <button onclick="" class="tutorialBtn" id="tutorialBtn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            height="40"
+            viewBox="0 0 24 24"
+            width="40"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8
+           3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"
+            />
+          </svg>
+        </button>
+        <div
+          class="setting dropdown"
+          data-step="1"
+          data-intro="Here is the setting menu"
+          onmouseover="{
         let settingsLogo = document.getElementById('settingsLogo');
         settingsLogo.style.transition='transform 0.5s';
         settingsLogo.style.transform='rotate(-45deg)';
       }"
-        onmouseout="{
+          onmouseout="{
         let settingsLogo = document.getElementById('settingsLogo');
         settingsLogo.style.transition='transform 0.5s';
         settingsLogo.style.transform='rotate(45deg)';
       }"
-      >
-        <div>
-          <svg
-            version="1.1"
-            id="settingsLogo"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            x="0px"
-            y="0px"
-            height="30"
-            width="30"
-            viewBox="0 0 512 512"
-            style="enable-background: new 0 0 512 512"
-            xml:space="preserve"
-            fill="#444"
-          >
-            <g>
+        >
+          <div>
+            <svg
+              version="1.1"
+              id="settingsLogo"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              height="30"
+              width="30"
+              viewBox="0 0 512 512"
+              style="enable-background: new 0 0 512 512"
+              xml:space="preserve"
+              fill="#444"
+            >
               <g>
-                <path
-                  d="M500.6,212.6l-59.9-14.7c-3.3-10.5-7.5-20.7-12.6-30.6l30.6-51c3.6-6,2.7-13.5-2.1-18.3L414,55.4
+                <g>
+                  <path
+                    d="M500.6,212.6l-59.9-14.7c-3.3-10.5-7.5-20.7-12.6-30.6l30.6-51c3.6-6,2.7-13.5-2.1-18.3L414,55.4
 			c-4.8-4.8-12.3-5.7-18.3-2.1l-51,30.6c-9.9-5.1-20.1-9.3-30.6-12.6l-14.4-59.9C297.9,4.8,291.9,0,285,0h-60
 			c-6.9,0-12.9,4.8-14.7,11.4l-14.4,59.9c-10.5,3.3-20.7,7.5-30.6,12.6l-51-30.6c-6-3.6-13.5-2.7-18.3,2.1L53.4,98
 			c-4.8,4.8-5.7,12.3-2.1,18.3l30.6,51c-5.1,9.9-9.3,20.1-12.6,30.6l-57.9,14.7C4.8,214.1,0,220.1,0,227v60
@@ -90,79 +99,79 @@
 			c4.8-4.8,5.7-12.3,2.1-18.3l-30.6-51c5.1-9.9,9.3-20.1,12.6-30.6l59.9-14.7c6.6-1.5,11.4-7.5,11.4-14.4v-60
 			C512,220.1,507.2,214.1,500.6,212.6z M255,332c-41.4,0-75-33.6-75-75c0-41.4,33.6-75,75-75c41.4,0,75,33.6,75,75
 			C330,298.4,296.4,332,255,332z"
-                />
+                  />
+                </g>
               </g>
-            </g>
-          </svg>
-        </div>
-        <div
-          class="dropdown-content"
-          data-intro="Here is the setting menu where you can change the timer length"
-        >
-          <div class="dropdown-item">
-            <label for="workTimeInput">Work Time</label>
-            <input
-              class="settingLengthInput"
-              id="workTimeInput"
-              type="number"
-              value="25"
-              style="width: 60px"
-            /><span style="margin-left: 5px">min</span>
+            </svg>
           </div>
-
-          <div class="dropdown-item">
-            <label for="shortBreakTimeInput">Short Break</label>
-            <input
-              class="settingLengthInput"
-              id="shortBreakTimeInput"
-              type="number"
-              value="5"
-              style="width: 60px"
-            /><span style="margin-left: 5px">min</span>
-          </div>
-          <div class="dropdown-item">
-            <label for="longBreakTimeInput">Long Break</label>
-            <input
-              class="settingLengthInput"
-              id="longBreakTimeInput"
-              type="number"
-              value="15"
-            /><span style="margin-left: 5px">min</span>
-          </div>
-
-          <!-- volume controller, need to add js function -->
-          <div class="dropdown-item">
-            <label for="volume">Volume</label>
-            <input type="range" min="1" max="100" value="50" id="volume" />
-          </div>
-          <!-- darkmode and auto switch -->
-          <div class="dropdown-item">
-            <label for="darkMode"> Dark Mode</label>
-            <label
-              class="switch"
-              data-intro="Turn on Dark Mode for a new Color Scheme"
-            >
+          <div
+            class="dropdown-content"
+            data-intro="Here is the setting menu where you can change the timer length"
+          >
+            <div class="dropdown-item">
+              <label for="workTimeInput">Work Time</label>
               <input
-                type="checkbox"
-                class="hiddenCheckbox"
-                id="darkMode"
-                onclick="darkMode();"
-              />
-              <span class="slider round"></span>
-            </label>
-            <!-- auto switch need to add js functions -->
-            <label for="auto"> Auto</label>
-            <label
-              class="switch"
-              data-intro="Auto - Pomodoro Session will run by itself. Manual - Select each session yourself"
-            >
-              <input type="checkbox" id="autoSwitch" />
-              <span class="slider round"></span>
-            </label>
+                class="settingLengthInput"
+                id="workTimeInput"
+                type="number"
+                value="25"
+                style="width: 60px"
+              /><span style="margin-left: 5px">min</span>
+            </div>
+
+            <div class="dropdown-item">
+              <label for="shortBreakTimeInput">Short Break</label>
+              <input
+                class="settingLengthInput"
+                id="shortBreakTimeInput"
+                type="number"
+                value="5"
+                style="width: 60px"
+              /><span style="margin-left: 5px">min</span>
+            </div>
+            <div class="dropdown-item">
+              <label for="longBreakTimeInput">Long Break</label>
+              <input
+                class="settingLengthInput"
+                id="longBreakTimeInput"
+                type="number"
+                value="15"
+              /><span style="margin-left: 5px">min</span>
+            </div>
+
+            <!-- volume controller, need to add js function -->
+            <div class="dropdown-item">
+              <label for="volume">Volume</label>
+              <input type="range" min="1" max="100" value="50" id="volume" />
+            </div>
+            <!-- darkmode and auto switch -->
+            <div class="dropdown-item">
+              <label for="darkMode"> Dark Mode</label>
+              <label
+                class="switch"
+                data-intro="Turn on Dark Mode for a new Color Scheme"
+              >
+                <input
+                  type="checkbox"
+                  class="hiddenCheckbox"
+                  id="darkMode"
+                  onclick="darkMode();"
+                />
+                <span class="slider round"></span>
+              </label>
+              <!-- auto switch need to add js functions -->
+              <label for="auto"> Auto</label>
+              <label
+                class="switch"
+                data-intro="Auto - Pomodoro Session will run by itself. Manual - Select each session yourself"
+              >
+                <input type="checkbox" id="autoSwitch" />
+                <span class="slider round"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Will Be in settings Later -->
+        <!-- Will Be in settings Later -->
       </div>
     </div>
 
