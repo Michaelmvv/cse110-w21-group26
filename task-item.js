@@ -1,4 +1,4 @@
-/* global saveList, displayList, decrementTopTask, getList, introJs, getCurrentTask, removeTask, getTaskTutorial */
+/* global saveList, displayList, decrementTopTask, getList, introJs, getCurrentTask, removeTask, addTaskTutorial */
 /**Variable storing the list of tasks as a JSON object */
 let taskList = [];
 let taskListDone = [];
