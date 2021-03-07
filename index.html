@@ -8,20 +8,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
-    <link href="introjs.css" rel="stylesheet" />
     <link rel="preload" href="images/logoLong.svg" as="image" />
     <link rel="preload" href="images/logoShort.svg" as="image" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <script
+      async
       src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/intro.min.js"
       integrity="sha512-NC1GtvckWJQLUHrSQp5+4ydIv6gW8kfP4Ewrwv8Y1xU1h9GTTaXDTnWl+kjHcZNCaX8ySFNSpPmtt/B4SUaDsQ=="
       crossorigin="anonymous"
     ></script>
     <link
-      rel="stylesheet"
+      rel="preload"
       href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/introjs.min.css"
-      integrity="sha512-631ugrjzlQYCOP9P8BOLEMFspr5ooQwY3rgt8SMUa+QqtVMbY/tniEUOcABHDGjK50VExB4CNc61g5oopGqCEw=="
-      crossorigin="anonymous"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
   </head>
 
