@@ -14,14 +14,14 @@ describe("Test Work Timer Button", () => {
   });
 
   it("Testing work timer when work time input is 5, timer should display 05:00", () => {
-    //cy.get('#setting dropdown').trigger('mouseover');
-    //cy.get('#dropdown-content').should('be.visible');
-    //cy.get('#workTimeInput').invoke('value', 5);
+    cy.get("#workTimeInput")
+      .type("{selectall}{backspace}5", { force: true })
+      .trigger("change", { force: true });
     cy.get("#workTime").click().should("have.class", "active");
     cy.get("#workTimeInput").then(($el) => {
-      expect($el).to.have.value("25");
+      expect($el).to.have.value("5");
     });
-    cy.get("#timer").contains("25:00");
+    cy.get("#timer").contains("05:00");
   });
 
   it("When work timer is clicked, check if work timer is dark pink", () => {
@@ -36,14 +36,14 @@ describe("Test Work Timer Button", () => {
   it("When work timer is clicked, check if short break changes to light pink", () => {
     cy.get("#workTime").click().should("have.class", "active");
     cy.get("#shortBreak").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(233, 121, 121)");
+      expect($el).to.have.css("background-color", "rgb(233, 120, 120)");
     });
   });
 
   it("When work timer is clicked, check if long break changes to light pink", () => {
     cy.get("#workTime").click().should("have.class", "active");
     cy.get("#longBreak").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(233, 121, 121)");
+      expect($el).to.have.css("background-color", "rgb(233, 120, 120)");
     });
   });
 
@@ -51,7 +51,7 @@ describe("Test Work Timer Button", () => {
     cy.get("#workTime").click().should("have.class", "active");
 
     cy.get("#StartButton").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(233, 121, 121)");
+      expect($el).to.have.css("background-color", "rgb(233, 120, 120)");
     });
   });
 
@@ -59,24 +59,13 @@ describe("Test Work Timer Button", () => {
     cy.get("#workTime").click().should("have.class", "active");
 
     cy.get("#StopButton").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(233, 121, 121)");
+      expect($el).to.have.css("background-color", "rgb(233, 120, 120)");
     });
   });
 
   it("When work timer is clicked, check if logo changes to default pink color", () => {
     cy.get("#workTime").click().should("have.class", "active");
-
-    cy.get("#logo-P1").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(241, 65, 72)");
-    });
-
-    cy.get("#logo-P2").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(241, 65, 72)");
-    });
-
-    cy.get("#logo-circle").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(246, 141, 144)");
-    });
+    cy.get("#logoSVG").should("have.attr", "src", "images/logo.svg");
   });
 
   it("When work timer is clicked, check if task list tab and add button changes to light pink color", () => {
@@ -145,18 +134,7 @@ describe("Test Long Break Button", () => {
 
   it("When Long Break is clicked, check if logo changes to light blue color", () => {
     cy.get("#longBreak").click().should("have.class", "active");
-
-    cy.get("#logo-P1").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(41, 71, 181)");
-    });
-
-    cy.get("#logo-P2").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(41, 71, 181)");
-    });
-
-    cy.get("#logo-circle").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(92, 109, 168)");
-    });
+    cy.get("#logoSVG").should("have.attr", "src", "images/logoLong.svg");
   });
 
   it("When Long Break is clicked, check if task list tab and add button changes to light pink color", () => {
@@ -223,17 +201,7 @@ describe("Test Short Break Button", () => {
   it("When Short Break is clicked, check if logo changes to light blue color", () => {
     cy.get("#shortBreak").click().should("have.class", "active");
 
-    cy.get("#logo-P1").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(88, 131, 206)");
-    });
-
-    cy.get("#logo-P2").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(88, 131, 206)");
-    });
-
-    cy.get("#logo-circle").should(($el) => {
-      expect($el).to.not.have.css("background-color", "rgb(125, 151, 188)");
-    });
+    cy.get("#logoSVG").should("have.attr", "src", "images/logoShort.svg");
   });
 
   it("When Short Break is clicked, check if task list tab and add button changes to light blue color", () => {
