@@ -469,11 +469,8 @@ function saveList() {
  */
 function displayList() {
   // Some CSS related thingy
-  let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = "activeList";
-  let doneBtn = document.getElementById("done");
-  doneBtn.className = "";
-  updateColors();
+  document.getElementById("to-do").className = "activeList";
+  document.getElementById("done").className = "";
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
@@ -491,11 +488,8 @@ function displayList() {
  */
 function displayListDone() {
   // Some CSS related thingy
-  let doneBtn = document.getElementById("done");
-  doneBtn.className = "activeList";
-  let toDoBtn = document.getElementById("to-do");
-  toDoBtn.className = "";
-  updateColors();
+  document.getElementById("done").className = "activeList";
+  document.getElementById("to-do").className = "";
   // End of CSS
   var taskFile = document.getElementById("tasks");
   // console.log(taskList);
@@ -506,42 +500,6 @@ function displayListDone() {
     let newTask = new taskEntry();
     newTask.syncName(currentTask);
     taskFile.appendChild(newTask);
-  }
-}
-
-/*Styling-related funtion for updating button colors*/
-function updateColors() {
-  let workSesh = document.getElementById("workTime");
-  let breakSesh = document.getElementById("shortBreak");
-  let longSesh = document.getElementById("longBreak");
-  let toDoBtn = document.getElementById("to-do");
-  let doneBtn = document.getElementById("done");
-  if (workSesh.className == "active") {
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#e97878";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#e97878";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-  }
-  if (breakSesh.className == "active") {
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#5883ce";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#5883ce";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
-  }
-  if (longSesh.className == "active") {
-    if (toDoBtn.className == "activeList") {
-      toDoBtn.style.backgroundColor = "#2947b5";
-      doneBtn.style.backgroundColor = "#ccc";
-    } else {
-      doneBtn.style.backgroundColor = "#2947b5";
-      toDoBtn.style.backgroundColor = "#ccc";
-    }
   }
 }
 
