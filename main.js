@@ -1,4 +1,4 @@
-/* global taskEntry, getList, displayList, decrementTopTask */
+/* global getList, displayList, decrementTopTask, introJs, getCurrentTask */
 
 let endAt = 0;
 let countingDown = false;
