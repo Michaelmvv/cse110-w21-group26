@@ -71,7 +71,7 @@
         settingsLogo.style.transform='rotate(45deg)';
       }"
         >
-          <div>
+          <div class="settings-tool">
             <svg
               version="1.1"
               id="settingsLogo"
@@ -114,6 +114,8 @@
                 class="settingLengthInput"
                 id="workTimeInput"
                 type="number"
+                min="1"
+                step="1"
                 value="25"
                 style="width: 60px"
               /><span style="margin-left: 5px">min</span>
@@ -125,8 +127,11 @@
                 class="settingLengthInput"
                 id="shortBreakTimeInput"
                 type="number"
+                min="1"
+                step="1"
                 value="5"
                 style="width: 60px"
+                pattern="^([1-9]|10)$"
               /><span style="margin-left: 5px">min</span>
             </div>
             <div class="dropdown-item">
@@ -135,14 +140,17 @@
                 class="settingLengthInput"
                 id="longBreakTimeInput"
                 type="number"
+                min="1"
+                step="1"
                 value="15"
+                pattern="^([1-9]|10)$"
               /><span style="margin-left: 5px">min</span>
             </div>
 
             <!-- volume controller, need to add js function -->
             <div class="dropdown-item">
               <label for="volume">Volume</label>
-              <input type="range" min="1" max="100" value="50" id="volume" />
+              <input type="range" min="0" max="100" value="50" id="volume" />
             </div>
             <!-- darkmode and auto switch -->
             <div class="dropdown-item">
@@ -160,12 +168,16 @@
                 <span class="slider round"></span>
               </label>
               <!-- auto switch need to add js functions -->
-              <label for="auto"> Auto</label>
+              <label for="manual"> Manual</label>
               <label
                 class="switch"
                 data-intro="Auto Mode is when the pomodoro timer will run by itself. Turn it off (Manual) to select each session yourself!"
               >
-                <input type="checkbox" id="autoSwitch" />
+                <input
+                  type="checkbox"
+                  id="autoSwitch"
+                  onclick="autoSwitch();"
+                />
                 <span class="slider round"></span>
               </label>
             </div>
@@ -175,6 +187,10 @@
       </div>
     </div>
 
+    <div class="currentSessionAuto">
+      <text id="autoText">Automatic Mode: </text>
+      <text id="autoText">Work Session</text>
+    </div>
     <!-- session switch section -->
     <div class="sessions">
       <button id="workTime" class="active" onclick="seshClicked(this.id)">
@@ -188,6 +204,7 @@
         Long Break
       </button>
     </div>
+
     <!-- <div style="margin: auto; width: 50%; padding: 10px; text-align: center">
       <text
         text-anchor="middle"
@@ -290,10 +307,11 @@
                 id="sessionNumber"
                 name="sessionNumber"
                 type="number"
+                step="1"
                 min="1"
                 max="10"
                 value="1"
-                onKeyDown="return false"
+                pattern="^([1-9]|10)$"
               />
             </div>
             <button onclick="addTask()" class="addTaskBtn">Create Task</button>
