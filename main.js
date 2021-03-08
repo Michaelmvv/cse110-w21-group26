@@ -463,15 +463,15 @@ function updateCircle(val, time) {
 function darkMode() {
   let dark = document.getElementById("darkMode");
   let settingsLogo = document.getElementById("settingsLogo");
-  let helperBtn = document.getElementById('helperBtn');
+  let helperBtn = document.getElementById("helperBtn");
   if (dark.checked) {
     document.body.classList.add("dark-mode");
     settingsLogo.setAttribute("fill", "#c3c3c3");
-    helperBtn.setAttribute('fill', "#c3c3c3");
+    helperBtn.setAttribute("fill", "#c3c3c3");
   } else {
     document.body.classList.remove("dark-mode");
     settingsLogo.setAttribute("fill", "#444444");
-    helperBtn.setAttribute('fill', "#444");
+    helperBtn.setAttribute("fill", "#444");
   }
 }
 
