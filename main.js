@@ -1,4 +1,4 @@
-/* global getList, displayList, decrementTopTask, introJs, getCurrentTask, removeTask, addTaskTutorial */
+/* global getList, displayList, decrementTopTask, displayListDone, introJs, getCurrentTask, removeTask, addTaskTutorial */
 
 let endAt = 0;
 let countingDown = false;
