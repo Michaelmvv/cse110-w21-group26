@@ -1,8 +1,12 @@
 /* eslint-disable no-undef */
 describe("Test Work Timer Button", () => {
   beforeEach(() => {
-    cy.visit("index.html"); //TAKE OUT LOCALHOST BEFORE FINAL SUBMISSION!
-    //cy.visit('/index.html');
+    cy.visit("index.html");
+
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
   });
 
   it("When work timer is clicked with default (input of 25), check if timer display updates to 25:00 correctly", () => {
@@ -87,6 +91,10 @@ describe("Test Work Timer Button", () => {
 describe("Test Long Break Button", () => {
   beforeEach(() => {
     cy.visit("index.html");
+    //switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
   });
 
   it("When Long Break is clicked with input of 15, check if timer display updates to 15:00 correctly", () => {
@@ -156,6 +164,10 @@ describe("Test Long Break Button", () => {
 describe("Test Short Break Button", () => {
   beforeEach(() => {
     cy.visit("index.html");
+    //switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
   });
 
   it("When Short Break is clicked with input of 5, check if timer display updates to 05:00 correctly", () => {
