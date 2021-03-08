@@ -1,4 +1,6 @@
 {
   "defaultCommandTimeout": 1000,
-  "includeShadowDom": true
+  "includeShadowDom": true,
+  "video": false,
+  "screenshotOnRunFailure": false
 }
