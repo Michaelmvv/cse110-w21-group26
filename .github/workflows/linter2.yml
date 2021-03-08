@@ -2,10 +2,10 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   pull_request:
-    branches: [ github-pages ]
+    branches: [github-pages]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,11 +20,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.4
         with:
-          node-version: '12'
+          node-version: "12"
       - run: npm install
       - run: npx eslint . --ext .js,.jsx,.ts,.tsx
+      - run: npx cypress run
       #- run: npx jest
