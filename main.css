@@ -9,7 +9,11 @@ html * {
 
 head,
 body {
-  background: #f2f2f2;
+  background: radial-gradient(
+    closest-side at 50% 50%,
+    rgba(255, 255, 255),
+    rgba(150, 150, 150, 0.15)
+  );
   /* width: 85%; */
 }
 
@@ -17,12 +21,21 @@ body.dark-mode {
   background: #363636;
 }
 body.dark-mode #pomoList {
-  background: #c4c4c4;
+  background: #464646;
 }
+body.dark-mode .task-list {
+  background: #464646;
+}
+
+/*
+body.dark-mode #tasks>*::part(.object){
+  background: red;
+}
+*/
 
 h2 {
   margin-top: 50px;
-  font-size: 20px;
+  font-size: 25px;
 }
 button {
   background-color: #e97878;
@@ -35,18 +48,12 @@ button {
   display: inline-block;
   /* font-size: 10; */
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 20px;
   padding: 15px 10px;
   margin: 4% 9%;
 }
 
-/* button:hover {
-  background-color: #c96567;
-} */
 
-/* button.active {
-  background-color: #c96567;
-} */
 
 label {
   margin: 0 10px;
@@ -60,7 +67,7 @@ label {
   margin: auto;
 }
 
-.settings-help{
+.settings-help {
   display: flex;
   align-items: center;
 }
@@ -70,13 +77,14 @@ label {
   margin: 50px 10px 10px;
 }
 
-.settings-tool{
+.settings-tool {
   padding: 10px;
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
+  padding: 5px;
 }
 .dropdown-content {
   display: none;
@@ -109,13 +117,6 @@ label {
   margin: 10px;
 }
 
-.currentSessionAuto{
-  font-size: 20px;
-  text-align: center;
-  margin: 0 auto;
-  padding: 10px;
-}
-
 .sessions {
   /* text-align: center; */
   /* position: static; */
@@ -144,8 +145,13 @@ label {
 }
 .addBtn {
   align-content: center;
-  margin: 5px;
-}documntgeElementById("utoSwich")
+  margin: 1% 0 0;
+}
+
+.clearBtn {
+  align-content: center;
+  margin: 1% 0 0;
+}
 
 .addTaskBtn {
   align-content: center;
@@ -252,19 +258,19 @@ input:checked + .slider:before {
 
 /* ------------------------------------------- */
 /* IDs */
-#tutorialBtn{
-  background:none;
+#tutorialBtn {
+  background: none;
   border: none;
   outline: none;
   padding: 0 10px;
-  margin:50px 10px 10px;
+  margin: 50px 10px 10px;
 }
 
-#tutorialBtn svg{
+/* #tutorialBtn svg {
   fill: #555;
-}
+} */
 
-#tutorialBtn svg:hover{
+#tutorialBtn svg:hover {
   fill: #333;
   cursor: pointer;
 }
@@ -275,6 +281,13 @@ input:checked + .slider:before {
   border-radius: 5px;
   border-style: groove;
   border-color: #e97979;
+}
+
+#currentSessionAuto {
+  font-size: 20px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 15px;
 }
 
 #StartButton {
@@ -309,19 +322,7 @@ input:checked + .slider:before {
   position: relative;
 }
 
-/*
-#btn-overlay:hover{
-  position: absolute;
-  padding: 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  opacity: 0.5;
-  transition: opacity .5s;
-}
-*/
+
 #longBreak {
   /* flex: 1 1 auto; */
   width: 5%;
@@ -374,6 +375,7 @@ body.dark-mode text {
   text-align: center;
   overflow-y: scroll;
   height: 80%;
+  margin: 20px 20px 5px;
 }
 #taskIndicator {
   padding: 10px;
@@ -390,7 +392,7 @@ body.dark-mode text {
 .taskTabs {
   overflow: hidden;
   text-align: center;
-  background-color: #ccc;
+  background-color: #bbb;
   display: flex;
   border-radius: 5px 5px 0 0;
 }
@@ -549,8 +551,9 @@ body.workTime #pointerProgress {
   stroke: #e97979;
 }
 /* TASK LIST STUFFs */
+
 body .taskTabs button {
-  background-color: #ccc;
+  background-color: #bbb;
 }
 
 body.shortBreak .taskTabs button.activeList {

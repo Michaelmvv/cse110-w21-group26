@@ -386,13 +386,14 @@ function stopTimer() {
   timerText.textContent = "Stopped!";
 
   if (manualSwitch.checked) {
-    document.getElementById("StartButton").style.display = "none";
+    document.getElementById("StartButton").style.display = "";
   } else {
     document.getElementById("StartButton").innerText = "Start Timer";
     document.getElementById("StartButton").style.display = "";
   }
 
   document.getElementById("StopButton").style.display = "none";
+
   sessionCountDown = sessionsBeforeLongBreak;
 }
 
@@ -462,12 +463,15 @@ function updateCircle(val, time) {
 function darkMode() {
   let dark = document.getElementById("darkMode");
   let settingsLogo = document.getElementById("settingsLogo");
+  let helperBtn = document.getElementById("helperBtn");
   if (dark.checked) {
     document.body.classList.add("dark-mode");
     settingsLogo.setAttribute("fill", "#c3c3c3");
+    helperBtn.setAttribute("fill", "#c3c3c3");
   } else {
     document.body.classList.remove("dark-mode");
     settingsLogo.setAttribute("fill", "#444444");
+    helperBtn.setAttribute("fill", "#444");
   }
 }
 
@@ -482,7 +486,7 @@ function autoSwitch() {
   let shortBreakButton = document.getElementById("longBreak");
   let longBreakButton = document.getElementById("shortBreak");
   let startButton = document.getElementById("StartButton");
-  let autoText = document.getElementById("autoText");
+  let autoText = document.getElementById("currentSessionAuto");
   if (manualSwitch.checked) {
     //hide start button
     startButton.style.display = "none";
@@ -497,7 +501,7 @@ function autoSwitch() {
     shortBreakButton.style.display = "none";
     longBreakButton.style.display = "none";
 
-    startButton.style.display = "block";
+    // startButton.style.display = "block";
     autoText.style.display = "block";
   }
 }
