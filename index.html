@@ -48,6 +48,8 @@
             height="40"
             viewBox="0 0 24 24"
             width="40"
+            id="helperBtn"
+            fill="#444"
           >
             <path d="M0 0h24v24H0z" fill="none" />
             <path
@@ -62,12 +64,12 @@
           data-intro="Here is the setting menu"
           onmouseover="{
         let settingsLogo = document.getElementById('settingsLogo');
-        settingsLogo.style.transition='transform 0.5s';
+        settingsLogo.style.transition='transform 0.15s';
         settingsLogo.style.transform='rotate(-45deg)';
       }"
           onmouseout="{
         let settingsLogo = document.getElementById('settingsLogo');
-        settingsLogo.style.transition='transform 0.5s';
+        settingsLogo.style.transition='transform 0.15s';
         settingsLogo.style.transform='rotate(45deg)';
       }"
         >
@@ -187,8 +189,8 @@
       </div>
     </div>
 
-    <div class="currentSessionAuto">
-      <text id="autoText">Automatic Mode: </text>
+    <div id="currentSessionAuto">
+      <text id="modeText">Automatic Mode: </text>
       <text id="autoText">Work Session</text>
     </div>
     <!-- session switch section -->
@@ -291,6 +293,14 @@
         >
           Add Task
         </button>
+        <button
+        id="clearBtn"
+        onclick=""
+        class="clearBtn"
+        data-intro="Clear all finished tasks!"
+      >
+        Clear
+      </button>
 
         <div id="addModal" class="modal">
           <div class="modal-content">

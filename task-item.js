@@ -14,11 +14,10 @@ class taskEntry extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `  
       <style>
-      
         .object {
           display: flex;
           align-items: center;
-          border: 1px solid #8a8a8a;
+          border: 1.5px solid #8a8a8a;
           border-radius: 10px;
           width: 98%;
           height: 120px;
@@ -118,7 +117,7 @@ class taskEntry extends HTMLElement {
           fill: #555;
         }
         .first{
-          border: 1px solid red;
+          border: 1.5px solid #e97878;
         }
         
       </style>
@@ -169,6 +168,9 @@ class taskEntry extends HTMLElement {
       `;
     super();
     this.root = this.attachShadow({ mode: "open" });
+    /*var bgStyle = document.createElement( 'bgStyle' );
+    bgStyle.textContent = ':host(.object){background: #ddd;}';
+    this.root.appendChild(bgStyle);*/
     this.root.appendChild(template.content.cloneNode(true));
   }
   /**
@@ -309,7 +311,7 @@ function updateStorage(originalName, name, newCount) {
 function getCurrentTask() {
   let taskIndicator = document.getElementById("taskIndicator");
   if (taskList.length == 0) {
-    taskIndicator.textContent = "No Task Selected";
+    taskIndicator.textContent = "";
     return null;
   } else {
     if (taskList[0].name.length >= 11) {
@@ -595,6 +597,10 @@ function displayList() {
   // Some CSS related thingy
   document.getElementById("to-do").className = "activeList";
   document.getElementById("done").className = "";
+  let addTask = document.getElementById("addBtn");
+  let clearTask = document.getElementById('clearBtn')
+  addTask.style.display = "initial";
+  clearTask.style.display = "none";
   listTracker = true;
   getCurrentTask();
   // End of CSS
@@ -618,6 +624,10 @@ function displayListDone() {
   // Some CSS related thingy
   document.getElementById("done").className = "activeList";
   document.getElementById("to-do").className = "";
+  let addTask = document.getElementById("addBtn");
+  let clearTask = document.getElementById('clearBtn')
+  addTask.style.display = "none";
+  clearTask.style.display = "initial";
   listTracker = false;
   getCurrentTask();
   // End of CSS
@@ -633,5 +643,6 @@ function displayListDone() {
     taskFile.appendChild(newTask);
   }
 }
+
 
 customElements.define("task-item", taskEntry);
