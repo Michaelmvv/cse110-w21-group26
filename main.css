@@ -70,6 +70,10 @@ label {
   margin: 50px 10px 10px;
 }
 
+.settings-tool{
+  padding: 10px;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -91,6 +95,9 @@ label {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+/* .show {
+  display: block;
+} */
 
 .dropdown-item {
   display: flex;
@@ -100,6 +107,13 @@ label {
 
 .logo {
   margin: 10px;
+}
+
+.currentSessionAuto{
+  font-size: 20px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px;
 }
 
 .sessions {
@@ -131,7 +145,7 @@ label {
 .addBtn {
   align-content: center;
   margin: 5px;
-}
+}documntgeElementById("utoSwich")
 
 .addTaskBtn {
   align-content: center;
