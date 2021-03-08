@@ -87,7 +87,7 @@ window.onload = () => {
 
   document
     .getElementById("longBreakTimeInput")
-    .addEventListener("change", function () {
+    .addEventListener("change", function (e) {
       if (e.target.value == 0) {
         e.target.value = window.localStorage.getItem("longInterval");
       }
@@ -96,7 +96,7 @@ window.onload = () => {
     });
   document
     .getElementById("shortBreakTimeInput")
-    .addEventListener("change", function () {
+    .addEventListener("change", function (e) {
       if (e.target.value == 0) {
         e.target.value = window.localStorage.getItem("shortInterval");
       }
