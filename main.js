@@ -88,38 +88,29 @@ window.onload = () => {
   document
     .getElementById("longBreakTimeInput")
     .addEventListener("change", function () {
-      if (e.target.value == 0){
+      if (e.target.value == 0) {
         e.target.value = window.localStorage.getItem("longInterval");
       }
       e.target.value = Math.floor(e.target.value);
-      window.localStorage.setItem(
-        "longInterval",
-        e.target.value
-      );
+      window.localStorage.setItem("longInterval", e.target.value);
     });
   document
     .getElementById("shortBreakTimeInput")
     .addEventListener("change", function () {
-      if (e.target.value == 0){
+      if (e.target.value == 0) {
         e.target.value = window.localStorage.getItem("shortInterval");
       }
       e.target.value = Math.floor(e.target.value);
-      window.localStorage.setItem(
-        "shortInterval",
-        e.target.value
-      );
+      window.localStorage.setItem("shortInterval", e.target.value);
     });
   document
     .getElementById("workTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0){
+      if (e.target.value == 0) {
         e.target.value = window.localStorage.getItem("workInterval");
       }
       e.target.value = Math.floor(e.target.value);
-      window.localStorage.setItem(
-        "workInterval",
-        e.target.value
-      );
+      window.localStorage.setItem("workInterval", e.target.value);
     });
 
   document.getElementById("volume").addEventListener("change", function () {
@@ -136,7 +127,7 @@ window.onload = () => {
       document.getElementById("darkMode").checked
     );
   });
-  
+
   document.getElementById("autoSwitch").addEventListener("click", function () {
     window.localStorage.setItem(
       "autoOn",
@@ -237,7 +228,7 @@ function updateTimerText() {
   // testing */
   let autoText = document.getElementById("autoText");
   timerText.textContent = toHuman(endAt - Date.now()); // sets timer text on HTML page
-  document.title = autoText.innerText + " "+ toHuman(endAt - Date.now());
+  document.title = autoText.innerText + " " + toHuman(endAt - Date.now());
   getCurrentTask();
   // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
@@ -313,32 +304,28 @@ function updateSession() {
   // can just be an else statement
   else if (sessionCountDown === 0) {
     manualSwitch = document.getElementById("autoSwitch");
-    if(manualSwitch.checked){
+    if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
-    }
-    else{
+    } else {
       sessionCountDown = sessionsBeforeLongBreak;
     }
-    
+
     manualSwitch = document.getElementById("autoSwitch");
-    if(manualSwitch.checked){
+    if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
-    }
-    else{
+    } else {
       sessionCountDown = sessionsBeforeLongBreak;
     }
-    
+
     manualSwitch = document.getElementById("autoSwitch");
-    if(manualSwitch.checked){
+    if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
-    }
-    else{
+    } else {
       sessionCountDown = sessionsBeforeLongBreak;
     }
-    
   }
 
   update();
@@ -390,14 +377,13 @@ function stopTimer() {
   manualSwitch = document.getElementById("autoSwitch");
   timerText.textContent = "Stopped!";
 
-  if(manualSwitch.checked){
+  if (manualSwitch.checked) {
     document.getElementById("StartButton").style.display = "none";
-  }
-  else{
+  } else {
     document.getElementById("StartButton").innerText = "Start Timer";
     document.getElementById("StartButton").style.display = "";
   }
-  
+
   document.getElementById("StopButton").style.display = "none";
   sessionCountDown = sessionsBeforeLongBreak;
 }
@@ -422,7 +408,7 @@ function seshClicked(seshID) {
     document.body.classList.remove("longBreak", "workTime");
     logo.src = "images/logoShort.svg";
     autoText.innerText = "Short Break";
-    sound.src="End Work Alarm.mp3";
+    sound.src = "End Work Alarm.mp3";
     sound.load();
     sound.play();
   } else if (seshID == "longBreak") {
@@ -430,7 +416,7 @@ function seshClicked(seshID) {
     document.body.classList.remove("shortBreak", "workTime");
     logo.src = "images/logoLong.svg";
     autoText.innerText = "Long Break";
-    sound.src="End Work Alarm.mp3";
+    sound.src = "End Work Alarm.mp3";
     sound.load();
     sound.play();
   } else {
@@ -438,7 +424,7 @@ function seshClicked(seshID) {
     document.body.classList.remove("shortBreak", "longBreak");
     logo.src = "images/logo.svg";
     autoText.innerText = "Work Time";
-    sound.src="End Break Alarm.mp3";
+    sound.src = "End Break Alarm.mp3";
     sound.load();
     sound.play();
   }
@@ -477,7 +463,6 @@ function darkMode() {
   }
 }
 
-
 /**
  * the automatic function from the settings
  * it controls the visibility of sessions button
@@ -498,8 +483,7 @@ function autoSwitch() {
     workTimerButton.style.display = "block";
     shortBreakButton.style.display = "block";
     longBreakButton.style.display = "block";
-  }
-  else{
+  } else {
     //hide top buttons
     workTimerButton.style.display = "none";
     shortBreakButton.style.display = "none";
