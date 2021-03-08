@@ -393,7 +393,7 @@ function stopTimer() {
   }
 
   document.getElementById("StopButton").style.display = "none";
-  
+
   sessionCountDown = sessionsBeforeLongBreak;
 }
 

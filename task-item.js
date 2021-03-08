@@ -598,7 +598,7 @@ function displayList() {
   document.getElementById("to-do").className = "activeList";
   document.getElementById("done").className = "";
   let addTask = document.getElementById("addBtn");
-  let clearTask = document.getElementById('clearBtn')
+  let clearTask = document.getElementById("clearBtn");
   addTask.style.display = "initial";
   clearTask.style.display = "none";
   listTracker = true;
@@ -625,7 +625,7 @@ function displayListDone() {
   document.getElementById("done").className = "activeList";
   document.getElementById("to-do").className = "";
   let addTask = document.getElementById("addBtn");
-  let clearTask = document.getElementById('clearBtn')
+  let clearTask = document.getElementById("clearBtn");
   addTask.style.display = "none";
   clearTask.style.display = "initial";
   listTracker = false;
@@ -643,6 +643,5 @@ function displayListDone() {
     taskFile.appendChild(newTask);
   }
 }
-
 
 customElements.define("task-item", taskEntry);
