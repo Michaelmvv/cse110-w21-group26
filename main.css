@@ -375,7 +375,7 @@ body.dark-mode text {
   text-align: center;
   overflow-y: scroll;
   height: 80%;
-  margin: 20px 20px 5px 20px;
+  margin: 20px 20px 5px;
 }
 #taskIndicator {
   padding: 10px;
