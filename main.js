@@ -198,12 +198,13 @@ function startTutorial() {
           dropMenu.style.display = "block";
           break;
         case 1:
+          addTaskTutorial();
+          getCurrentTask();
           break;
         case 2:
           break;
         case 3:
           dropMenu.style.display = "";
-          console.log("DOING");
           break;
         case 4:
           break;
@@ -214,8 +215,11 @@ function startTutorial() {
         case 7:
           break;
         case 8:
-          addTaskTutorial();
-          // displayList();
+          displayListDone();
+          //displayList();
+          break;
+        case 9:
+          displayList();
           break;
       }
       console.log("IntroJS Step: " + this._currentStep);

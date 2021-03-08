@@ -306,7 +306,7 @@ function updateStorage(originalName, name, newCount) {
 }
 
 /**
- * Return Current Working task, else return null
+ * Return Current Working task and update text on screen, else return null
  */
 function getCurrentTask() {
   let taskIndicator = document.getElementById("taskIndicator");
@@ -397,7 +397,7 @@ function workOnThisButton(button, name) {
 }
 
 /**
- * Decrememnt the Top Task Pomo Sessions left
+ * Decrememnt the Top Task Pomodoro Sessions left, move to done list if necessary
  */
 function decrementTopTask() {
   if (taskList.length != 0) {
@@ -563,6 +563,15 @@ function addTask() {
   // // close the modal upon creation
   // let modal = document.getElementById("addModal");
   // modal.style.display = "none";
+}
+
+/**
+ * Clear the done list and remove all tasks
+ */
+function clearDoneList() {
+  taskListDone = [];
+  saveList();
+  displayListDone();
 }
 
 /**
