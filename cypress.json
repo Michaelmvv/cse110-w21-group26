@@ -1,1 +1,4 @@
-{}
+{
+  "defaultCommandTimeout": 1000,
+  "includeShadowDom": true
+}
