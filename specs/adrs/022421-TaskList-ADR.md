@@ -2,9 +2,13 @@
 
 * Status: [accepted]
 * Deciders: [Everyone] <!-- optional -->
-* Date: [2021-02-24] <!-- optional -->
+* Date: [2021-02-24] Updated: [2021-03-07]<!-- optional -->
 
 Technical Story: [We need to know how exactly our task list will work] <!-- optional -->
+
+## Updated Decision
+
+* Instead of having a pop modal to insert the task, implement a input type so allow for more name changes consistently. In this, when adding a new task, it adds a default task with the text "Enter Task".
 
 ## Context and Problem Statement
 
