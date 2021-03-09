@@ -88,8 +88,15 @@ window.onload = () => {
   document
     .getElementById("longBreakTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0) {
-        e.target.value = window.localStorage.getItem("longInterval");
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("longInterval") === null) {
+          e.target.value = 15;
+        } else {
+          e.target.value = window.localStorage.getItem("longInterval");
+        }
+      }
+      else if (e.target.value > 60) {
+        e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("longInterval", e.target.value);
@@ -97,8 +104,16 @@ window.onload = () => {
   document
     .getElementById("shortBreakTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0) {
-        e.target.value = window.localStorage.getItem("shortInterval");
+
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("shortInterval") === null) {
+          e.target.value = 5;
+        } else {
+          e.target.value = window.localStorage.getItem("shortInterval");
+        }
+      }
+      else if (e.target.value > 60) {
+        e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("shortInterval", e.target.value);
@@ -106,8 +121,16 @@ window.onload = () => {
   document
     .getElementById("workTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0) {
-        e.target.value = window.localStorage.getItem("workInterval");
+
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("workInterval") === null) {
+          e.target.value = 25;
+        } else {
+          e.target.value = window.localStorage.getItem("workInterval");
+        }
+      }
+      else if (e.target.value > 60) {
+        e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("workInterval", e.target.value);
