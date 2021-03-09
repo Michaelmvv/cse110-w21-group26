@@ -359,7 +359,7 @@ function getCurrentTask() {
   } else {
     seshLeft.textContent =
       taskList[0].sessions + "/" + localStorage.getItem("numWorkInput");
-    console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
+    // console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
     if (taskList[0].name.length >= 11) {
       taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";
     } else {

@@ -350,6 +350,9 @@ function updateTimerText() {
 function update() {
   if (countingDown) {
     if (Date.now() < endAt) {
+      // console.log('inside update()');
+      // console.log(Date.now());
+      // console.log(endAt);
       updateTimerText();
     } else {
       updateSession();
@@ -368,6 +371,7 @@ function updateSession() {
   // short break
   //   0        1     0       1      0      1       0      1
   // 25 min, short, 25 min, short, 25 min, short, 25 min, long
+  manualSwitch = document.getElementById("autoSwitch");
   if (breakState == true) {
     console.log("pomo session starting");
     timerLength = document.getElementById("workTimeInput").value;
@@ -378,7 +382,13 @@ function updateSession() {
     sound.load();
     sound.play();
     // add this for changing color scheme
-    seshClicked("workTime");
+    if (!manualSwitch.checked) {
+      // console.log('i really hope this could fix the manual thing');
+      seshClicked("workTime");
+    } else {
+      stopTimer();
+    }
+   
     update();
     return;
   }
@@ -393,7 +403,13 @@ function updateSession() {
     sound.load();
     sound.play();
     // add this for changing color scheme
-    seshClicked("shortBreak");
+    if (!manualSwitch.checked) {
+      // console.log('you only click if it is auto bluh');
+      seshClicked("shortBreak");
+    } else {
+      stopTimer();
+    }
+    
     decrementTopTask();
   }
 
@@ -408,13 +424,19 @@ function updateSession() {
     sound.load();
     sound.play();
     // add this for changing color scheme
-    seshClicked("longBreak");
+    if (!manualSwitch.checked) {
+      // console.log('long break lalalala');
+      seshClicked("longBreak");
+    } else {
+      stopTimer();
+    }
+    
     decrementTopTask();
   }
 
   // can just be an else statement
   else if (sessionCountDown === 0) {
-    manualSwitch = document.getElementById("autoSwitch");
+    
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
@@ -422,21 +444,21 @@ function updateSession() {
       sessionCountDown = sessionsBeforeLongBreak;
     }
 
-    manualSwitch = document.getElementById("autoSwitch");
-    if (manualSwitch.checked) {
-      console.log("DONEEEEE reset plz");
-      stopTimer();
-    } else {
-      sessionCountDown = sessionsBeforeLongBreak;
-    }
+    // manualSwitch = document.getElementById("autoSwitch");
+    // if (manualSwitch.checked) {
+    //   console.log("DONEEEEE reset plz");
+    //   stopTimer();
+    // } else {
+    //   sessionCountDown = sessionsBeforeLongBreak;
+    // }
 
-    manualSwitch = document.getElementById("autoSwitch");
-    if (manualSwitch.checked) {
-      console.log("DONEEEEE reset plz");
-      stopTimer();
-    } else {
-      sessionCountDown = sessionsBeforeLongBreak;
-    }
+    // manualSwitch = document.getElementById("autoSwitch");
+    // if (manualSwitch.checked) {
+    //   console.log("DONEEEEE reset plz");
+    //   stopTimer();
+    // } else {
+    //   sessionCountDown = sessionsBeforeLongBreak;
+    // }
   }
 
   update();
@@ -602,7 +624,6 @@ function autoSwitch() {
       stopButton.style.display = "block";
     } else {
       console.log("Timer not running");
-      stopButton.style.display = "none";
     }
     //startButton.style.display = "none";
     autoText.style.display = "none";

@@ -29,6 +29,9 @@ body.dark-mode .task-list {
 body.dark-mode task-item::part(object) {
   background: #333;
 }
+body.dark-mode task-item::part(object):hover {
+  background: #222;
+}
 
 body.dark-mode .taskTabs button {
   background: #555;
