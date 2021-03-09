@@ -354,10 +354,11 @@ function getCurrentTask() {
   let seshLeft = document.getElementById("seshLeft");
   if (taskList.length == 0) {
     taskIndicator.textContent = "";
-    seshLeft.textContent="";
+    seshLeft.textContent = "";
     return null;
   } else {
-    seshLeft.textContent = taskList[0].sessions + "/" + localStorage.getItem("numWorkInput");
+    seshLeft.textContent =
+      taskList[0].sessions + "/" + localStorage.getItem("numWorkInput");
     console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
     if (taskList[0].name.length >= 11) {
       taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";

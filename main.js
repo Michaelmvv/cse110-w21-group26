@@ -80,9 +80,9 @@ window.onload = () => {
     );
   }
   if (window.localStorage.getItem("numWorkInput") !== null) {
-    document.getElementById(
-      "numWork"
-    ).value = window.localStorage.getItem("numWorkInput");
+    document.getElementById("numWork").value = window.localStorage.getItem(
+      "numWorkInput"
+    );
     sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
   }
   if (window.localStorage.getItem("savedVolume") !== null) {
@@ -106,77 +106,66 @@ window.onload = () => {
         } else {
           e.target.value = window.localStorage.getItem("longInterval");
         }
-      }
-      else if (e.target.value > 60) {
+      } else if (e.target.value > 60) {
         e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("longInterval", e.target.value);
-      if(currentSession === "longBreak") {
+      if (currentSession === "longBreak") {
         changeTimerTextString(e.target.value.toString());
       }
-      
     });
   document
     .getElementById("shortBreakTimeInput")
     .addEventListener("change", function (e) {
-
       if (e.target.value <= 0) {
         if (window.localStorage.getItem("shortInterval") === null) {
           e.target.value = 5;
         } else {
           e.target.value = window.localStorage.getItem("shortInterval");
         }
-      }
-      else if (e.target.value > 60) {
+      } else if (e.target.value > 60) {
         e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("shortInterval", e.target.value);
-      if(currentSession === "shortBreak") {
+      if (currentSession === "shortBreak") {
         changeTimerTextString(e.target.value.toString());
       }
     });
   document
     .getElementById("workTimeInput")
     .addEventListener("change", function (e) {
-
       if (e.target.value <= 0) {
         if (window.localStorage.getItem("workInterval") === null) {
           e.target.value = 25;
         } else {
           e.target.value = window.localStorage.getItem("workInterval");
         }
-      }
-      else if (e.target.value > 60) {
+      } else if (e.target.value > 60) {
         e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("workInterval", e.target.value);
-      if(currentSession === "work") {
+      if (currentSession === "work") {
         changeTimerTextString(e.target.value.toString());
       }
-      
     });
 
-    document
-    .getElementById("numWork")
-    .addEventListener("change", function (e) {
-
-      if (e.target.value <= 0) {
-        if (window.localStorage.getItem("numWorkInput") === null) {
-          e.target.value = 4;
-        } else {
-          e.target.value = window.localStorage.getItem("numWorkInput");
-        }
+  document.getElementById("numWork").addEventListener("change", function (e) {
+    if (e.target.value <= 0) {
+      if (window.localStorage.getItem("numWorkInput") === null) {
+        e.target.value = 4;
+      } else {
+        e.target.value = window.localStorage.getItem("numWorkInput");
       }
-      else if (e.target.value > 60) {
-        e.target.value = 60;
-      }
-      e.target.value = Math.floor(e.target.value);
-      window.localStorage.setItem("numWorkInput", e.target.value);
-      sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
-    });
+    } else if (e.target.value > 60) {
+      e.target.value = 60;
+    }
+    e.target.value = Math.floor(e.target.value);
+    window.localStorage.setItem("numWorkInput", e.target.value);
+    sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  });
 
   document.getElementById("volume").addEventListener("change", function () {
     window.localStorage.setItem(
@@ -260,7 +249,6 @@ function startTutorial() {
     .onchange(function (targetElement) {
       dropMenu.style.display = "";
       switch (this._currentStep - 1) {
-        
         case 0:
           dropMenu.style.display = "block";
           break;
@@ -312,22 +300,27 @@ function updateTimerText() {
   let autoText = document.getElementById("autoText");
   timerText.textContent = toHuman(endAt - Date.now()); // sets timer text on HTML page
   document.title = autoText.innerText + " " + toHuman(endAt - Date.now());
-  if(timerText.textContent === "00:01") {
+  if (timerText.textContent === "00:01") {
     reached1Sec = true;
-  } else if (timerText.textContent === "00:00" || timerText.textContent === "Stopped!") {
+  } else if (
+    timerText.textContent === "00:00" ||
+    timerText.textContent === "Stopped!"
+  ) {
     reached0Sec = true;
   }
 
-  if(reached1Sec && reached0Sec) {
-    if(currentSession === "work") {
+  if (reached1Sec && reached0Sec) {
+    if (currentSession === "work") {
       sound.src = "End Break Alarm.mp3";
       sound.load();
       sound.play();
       decrementTopTask();
       reached1Sec = false;
       reached0Sec = false;
-      
-    }else if(currentSession === "shortBreak" || currentSession === "longBreak"){
+    } else if (
+      currentSession === "shortBreak" ||
+      currentSession === "longBreak"
+    ) {
       sound.src = "End Work Alarm.mp3";
       sound.load();
       sound.play();
@@ -468,8 +461,8 @@ function toHuman(ms) {
 function startTimer() {
   let autoText = document.getElementById("autoText");
   autoText.innerText = "Work Time";
-  timerLength = document.getElementById('workTimeInput').value;
-  officialStart(); 
+  timerLength = document.getElementById("workTimeInput").value;
+  officialStart();
 }
 
 /**
@@ -604,7 +597,7 @@ function autoSwitch() {
   if (manualSwitch.checked) {
     //Manual mode is enabled
     //hide start button
-    if(countingDown) {
+    if (countingDown) {
       console.log("Timer running");
       stopButton.style.display = "block";
     } else {
@@ -623,7 +616,7 @@ function autoSwitch() {
     shortBreakButton.style.display = "none";
     longBreakButton.style.display = "none";
 
-    if(countingDown) {
+    if (countingDown) {
       stopButton.style.display = "block";
     } else {
       startButton.style.display = "block";
@@ -660,14 +653,13 @@ function openModal() {
   };
 }
 
-/** 
+/**
  * Easily change the timer text by hardcoding the string (for changing initial display)
  */
 function changeTimerTextString(num) {
-  if(num.length == 1) {
+  if (num.length == 1) {
     timerText.textContent = "0" + num + ":00";
   } else if (num.length == 2) {
     timerText.textContent = num + ":00";
   }
-  
 }
