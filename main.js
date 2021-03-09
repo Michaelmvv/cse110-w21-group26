@@ -388,7 +388,6 @@ function updateSession() {
     } else {
       stopTimer();
     }
-   
     update();
     return;
   }
@@ -409,7 +408,6 @@ function updateSession() {
     } else {
       stopTimer();
     }
-    
     decrementTopTask();
   }
 
@@ -430,13 +428,11 @@ function updateSession() {
     } else {
       stopTimer();
     }
-    
     decrementTopTask();
   }
 
   // can just be an else statement
   else if (sessionCountDown === 0) {
-    
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
