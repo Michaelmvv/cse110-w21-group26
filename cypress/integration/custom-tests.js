@@ -17,15 +17,18 @@ describe("Test Work Timer Button", () => {
     cy.get("#timer").contains("25:00");
   });
 
-  it("Testing work timer when work time input is 0, timer should display 60:00", () => {
+  it("Testing work timer when work time input is 0, timer should display previous valid input", () => {
+    cy.get("#workTimeInput")
+      .type("{selectall}{backspace}10", { force: true })
+      .trigger("change", { force: true });
     cy.get("#workTimeInput")
       .type("{selectall}{backspace}0", { force: true })
       .trigger("change", { force: true });
     cy.get("#workTime").click().should("have.class", "active");
-    /* cy.get("#workTimeInput").then(($el) => {
-      expect($el).to.have.value("60");
+    cy.get("#workTimeInput").then(($el) => {
+      expect($el).to.have.value("10");
     });
-    cy.get("#timer").contains("00:00"); */
+    cy.get("#timer").contains("10:00");
   });
 
   for (let i = 1; i < 9; i++) {
@@ -99,27 +102,29 @@ describe("Test Work Timer Button", () => {
     cy.get("#timer").contains("00:00");
   });
 
-  it("Edge case: Testing work timer when work time input is 0, timer should display 60:00", () => {
+  it("Edge case: Testing work timer when work time input is 0, timer should display previous valid input", () => {
+    cy.get("#workTimeInput")
+      .type("{selectall}{backspace}10", { force: true })
+      .trigger("change", { force: true });
     cy.get("#workTimeInput")
       .type("{selectall}{backspace}0", { force: true })
       .trigger("change", { force: true });
     cy.get("#workTime").click().should("have.class", "active");
-    /* cy.get("#workTimeInput").then(($el) => {
-      expect($el).to.have.value("60");
+    cy.get("#workTimeInput").then(($el) => {
+      expect($el).to.have.value("10");
     });
-    cy.get("#timer").contains("00:00"); */
+    cy.get("#timer").contains("10:00");
   });
 
   it("Edge Case: Testing work timer when work time input is > 60, timer should display 60:00", () => {
     cy.get("#workTimeInput")
-      .type("{selectall}{backspace}100", { force: true })
+      .type("{selectall}{backspace}10", { force: true })
       .trigger("change", { force: true });
     cy.get("#workTime").click().should("have.class", "active");
     cy.get("#workTimeInput").then(($el) => {
-      expect($el).to.have.value("100");
-      //expect($el).to.have.value("60");
+      expect($el).to.have.value("60");
     });
-    //cy.get("#timer").contains("00:00"); //TODO
+    cy.get("#timer").contains("60:00");
   });
 
   it("When work timer is clicked, check if work timer is dark pink", () => {
@@ -311,15 +316,18 @@ describe("Test Long Break Button", () => {
     );
   }
 
-  it("Edge Case: Testing Long Break when Long Break input is 0, timer should display 60:00", () => {
+  it("Edge Case: Testing Long Break when Long Break input is 0, timer should display previous valid input", () => {
+    cy.get("#longBreakTimeInput")
+      .type("{selectall}{backspace}25", { force: true })
+      .trigger("change", { force: true });
     cy.get("#longBreakTimeInput")
       .type("{selectall}{backspace}0", { force: true })
       .trigger("change", { force: true });
     cy.get("#longBreak").click().should("have.class", "active");
-    /* cy.get("#longBreakTimeInput").then(($el) => {
-      expect($el).to.have.value("0");
+    cy.get("#longBreakTimeInput").then(($el) => {
+      expect($el).to.have.value("25");
     });
-    cy.get("#timer").contains("00:00"); */
+    cy.get("#timer").contains("25:00");
   });
 
   it("Testing Long Break when Long Break input is 60, timer should display 60:00", () => {
@@ -338,10 +346,10 @@ describe("Test Long Break Button", () => {
       .type("{selectall}{backspace}100", { force: true })
       .trigger("change", { force: true });
     cy.get("#longBreak").click().should("have.class", "active");
-    /* cy.get("#longBreakTimeInput").then(($el) => {
+    cy.get("#longBreakTimeInput").then(($el) => {
       expect($el).to.have.value("60");
     });
-    cy.get("#timer").contains("00:00"); */
+    cy.get("#timer").contains("60:00");
   });
 });
 
@@ -426,15 +434,18 @@ describe("Test Short Break Button", () => {
     cy.get("#timer").contains("05:00");
   });
 
-  it("Edge Case: Testing short Break when short Break input is 0, timer should display 60:00", () => {
+  it("Edge Case: Testing short Break when short Break input is 0, timer should display previous valid input", () => {
+    cy.get("#shortBreakTimeInput")
+      .type("{selectall}{backspace}13", { force: true })
+      .trigger("change", { force: true });
     cy.get("#shortBreakTimeInput")
       .type("{selectall}{backspace}0", { force: true })
       .trigger("change", { force: true });
     cy.get("#shortBreak").click().should("have.class", "active");
-    /* cy.get("#shortBreakTimeInput").then(($el) => {
-      expect($el).to.have.value("60");
+    cy.get("#shortBreakTimeInput").then(($el) => {
+      expect($el).to.have.value("13");
     });
-    cy.get("#timer").contains("60:00"); */
+    cy.get("#timer").contains("13:00");
   });
 
   it("Testing short Break when short Break input is 05, timer should display 05:00", () => {
@@ -464,10 +475,10 @@ describe("Test Short Break Button", () => {
       .type("{selectall}{backspace}100", { force: true })
       .trigger("change", { force: true });
     cy.get("#shortBreak").click().should("have.class", "active");
-    /* cy.get("#shortBreakTimeInput").then(($el) => {
+   cy.get("#shortBreakTimeInput").then(($el) => {
       expect($el).to.have.value("60");
     });
-    cy.get("#timer").contains("00:00"); */
+    cy.get("#timer").contains("60:00");
   });
 });
 

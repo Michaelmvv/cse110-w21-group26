@@ -7,10 +7,15 @@ let timerText;
 
 let manualSwitch = document.getElementById("autoSwitch");
 
+/* Keeps track of manual mode sessions */
+let currentSession; //work, shortBreak, longBreak
+let reached1Sec = false;
+let reached0Sec = true;
+
 /**
  * Users input of how many short breaks before a long break
  */
-let sessionsBeforeLongBreak = 4; // user selection
+let sessionsBeforeLongBreak = 4;
 
 /**
  * Number of sessions until long break
@@ -44,6 +49,7 @@ window.onload = () => {
   document.getElementById("workTime").addEventListener("click", setWorkTime);
   document.getElementById("longBreak").addEventListener("click", setLongTime);
   document.getElementById("shortBreak").addEventListener("click", setShortTime);
+  window.localStorage.setItem("numWorkInput", 4);
 
   document
     .getElementById("tutorialBtn")
@@ -73,6 +79,12 @@ window.onload = () => {
       parseInt(window.localStorage.getItem("workInterval")) * 60 * 1000
     );
   }
+  if (window.localStorage.getItem("numWorkInput") !== null) {
+    document.getElementById(
+      "numWork"
+    ).value = window.localStorage.getItem("numWorkInput");
+    sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  }
   if (window.localStorage.getItem("savedVolume") !== null) {
     document.getElementById("volume").value = window.localStorage.getItem(
       "savedVolume"
@@ -100,6 +112,10 @@ window.onload = () => {
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("longInterval", e.target.value);
+      if(currentSession === "longBreak") {
+        changeTimerTextString(e.target.value.toString());
+      }
+      
     });
   document
     .getElementById("shortBreakTimeInput")
@@ -117,6 +133,9 @@ window.onload = () => {
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("shortInterval", e.target.value);
+      if(currentSession === "shortBreak") {
+        changeTimerTextString(e.target.value.toString());
+      }
     });
   document
     .getElementById("workTimeInput")
@@ -134,6 +153,29 @@ window.onload = () => {
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("workInterval", e.target.value);
+      if(currentSession === "work") {
+        changeTimerTextString(e.target.value.toString());
+      }
+      
+    });
+
+    document
+    .getElementById("numWork")
+    .addEventListener("change", function (e) {
+
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("numWorkInput") === null) {
+          e.target.value = 4;
+        } else {
+          e.target.value = window.localStorage.getItem("numWorkInput");
+        }
+      }
+      else if (e.target.value > 60) {
+        e.target.value = 60;
+      }
+      e.target.value = Math.floor(e.target.value);
+      window.localStorage.setItem("numWorkInput", e.target.value);
+      sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
     });
 
   document.getElementById("volume").addEventListener("change", function () {
@@ -216,15 +258,19 @@ function startTutorial() {
   let taskListTutorial = document.getElementById("tasks");
   introJs()
     .onchange(function (targetElement) {
+      dropMenu.style.display = "";
       switch (this._currentStep - 1) {
+        
         case 0:
           dropMenu.style.display = "block";
           break;
         case 1:
           addTaskTutorial();
           getCurrentTask();
+          dropMenu.style.display = "block";
           break;
         case 2:
+          dropMenu.style.display = "block";
           break;
         case 3:
           dropMenu.style.display = "";
@@ -238,10 +284,12 @@ function startTutorial() {
         case 7:
           break;
         case 8:
-          displayListDone();
-          //displayList();
+          displayList();
           break;
         case 9:
+          displayListDone();
+          break;
+        case 10:
           displayList();
           break;
       }
@@ -264,6 +312,29 @@ function updateTimerText() {
   let autoText = document.getElementById("autoText");
   timerText.textContent = toHuman(endAt - Date.now()); // sets timer text on HTML page
   document.title = autoText.innerText + " " + toHuman(endAt - Date.now());
+  if(timerText.textContent === "00:01") {
+    reached1Sec = true;
+  } else if (timerText.textContent === "00:00" || timerText.textContent === "Stopped!") {
+    reached0Sec = true;
+  }
+
+  if(reached1Sec && reached0Sec) {
+    if(currentSession === "work") {
+      sound.src = "End Break Alarm.mp3";
+      sound.load();
+      sound.play();
+      decrementTopTask();
+      reached1Sec = false;
+      reached0Sec = false;
+      
+    }else if(currentSession === "shortBreak" || currentSession === "longBreak"){
+      sound.src = "End Work Alarm.mp3";
+      sound.load();
+      sound.play();
+      reached1Sec = false;
+      reached0Sec = false;
+    }
+  }
   getCurrentTask();
   // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
@@ -309,6 +380,10 @@ function updateSession() {
     timerLength = document.getElementById("workTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = false;
+    // Sound plays here
+    sound.src = "End Break Alarm.mp3";
+    sound.load();
+    sound.play();
     // add this for changing color scheme
     seshClicked("workTime");
     update();
@@ -320,6 +395,10 @@ function updateSession() {
     timerLength = document.getElementById("shortBreakTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
+    // Sound plays here
+    sound.src = "End Work Alarm.mp3";
+    sound.load();
+    sound.play();
     // add this for changing color scheme
     seshClicked("shortBreak");
     decrementTopTask();
@@ -331,6 +410,10 @@ function updateSession() {
     timerLength = document.getElementById("longBreakTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
+    // Sound plays here
+    sound.src = "End Work Alarm.mp3";
+    sound.load();
+    sound.play();
     // add this for changing color scheme
     seshClicked("longBreak");
     decrementTopTask();
@@ -385,8 +468,8 @@ function toHuman(ms) {
 function startTimer() {
   let autoText = document.getElementById("autoText");
   autoText.innerText = "Work Time";
-  officialStart(); // startTimer only calls officialStart(), replace all calls
-  // of startTimer() with officialStar
+  timerLength = document.getElementById('workTimeInput').value;
+  officialStart(); 
 }
 
 /**
@@ -394,7 +477,6 @@ function startTimer() {
  * be used to start a new session or reset one
  */
 function officialStart() {
-  // timerLength = document.getElementById('workTimeInput').value;
   endAt = Date.now() + 60000 * Number(timerLength); // 60000 min to ms
   countingDown = true;
   updateCircle(timerLength, timerLength);
@@ -444,25 +526,28 @@ function seshClicked(seshID) {
     document.body.classList.remove("longBreak", "workTime");
     logo.src = "images/logoShort.svg";
     autoText.innerText = "Short Break";
-    sound.src = "End Work Alarm.mp3";
-    sound.load();
-    sound.play();
+    currentSession = "shortBreak";
+    //sound.src = "End Work Alarm.mp3";
+    //sound.load();
+    //sound.play();
   } else if (seshID == "longBreak") {
     document.body.classList.add("longBreak");
     document.body.classList.remove("shortBreak", "workTime");
     logo.src = "images/logoLong.svg";
     autoText.innerText = "Long Break";
-    sound.src = "End Work Alarm.mp3";
-    sound.load();
-    sound.play();
+    currentSession = "longBreak";
+    //sound.src = "End Work Alarm.mp3";
+    //sound.load();
+    //sound.play();
   } else {
     document.body.classList.add("workTime");
     document.body.classList.remove("shortBreak", "longBreak");
     logo.src = "images/logo.svg";
     autoText.innerText = "Work Time";
-    sound.src = "End Break Alarm.mp3";
-    sound.load();
-    sound.play();
+    currentSession = "work";
+    //sound.src = "End Break Alarm.mp3";
+    //sound.load();
+    //sound.play();
   }
 }
 
@@ -508,15 +593,25 @@ function darkMode() {
  * and the start button state.
  */
 function autoSwitch() {
+  console.log("switch on");
   manualSwitch = document.getElementById("autoSwitch");
   let workTimerButton = document.getElementById("workTime");
   let shortBreakButton = document.getElementById("longBreak");
   let longBreakButton = document.getElementById("shortBreak");
   let startButton = document.getElementById("StartButton");
   let autoText = document.getElementById("currentSessionAuto");
+  let stopButton = document.getElementById("StopButton");
   if (manualSwitch.checked) {
+    //Manual mode is enabled
     //hide start button
-    startButton.style.display = "none";
+    if(countingDown) {
+      console.log("Timer running");
+      stopButton.style.display = "block";
+    } else {
+      console.log("Timer not running");
+      stopButton.style.display = "none";
+    }
+    //startButton.style.display = "none";
     autoText.style.display = "none";
 
     workTimerButton.style.display = "block";
@@ -527,6 +622,13 @@ function autoSwitch() {
     workTimerButton.style.display = "none";
     shortBreakButton.style.display = "none";
     longBreakButton.style.display = "none";
+
+    if(countingDown) {
+      stopButton.style.display = "block";
+    } else {
+      startButton.style.display = "block";
+      stopButton.style.display = "none";
+    }
 
     // startButton.style.display = "block";
     autoText.style.display = "block";
@@ -556,4 +658,16 @@ function openModal() {
       modal.style.display = "none";
     }
   };
+}
+
+/** 
+ * Easily change the timer text by hardcoding the string (for changing initial display)
+ */
+function changeTimerTextString(num) {
+  if(num.length == 1) {
+    timerText.textContent = "0" + num + ":00";
+  } else if (num.length == 2) {
+    timerText.textContent = num + ":00";
+  }
+  
 }

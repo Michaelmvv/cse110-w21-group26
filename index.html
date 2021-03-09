@@ -133,7 +133,6 @@
                 step="1"
                 value="5"
                 style="width: 60px"
-                pattern="^([1-9]|10)$"
               /><span style="margin-left: 5px">min</span>
             </div>
             <div class="dropdown-item">
@@ -145,11 +144,21 @@
                 min="1"
                 step="1"
                 value="15"
-                pattern="^([1-9]|10)$"
               /><span style="margin-left: 5px">min</span>
             </div>
-
-            <!-- volume controller, need to add js function -->
+            <!-- Number of work sessions before a long break -->
+            <div class="dropdown-item">
+              <label for="numWork">Long Break Interval</label>
+              <input 
+                class="settingLengthInput"
+                id="numWork"
+                type="number" 
+                min="1" 
+                max="10"
+                step="1" 
+                value="4"  />
+            </div>
+            <!-- volume controller -->
             <div class="dropdown-item">
               <label for="volume">Volume</label>
               <input type="range" min="0" max="100" value="50" id="volume" />
@@ -228,10 +237,13 @@
           <text
             id="taskIndicator"
             text-anchor="middle"
-            y="-50px"
+            y="-55px"
             data-intro="Here is the name of the current task you are working on!"
           >
             No Task
+          </text>
+          <text id="seshLeft" y="-40px" font-size="14px" text-anchor="middle" alignment-baseline="middle" data-intro="See the number of work sessions until the long break!">
+            Holdeer
           </text>
           <text id="timer" text-anchor="middle" alignment-baseline="middle">
             25:00
