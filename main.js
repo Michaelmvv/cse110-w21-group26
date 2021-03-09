@@ -8,14 +8,18 @@ let timerText;
 let manualSwitch = document.getElementById("autoSwitch");
 
 /* Keeps track of manual mode sessions */
-let currentSession; //work, shortBreak, longBreak
+let currentSession = "work"; //work, shortBreak, longBreak
 let reached1Sec = false;
 let reached0Sec = true;
 
 /**
  * Users input of how many short breaks before a long break
  */
-let sessionsBeforeLongBreak = 4;
+let sessionsBeforeLongBreak;
+
+if(window.localStorage.getItem("numWorkInput") === null) {
+  sessionsBeforeLongBreak = 4;
+}
 
 /**
  * Number of sessions until long break
@@ -49,7 +53,6 @@ window.onload = () => {
   document.getElementById("workTime").addEventListener("click", setWorkTime);
   document.getElementById("longBreak").addEventListener("click", setLongTime);
   document.getElementById("shortBreak").addEventListener("click", setShortTime);
-  window.localStorage.setItem("numWorkInput", 4);
 
   document
     .getElementById("tutorialBtn")
@@ -65,11 +68,15 @@ window.onload = () => {
     document.getElementById(
       "longBreakTimeInput"
     ).value = window.localStorage.getItem("longInterval");
+  } else {
+    window.localStorage.setItem("longInterval", 15);
   }
   if (window.localStorage.getItem("shortInterval") !== null) {
     document.getElementById(
       "shortBreakTimeInput"
     ).value = window.localStorage.getItem("shortInterval");
+  } else {
+    window.localStorage.setItem("shortInterval", 5);
   }
   if (window.localStorage.getItem("workInterval") !== null) {
     document.getElementById(
@@ -78,12 +85,16 @@ window.onload = () => {
     document.getElementById("timer").textContent = toHuman(
       parseInt(window.localStorage.getItem("workInterval")) * 60 * 1000
     );
+  } else {
+    window.localStorage.setItem("workInterval", 25);
   }
   if (window.localStorage.getItem("numWorkInput") !== null) {
     document.getElementById("numWork").value = window.localStorage.getItem(
       "numWorkInput"
     );
     sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  } else {
+    window.localStorage.setItem("numWorkInput", 4);
   }
   if (window.localStorage.getItem("savedVolume") !== null) {
     document.getElementById("volume").value = window.localStorage.getItem(
@@ -100,6 +111,7 @@ window.onload = () => {
   document
     .getElementById("longBreakTimeInput")
     .addEventListener("change", function (e) {
+      countingDown = false;
       if (e.target.value <= 0) {
         if (window.localStorage.getItem("longInterval") === null) {
           e.target.value = 15;
@@ -118,6 +130,7 @@ window.onload = () => {
   document
     .getElementById("shortBreakTimeInput")
     .addEventListener("change", function (e) {
+      countingDown = false;
       if (e.target.value <= 0) {
         if (window.localStorage.getItem("shortInterval") === null) {
           e.target.value = 5;
@@ -136,6 +149,7 @@ window.onload = () => {
   document
     .getElementById("workTimeInput")
     .addEventListener("change", function (e) {
+      countingDown = false;
       if (e.target.value <= 0) {
         if (window.localStorage.getItem("workInterval") === null) {
           e.target.value = 25;
@@ -310,10 +324,20 @@ function updateTimerText() {
   }
 
   if (reached1Sec && reached0Sec) {
+    // Checks if audio is not playing before playing source: 
+    /* https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-
+    request-was-interrupted-by-a-call-to-pause-error */
+    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
+    && sound.readyState > sound.HAVE_CURRENT_DATA;
+
     if (currentSession === "work") {
-      sound.src = "End Break Alarm.mp3";
-      sound.load();
-      sound.play();
+      
+      if (!isPlaying) {
+        sound.src = "End Break Alarm.mp3";
+        sound.load();
+        sound.play();
+      }
+      
       decrementTopTask();
       reached1Sec = false;
       reached0Sec = false;
@@ -321,9 +345,11 @@ function updateTimerText() {
       currentSession === "shortBreak" ||
       currentSession === "longBreak"
     ) {
-      sound.src = "End Work Alarm.mp3";
-      sound.load();
-      sound.play();
+      if (!isPlaying) {
+        sound.src = "End Work Alarm.mp3";
+        sound.load();
+        sound.play();
+      }
       reached1Sec = false;
       reached0Sec = false;
     }
@@ -378,9 +404,14 @@ function updateSession() {
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = false;
     // Sound plays here
-    sound.src = "End Break Alarm.mp3";
-    sound.load();
-    sound.play();
+    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
+    && sound.readyState > sound.HAVE_CURRENT_DATA;
+    if(!isPlaying) {
+      sound.src = "End Break Alarm.mp3";
+      sound.load();
+      sound.play();
+    }
+    
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('i really hope this could fix the manual thing');
@@ -398,9 +429,14 @@ function updateSession() {
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
     // Sound plays here
-    sound.src = "End Work Alarm.mp3";
-    sound.load();
-    sound.play();
+    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
+    && sound.readyState > sound.HAVE_CURRENT_DATA;
+    if(!isPlaying) {
+      sound.src = "End Work Alarm.mp3";
+      sound.load();
+      sound.play();
+    }
+
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('you only click if it is auto bluh');
@@ -418,9 +454,14 @@ function updateSession() {
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
     // Sound plays here
-    sound.src = "End Work Alarm.mp3";
-    sound.load();
-    sound.play();
+    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
+    && sound.readyState > sound.HAVE_CURRENT_DATA;
+    if(!isPlaying) {
+      sound.src = "End Work Alarm.mp3";
+      sound.load();
+      sound.play();
+    }
+
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('long break lalalala');
