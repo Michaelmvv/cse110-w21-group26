@@ -581,7 +581,7 @@ describe("Testing Task List", () => {
     });
 
     cy.get("#done").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
+      expect($el).to.have.css("background-color", "rgb(187, 187, 187)");
     });
   });
 
@@ -595,7 +595,7 @@ describe("Testing Task List", () => {
     cy.get("#done").click();
 
     cy.get("#to-do").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
+      expect($el).to.have.css("background-color", "rgb(187, 187, 187)");
     });
 
     cy.get("#done").should(($el) => {
@@ -617,7 +617,7 @@ describe("Testing Task List", () => {
     });
 
     cy.get("#done").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
+      expect($el).to.have.css("background-color", "rgb(187, 187, 187)");
     });
   });
 
@@ -631,7 +631,7 @@ describe("Testing Task List", () => {
     cy.get("#done").click();
 
     cy.get("#to-do").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
+      expect($el).to.have.css("background-color", "rgb(187, 187, 187)");
     });
 
     cy.get("#done").should(($el) => {
@@ -653,7 +653,7 @@ describe("Testing Task List", () => {
     });
 
     cy.get("#done").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
+      expect($el).to.have.css("background-color", "rgb(187, 187, 187)");
     });
   });
 
@@ -667,7 +667,7 @@ describe("Testing Task List", () => {
     cy.get("#done").click();
 
     cy.get("#to-do").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
+      expect($el).to.have.css("background-color", "rgb(187, 187, 187)");
     });
 
     cy.get("#done").should(($el) => {

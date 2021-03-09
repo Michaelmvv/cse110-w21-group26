@@ -61,7 +61,7 @@
         <div
           class="setting dropdown"
           data-step="1"
-          data-intro="Here is the setting menu"
+          data-intro="Here is the setting menu!"
           onmouseover="{
         let settingsLogo = document.getElementById('settingsLogo');
         settingsLogo.style.transition='transform 0.15s';
@@ -159,7 +159,7 @@
               <label for="darkMode"> Dark Mode</label>
               <label
                 class="switch"
-                data-intro="Turn on Dark Mode for a new color scheme"
+                data-intro="Turn on Dark Mode for a new color scheme!"
               >
                 <input
                   type="checkbox"
@@ -173,7 +173,7 @@
               <label for="manual"> Manual</label>
               <label
                 class="switch"
-                data-intro="Auto Mode is when the pomodoro timer will run by itself. Turn it off (Manual) to select each session yourself!"
+                data-intro="Turn on manual mode for control on which session you would like to enter. Keep it off for automatic mode!"
               >
                 <input
                   type="checkbox"
@@ -218,7 +218,7 @@
 
     <div
       class="circle"
-      data-intro="Here is where you will see the time remaining"
+      data-intro="Here is where you will see the time remaining!"
     >
       <!-- viewBox is part of svg class -->
       <svg class="circleTimer" viewBox="0 0 220 220">
@@ -229,7 +229,7 @@
             id="taskIndicator"
             text-anchor="middle"
             y="-50px"
-            data-intro="Here is the name of the current task you are working on"
+            data-intro="Here is the name of the current task you are working on!"
           >
             No Task
           </text>
@@ -270,7 +270,7 @@
           onclick="displayList()"
           id="to-do"
           class="activeList"
-          data-intro="See your current To-Do tasks here"
+          data-intro="See your current To-Do tasks here!"
         >
           To-Do
         </button>
@@ -278,7 +278,7 @@
           onclick="displayListDone()"
           id="done"
           class=" "
-          data-intro="See your Done Tasks"
+          data-intro="See your Done Tasks!"
         >
           Done
         </button>
@@ -294,13 +294,13 @@
           Add Task
         </button>
         <button
-        id="clearBtn"
-        onclick=""
-        class="clearBtn"
-        data-intro="Clear all finished tasks!"
-      >
-        Clear
-      </button>
+          id="clearBtn"
+          onclick="clearDoneList()"
+          class="clearBtn"
+          data-intro="Clear all finished tasks!"
+        >
+          Clear
+        </button>
 
         <div id="addModal" class="modal">
           <div class="modal-content">
@@ -330,7 +330,7 @@
         <ul
           id="tasks"
           data-title="Your Tasks"
-          data-intro="Use the farthest left buttons to move tasks up or down"
+          data-intro="Here you can switch the order, select a task to work on, change the name, see your remaining (in To-Do) or your total (in Done) pomodoro sessions, switch lists, or delete!"
         ></ul>
       </div>
     </div>
