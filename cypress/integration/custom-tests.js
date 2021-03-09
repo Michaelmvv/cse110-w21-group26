@@ -475,7 +475,7 @@ describe("Test Short Break Button", () => {
       .type("{selectall}{backspace}100", { force: true })
       .trigger("change", { force: true });
     cy.get("#shortBreak").click().should("have.class", "active");
-   cy.get("#shortBreakTimeInput").then(($el) => {
+    cy.get("#shortBreakTimeInput").then(($el) => {
       expect($el).to.have.value("60");
     });
     cy.get("#timer").contains("60:00");
