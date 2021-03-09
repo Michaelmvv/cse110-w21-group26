@@ -17,7 +17,7 @@ let reached0Sec = true;
  */
 let sessionsBeforeLongBreak;
 
-if(window.localStorage.getItem("numWorkInput") === null) {
+if (window.localStorage.getItem("numWorkInput") === null) {
   sessionsBeforeLongBreak = 4;
 }
 
@@ -324,20 +324,22 @@ function updateTimerText() {
   }
 
   if (reached1Sec && reached0Sec) {
-    // Checks if audio is not playing before playing source: 
+    // Checks if audio is not playing before playing source:
     /* https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-
     request-was-interrupted-by-a-call-to-pause-error */
-    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
-    && sound.readyState > sound.HAVE_CURRENT_DATA;
+    let isPlaying =
+      sound.currentTime > 0 &&
+      !sound.paused &&
+      !sound.ended &&
+      sound.readyState > sound.HAVE_CURRENT_DATA;
 
     if (currentSession === "work") {
-      
       if (!isPlaying) {
         sound.src = "End Break Alarm.mp3";
         sound.load();
         sound.play();
       }
-      
+
       decrementTopTask();
       reached1Sec = false;
       reached0Sec = false;
@@ -404,14 +406,17 @@ function updateSession() {
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = false;
     // Sound plays here
-    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
-    && sound.readyState > sound.HAVE_CURRENT_DATA;
-    if(!isPlaying) {
+    let isPlaying =
+      sound.currentTime > 0 &&
+      !sound.paused &&
+      !sound.ended &&
+      sound.readyState > sound.HAVE_CURRENT_DATA;
+    if (!isPlaying) {
       sound.src = "End Break Alarm.mp3";
       sound.load();
       sound.play();
     }
-    
+
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('i really hope this could fix the manual thing');
@@ -429,9 +434,12 @@ function updateSession() {
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
     // Sound plays here
-    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
-    && sound.readyState > sound.HAVE_CURRENT_DATA;
-    if(!isPlaying) {
+    let isPlaying =
+      sound.currentTime > 0 &&
+      !sound.paused &&
+      !sound.ended &&
+      sound.readyState > sound.HAVE_CURRENT_DATA;
+    if (!isPlaying) {
       sound.src = "End Work Alarm.mp3";
       sound.load();
       sound.play();
@@ -454,9 +462,12 @@ function updateSession() {
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
     // Sound plays here
-    let isPlaying = sound.currentTime > 0 && !sound.paused && !sound.ended 
-    && sound.readyState > sound.HAVE_CURRENT_DATA;
-    if(!isPlaying) {
+    let isPlaying =
+      sound.currentTime > 0 &&
+      !sound.paused &&
+      !sound.ended &&
+      sound.readyState > sound.HAVE_CURRENT_DATA;
+    if (!isPlaying) {
       sound.src = "End Work Alarm.mp3";
       sound.load();
       sound.play();

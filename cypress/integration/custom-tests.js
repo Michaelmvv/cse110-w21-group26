@@ -518,7 +518,7 @@ describe("Test Short Break Button", () => {
   });
 });
 
-describe('Testing Edge cases in Long Break Interval Input', () => {
+describe("Testing Edge cases in Long Break Interval Input", () => {
   beforeEach(() => {
     cy.visit("index.html");
   });
@@ -545,7 +545,6 @@ describe('Testing Edge cases in Long Break Interval Input', () => {
       expect($el).to.have.value("5");
     });
   });
-
 });
 
 describe("Testing Start Button", () => {
@@ -900,7 +899,7 @@ describe("Testing pomo session to long break (default inputs in automatic)", () 
     cy.tick(work); // 25 minutes work session
     cy.tick(shortB); // 5 minutes short break
     cy.tick(work); // 25 minutes work session
-    
+
     cy.get("#workTime").should(($el) => {
       expect($el).to.have.css("background-color", "rgb(41, 71, 181)");
     });
@@ -921,12 +920,12 @@ describe("Testing pomo session to long break (1 min work session in automatic)",
       .type("{selectall}{backspace}1", { force: true })
       .trigger("change", { force: true });
 
-  cy.get("#numWork")
+    cy.get("#numWork")
       .type("{selectall}{backspace}1", { force: true })
       .trigger("change", { force: true });
-  cy.get("#numWork").then(($el) => {
-    expect($el).to.have.value("1");
-  });
+    cy.get("#numWork").then(($el) => {
+      expect($el).to.have.value("1");
+    });
     cy.get("#StartButton").click();
     cy.tick(work); // 25 minutes work session
     cy.tick(shortB); // 5 minutes break session
@@ -936,7 +935,7 @@ describe("Testing pomo session to long break (1 min work session in automatic)",
     cy.tick(shortB);
     cy.tick(work); // after 4 work sessions, do long break
     //cy.tick(longB); stack breaks if trying to check after this
-    
+
     cy.get("#workTime").should(($el) => {
       expect($el).to.have.css("background-color", "rgb(41, 71, 181)");
     });
@@ -957,17 +956,17 @@ describe("Testing 4 pomo sessions to long break two times in a row (1 min work s
       .type("{selectall}{backspace}1", { force: true })
       .trigger("change", { force: true });
 
-  cy.get("#numWork")
+    cy.get("#numWork")
       .type("{selectall}{backspace}4", { force: true })
       .trigger("change", { force: true });
-  cy.get("#numWork").then(($el) => {
-    expect($el).to.have.value("4");
-  });
+    cy.get("#numWork").then(($el) => {
+      expect($el).to.have.value("4");
+    });
     cy.get("#StartButton").click();
-    cy.tick(4*work + 3*shortB);
+    cy.tick(4 * work + 3 * shortB);
     cy.tick(longB);
-    cy.tick(4*work + 3*shortB);
-    
+    cy.tick(4 * work + 3 * shortB);
+
     cy.get("#workTime").should(($el) => {
       expect($el).to.have.css("background-color", "rgb(41, 71, 181)");
     });
