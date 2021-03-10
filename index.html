@@ -26,6 +26,7 @@
   </head>
 
   <body class="dark-mode workTime">
+    <!-- <audio id="soundTag" src="End Work Alarm.mp3" preload="auto"></audio> -->
     <!-- logo -->
     <div class="settingAndLogo">
       <div class="logo">
@@ -41,7 +42,12 @@
       </div>
       <!-- settings -->
       <div class="settings-help">
-        <button title="I am a tour guide" onclick="" class="tutorialBtn" id="tutorialBtn">
+        <button
+          title="I am a tour guide"
+          onclick=""
+          class="tutorialBtn"
+          id="tutorialBtn"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -150,14 +156,15 @@
             <!-- Number of work sessions before a long break -->
             <div class="dropdown-item">
               <label for="numWork">Pomos in a Cycle</label>
-              <input 
+              <input
                 class="settingLengthInput"
                 id="numWork"
-                type="number" 
-                min="1" 
+                type="number"
+                min="1"
                 max="10"
-                step="0.1" 
-                value="4"  />
+                step="0.1"
+                value="4"
+              />
             </div>
             <!-- volume controller -->
             <div class="dropdown-item">
@@ -243,7 +250,14 @@
           >
             No Task
           </text>
-          <text id="seshLeft" y="-40px" font-size="14px" text-anchor="middle" alignment-baseline="middle" data-intro="See the number of work sessions until the long break!">
+          <text
+            id="seshLeft"
+            y="-40px"
+            font-size="14px"
+            text-anchor="middle"
+            alignment-baseline="middle"
+            data-intro="See the number of work sessions until the long break!"
+          >
             Holdeer
           </text>
           <text id="timer" text-anchor="middle" alignment-baseline="middle">

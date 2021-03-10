@@ -360,13 +360,14 @@ function getCurrentTask() {
     return null;
   } else {
     let curMax = localStorage.getItem("numWorkInput");
-    console.log(taskList[0].seshAll + " " + taskList[0].sessions);
-    if(taskList[0].seshAll > curMax){
-      seshLeft.textContent = curMax - (taskList[0].seshAll-taskList[0].sessions) + "/" + curMax;
-      if(curMax - (taskList[0].seshAll-taskList[0].sessions) == 0){
+    //console.log(taskList[0].seshAll + " " + taskList[0].sessions);
+    if (taskList[0].seshAll > curMax) {
+      seshLeft.textContent =
+        curMax - (taskList[0].seshAll - taskList[0].sessions) + "/" + curMax;
+      if (curMax - (taskList[0].seshAll - taskList[0].sessions) == 0) {
         taskList[0].seshAll = taskList[0].sessions;
       }
-    }else{
+    } else {
       seshLeft.textContent = taskList[0].sessions + "/" + curMax;
     }
     // console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
@@ -488,7 +489,7 @@ function Task(name, sessionCount) {
   this.name = name;
   this.sessions = sessionCount;
   this.seshAll = sessionCount;
-  console.log(this.sessions + " HERE " + this.seshAll);
+  //console.log(this.sessions + " HERE " + this.seshAll);
   this.done = false;
   this.sessionTotal = 0;
   this.firstTask = false;

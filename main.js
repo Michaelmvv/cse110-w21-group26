@@ -15,16 +15,13 @@ let currentSession = "work"; //work, shortBreak, longBreak
  */
 let sessionsBeforeLongBreak;
 
-if (window.localStorage.getItem("numWorkInput") === null) {
-  sessionsBeforeLongBreak = 4;
-}
-
 /**
  * Number of sessions until long break
  * Attributed to bone666138 on freesound.com, audio file Analog Alarm Clock
  * https://freesound.org/people/bone666138/sounds/198841/
  */
-let sessionCountDown = sessionsBeforeLongBreak;
+let sessionCountDown;
+//let sound = document.getElementById("soundTag");
 let sound = new Audio("End Work Alarm.mp3");
 
 /**
@@ -105,6 +102,14 @@ window.onload = () => {
     document.getElementById("autoSwitch").checked =
       window.localStorage.getItem("autoOn").charAt(0) == "t";
   }
+
+  if (window.localStorage.getItem("numWorkInput") === null) {
+    sessionsBeforeLongBreak = 4;
+  } else {
+    sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  }
+
+  sessionCountDown = sessionsBeforeLongBreak;
 
   document
     .getElementById("longBreakTimeInput")
@@ -215,7 +220,7 @@ window.onload = () => {
  */
 function setWorkTime() {
   timerLength = document.getElementById("workTimeInput").value;
-  sessionCountDown = 0;
+  //sessionCountDown = 0;
   officialStart();
 }
 
@@ -224,7 +229,7 @@ function setWorkTime() {
  */
 function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
-  sessionCountDown = 0;
+  //sessionCountDown = 0;
   officialStart();
   // Change color scheme
 }
@@ -234,7 +239,7 @@ function setLongTime() {
  */
 function setShortTime() {
   timerLength = document.getElementById("shortBreakTimeInput").value;
-  sessionCountDown = 0;
+  //sessionCountDown = 0;
   officialStart();
 
   // Change color scheme
@@ -374,10 +379,9 @@ function updateSession() {
       //decrementTopTask();
     }
 
-    //update();
+    update();
     return;
   }
-
 
   if (sessionCountDown > 1) {
     console.log("short break starting");
@@ -434,7 +438,7 @@ function updateSession() {
   sessionCountDown--;
   console.log("SESH COUNTDOWN: " + sessionCountDown);
   // console.log('or is it ya');
-  //update();
+  update();
 }
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
@@ -467,7 +471,7 @@ function officialStart() {
   endAt = Date.now() + 60000 * Number(timerLength); // 60000 min to ms
   countingDown = true;
   updateCircle(timerLength, timerLength);
-  //update();
+  update();
   document.getElementById("StartButton").style.display = "none";
   document.getElementById("StopButton").style.display = "initial";
 }

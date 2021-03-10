@@ -658,6 +658,32 @@ describe.only("Testing Task List", () => {
       .trigger("change", { force: true });
   });
 
+  it("Edge Case: Testing negative pomo number in task list", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#taskNum")
+      .find("form")
+      .find("input")
+      .type("{selectall}{backspace}-1", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+  });
+
   it("Remove task if only spaces in title, display alert", () => {
     cy.get("#addBtn").click();
     cy.get("task-item")
@@ -669,7 +695,7 @@ describe.only("Testing Task List", () => {
 
     cy.on("window:alert", (txt) => {
       expect(txt).to.contains("You need to enter a valid task name.");
-    }); 
+    });
   });
 
   it("Display alert when task name is null aka 0 char", () => {
@@ -683,7 +709,7 @@ describe.only("Testing Task List", () => {
 
     cy.on("window:alert", (txt) => {
       expect(txt).to.contains("You need to enter a valid task name.");
-    }); 
+    });
   });
 
   it("Alert pops up when trying to add duplicate task names (HW1) to task list", () => {
@@ -704,8 +730,10 @@ describe.only("Testing Task List", () => {
       .trigger("change", { force: true });
 
     cy.on("window:alert", (txt) => {
-      expect(txt).to.contains("You cannot have the same name as a previous task");
-    }); 
+      expect(txt).to.contains(
+        "You cannot have the same name as a previous task"
+      );
+    });
   });
 
   it("Alert pops up when trying to enter a new task without entering valid name for previous task", () => {
@@ -713,10 +741,11 @@ describe.only("Testing Task List", () => {
     cy.get("#addBtn").click();
 
     cy.on("window:alert", (txt) => {
-      expect(txt).to.contains("You already have a New Task waiting to be customized");
-    }); 
+      expect(txt).to.contains(
+        "You already have a New Task waiting to be customized"
+      );
+    });
   });
-  
 
   it("Work timer: To-Do tab is pink when clicked on; Done tab is greyed", () => {
     //Switch to manual mode
@@ -827,7 +856,6 @@ describe.only("Testing Task List", () => {
   });
 
   it("Successfully move HW1 to done list on clicking the switch button", () => {
-
     cy.get("#addBtn").click();
     cy.get("task-item")
       .shadow()
@@ -843,8 +871,6 @@ describe.only("Testing Task List", () => {
       .find("#name")
       .type("{selectall}{backspace}HW2", { force: true })
       .trigger("change", { force: true });
-
-    
   });
 
   it("Successfuly deletes the first task from task list", () => {
@@ -864,14 +890,13 @@ describe.only("Testing Task List", () => {
       .type("{selectall}{backspace}HW2", { force: true })
       .trigger("change", { force: true });
 
-      cy.get("task-item:nth-of-type(1)")
+    cy.get("task-item:nth-of-type(1)")
       .shadow()
       .find("li")
       .find("#removeTask")
       .click();
 
-      cy.get("#addBtn").click();
-
+    cy.get("#addBtn").click();
   });
 
   it("Successfuly deletes the last task from task list", () => {
@@ -891,67 +916,274 @@ describe.only("Testing Task List", () => {
       .type("{selectall}{backspace}HW2", { force: true })
       .trigger("change", { force: true });
 
-      cy.get("task-item:nth-of-type(2)")
+    cy.get("task-item:nth-of-type(2)")
       .shadow()
       .find("li")
       .find("#removeTask")
       .click();
 
-      cy.get("#addBtn").click();
+    cy.get("#addBtn").click();
+  });
+
+  it("Successfuly moves a task up to the top in the To-Do list", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find("#workTask")
+      .click();
+  });
+
+  it("Edge case: move task up to the top for the top task does nothing in the To-Do list", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find("#workTask")
+      .click();
+
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find("#workTask")
+      .click();
   });
 
   it("Successfuly moves a task up 1 in the To-Do list", () => {
-    /* 
-    cy.get("#done").click();
-    */
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".up-btn")
+      .click();
   });
 
   it("Edge case: move task up button on top task does nothing in the To-Do list", () => {
-    /* 
-    cy.get("#done").click();
-    */
-  });
-  
-  it("Successfuly moves a task up 1 in the To-Do list", () => {
-    /* 
-    cy.get("#done").click();
-    */
-  });
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
 
-  it("Edge case: move task up button on top task does nothing in the To-Do list", () => {
-    /* 
-    cy.get("#done").click();
-    */
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".up-btn")
+      .click();
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".up-btn")
+      .click();
   });
 
   it("Successfuly moves a task down 1 in the To-Do list", () => {
-    /* 
-    cy.get("#done").click();
-    */
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".down-btn")
+      .click();
   });
 
   it("Edge case: move task down button on bottom task does nothing in the To-Do list", () => {
-    /* 
-    cy.get("#done").click();
-    */
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".down-btn")
+      .click();
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".down-btn")
+      .click();
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find(".all-move-btns")
+      .find(".move-btns")
+      .find(".down-btn")
+      .click();
   });
 
-  it("Successfuly switches a task from To-Do to Done", () => {
-    /* 
-    cy.get("#done").click();
-    */
-  });
+  it("Successfuly switches a task from To-Do to Done and Done to To-Do", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
 
-  it("Successfuly switches a task from Done to To-Do", () => {
-    /* 
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find("#moveToNewList")
+      .click();
+
     cy.get("#done").click();
-    */
+    cy.get("#to-do").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#moveToNewList")
+      .click();
   });
 
   it("Successfuly deletes all tasks from task list", () => {
-    /* 
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
     cy.get("#done").click();
-    */
+    cy.get("#clearBtn").click();
+  });
+
+  it("Spamming clear in done tab does not do anything", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#done").click();
+    cy.get("#clearBtn").click();
+    cy.get("#clearBtn").click();
+    cy.get("#clearBtn").click();
   });
 });
 
