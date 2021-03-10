@@ -124,7 +124,7 @@ window.onload = () => {
       } else if (e.target.value > 60) {
         e.target.value = 60;
       }
-      //e.target.value = Math.floor(e.target.value);
+      e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("longInterval", e.target.value);
       if (currentSession === "longBreak") {
         changeTimerTextString(e.target.value.toString());
@@ -143,7 +143,7 @@ window.onload = () => {
       } else if (e.target.value > 60) {
         e.target.value = 60;
       }
-      //e.target.value = Math.floor(e.target.value);
+      e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("shortInterval", e.target.value);
       if (currentSession === "shortBreak") {
         changeTimerTextString(e.target.value.toString());
@@ -162,7 +162,7 @@ window.onload = () => {
       } else if (e.target.value > 60) {
         e.target.value = 60;
       }
-      //e.target.value = Math.floor(e.target.value);
+      e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("workInterval", e.target.value);
       if (currentSession === "work") {
         changeTimerTextString(e.target.value.toString());
