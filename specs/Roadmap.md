@@ -31,28 +31,28 @@ Week 6: <br />
 <br />
 Week 7:<br />
   Development:<br />
-    Timer with Pomodoro Functionality<br />
-    Settings Tabs with Parameter Inputs<br />
+    Timer with Pomodoro Functionality - Completed, need to work on Automatic vs Manual<br />
+    Settings Tabs with Parameter Inputs - Input tab is there but needs some event listeners to change at the right time<br />
   Design:<br />
-    Color Scheme<br />
+    Color Scheme - Three main colors with auto/dark <br />
     Software Architecture<br />
     System Diagrams<br />
     CSS for Timer<br />
 <br />
 Week 8:<br />
   Development:<br />
-    Task List implementation<br />
+    Task List Implementation - Used Shadown Dom Technique from Lab 6 and implemented it<br />
   Design:<br />
-    CSS for Setting<br />
+    CSS for Setting - Moving Setting Icons <br />
 <br />
 Week 9:<br />
   Development:<br />
-    Finalizing all elements/fixing bugs<br />
+    Finalizing all elements/fixing bugs - Done as well as sound implementations <br />
   Design:<br />
-    CSS for Task List<br />
+    CSS for Task List - Done, different bug fixes and icons issue with ad-block<br />
 <br />
-Hoping to be done by week 9<br />
+<br />
 Week 10:<br />
-  Development:<br />
+  Development: Everything is done but big issue is sound implementation<br />
 <br />
-  Design:<br />
+  Design: Different sizes of web browser windows correctly dislay icons still<br />
