@@ -685,6 +685,7 @@ function displayList() {
   }
 }
 /**
+
  * Displays all the task list done on the web page
  */
 function displayListDone() {

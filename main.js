@@ -9,8 +9,6 @@ let manualSwitch = document.getElementById("autoSwitch");
 
 /* Keeps track of manual mode sessions */
 let currentSession = "work"; //work, shortBreak, longBreak
-let reached1Sec = false;
-let reached0Sec = true;
 
 /**
  * Users input of how many short breaks before a long break
@@ -121,7 +119,7 @@ window.onload = () => {
       } else if (e.target.value > 60) {
         e.target.value = 60;
       }
-      e.target.value = Math.floor(e.target.value);
+      //e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("longInterval", e.target.value);
       if (currentSession === "longBreak") {
         changeTimerTextString(e.target.value.toString());
@@ -140,7 +138,7 @@ window.onload = () => {
       } else if (e.target.value > 60) {
         e.target.value = 60;
       }
-      e.target.value = Math.floor(e.target.value);
+      //e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("shortInterval", e.target.value);
       if (currentSession === "shortBreak") {
         changeTimerTextString(e.target.value.toString());
@@ -159,7 +157,7 @@ window.onload = () => {
       } else if (e.target.value > 60) {
         e.target.value = 60;
       }
-      e.target.value = Math.floor(e.target.value);
+      //e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("workInterval", e.target.value);
       if (currentSession === "work") {
         changeTimerTextString(e.target.value.toString());
@@ -176,7 +174,7 @@ window.onload = () => {
     } else if (e.target.value > 60) {
       e.target.value = 60;
     }
-    e.target.value = Math.floor(e.target.value);
+    //e.target.value = Math.floor(e.target.value);
     window.localStorage.setItem("numWorkInput", e.target.value);
     sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
   });
@@ -313,47 +311,6 @@ function updateTimerText() {
   let autoText = document.getElementById("autoText");
   timerText.textContent = toHuman(endAt - Date.now()); // sets timer text on HTML page
   document.title = autoText.innerText + " " + toHuman(endAt - Date.now());
-  if (timerText.textContent === "00:01") {
-    reached1Sec = true;
-  } else if (
-    timerText.textContent === "00:00" ||
-    timerText.textContent === "Stopped!"
-  ) {
-    reached0Sec = true;
-  }
-  
-  // if (reached1Sec && reached0Sec) {
-  //   // Checks if audio is not playing before playing source:
-  //   /* https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-
-  //   request-was-interrupted-by-a-call-to-pause-error */
-  //   let isPlaying =
-  //     sound.currentTime > 0 &&
-  //     !sound.paused &&
-  //     !sound.ended &&
-  //     sound.readyState > sound.HAVE_CURRENT_DATA;
-
-  //   if (currentSession === "work") {
-  //     if (!isPlaying) {
-  //       sound.src = "End Break Alarm.mp3";
-  //       sound.load();
-  //       sound.play();
-  //     }
-  //     //decrementTopTask();
-  //     reached1Sec = false;
-  //     reached0Sec = false;
-  //   } else if (
-  //     currentSession === "shortBreak" ||
-  //     currentSession === "longBreak"
-  //   ) {
-  //     if (!isPlaying) {
-  //       sound.src = "End Work Alarm.mp3";
-  //       sound.load();
-  //       sound.play();
-  //     }
-  //     reached1Sec = false;
-  //     reached0Sec = false;
-  //   }
-  // }
   getCurrentTask();
   // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
@@ -412,14 +369,15 @@ function updateSession() {
       // console.log('i really hope this could fix the manual thing');
       seshClicked("workTime");
     } else {
-      stopTimer();  
+      stopTimer();
       // console.log('how dare u decrement');
       //decrementTopTask();
     }
-    
-    update();
+
+    //update();
     return;
   }
+
 
   if (sessionCountDown > 1) {
     console.log("short break starting");
@@ -439,8 +397,6 @@ function updateSession() {
     } else {
       stopTimer();
     }
-    
-    
   }
 
   // long break
@@ -462,11 +418,10 @@ function updateSession() {
     } else {
       stopTimer();
     }
-    
   }
 
-  // if sessionCountDown is 0, can just be an else statement
-  else{
+  // can just be an else statement
+  else {
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
@@ -476,10 +431,10 @@ function updateSession() {
     }
   }
 
-  // console.log('or is it ya');
-  // update();
   sessionCountDown--;
   console.log("SESH COUNTDOWN: " + sessionCountDown);
+  // console.log('or is it ya');
+  //update();
 }
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
@@ -512,7 +467,7 @@ function officialStart() {
   endAt = Date.now() + 60000 * Number(timerLength); // 60000 min to ms
   countingDown = true;
   updateCircle(timerLength, timerLength);
-  update();
+  //update();
   document.getElementById("StartButton").style.display = "none";
   document.getElementById("StopButton").style.display = "initial";
 }
@@ -553,7 +508,7 @@ function seshClicked(seshID) {
   session.className = "active";
   let autoText = document.getElementById("autoText");
   // hover effect need to address
-  if (seshID == "shortBreak") { 
+  if (seshID == "shortBreak") {
     document.body.classList.add("shortBreak");
     document.body.classList.remove("longBreak", "workTime");
     logo.src = "images/logoShort.svg";

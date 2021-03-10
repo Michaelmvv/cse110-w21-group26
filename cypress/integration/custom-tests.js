@@ -606,42 +606,117 @@ describe.only("Testing Task List", () => {
 
   it("Successfully add task HW1 to task list", () => {
     cy.get("#addBtn").click();
-    //cy.get("task-item").shadow().find('li').find('input #name');//.find('#element').find('#name').clear().type("HW1");
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
   });
 
-  it("Successfully add task HW2 to task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW2");
-    cy.get(".addTaskBtn").click(); */
+  it("Successfully add 2 tasks: HW1 and HW2 to task list", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
   });
 
-  it("Successfully add task HW3 to task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW3");
-    cy.get(".addTaskBtn").click(); */
+  it("Successfully change number of pomo sessions in HW1 to 4", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#taskNum")
+      .find("form")
+      .find("input")
+      .type("{selectall}{backspace}4", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
   });
 
-  it("Display alert when enter empty task", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    //cy.get('#addTaskInput').clear().invoke('value', null);
-    cy.get(".addTaskBtn").click(); */
-    //cy.on('window:alert',(txt)=>{
-    //  expect(txt).to.contains('You need to enter a valid task name.');
-    //})
-  });
+  it("Remove task if only spaces in title, display alert", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace} ", { force: true })
+      .trigger("change", { force: true });
 
-  it("Display alert when enter only spaces in task name", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("    ");
-    cy.get(".addTaskBtn").click();
     cy.on("window:alert", (txt) => {
       expect(txt).to.contains("You need to enter a valid task name.");
-    }); */
+    }); 
   });
+
+  it("Display alert when task name is null aka 0 char", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}", { force: true })
+      .trigger("change", { force: true });
+
+    cy.on("window:alert", (txt) => {
+      expect(txt).to.contains("You need to enter a valid task name.");
+    }); 
+  });
+
+  it("Alert pops up when trying to add duplicate task names (HW1) to task list", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace} HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace} HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.on("window:alert", (txt) => {
+      expect(txt).to.contains("You cannot have the same name as a previous task");
+    }); 
+  });
+
+  it("Alert pops up when trying to enter a new task without entering valid name for previous task", () => {
+    cy.get("#addBtn").click();
+    cy.get("#addBtn").click();
+
+    cy.on("window:alert", (txt) => {
+      expect(txt).to.contains("You already have a New Task waiting to be customized");
+    }); 
+  });
+  
 
   it("Work timer: To-Do tab is pink when clicked on; Done tab is greyed", () => {
     //Switch to manual mode
@@ -752,102 +827,131 @@ describe.only("Testing Task List", () => {
   });
 
   it("Successfully move HW1 to done list on clicking the switch button", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW1");
-    cy.get(".addTaskBtn").click();
-
-    cy.get("#to-do").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(233, 120, 120)");
-    });
-
-    cy.get("#done").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
-    });
-
-    //cy.get('#moveToNewList').click();
-    cy.get("#done").click();
-
-    cy.get("#to-do").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(204, 204, 204)");
-    });
-
-    cy.get("#done").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(233, 120, 120)");
-    }); */
-  });
-
-  it("Alert pops up when trying to add duplicate task names (HW1) to task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW1");
-    cy.get(".addTaskBtn").click();
 
     cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW1");
-    cy.get(".addTaskBtn").click();
-
-    cy.on("window:alert", (txt) => {
-      expect(txt).to.contains(
-        "You cannot have the same name as a previous task"
-      );
-    }); */
-  });
-
-  it("Alert pops up when trying to add duplicate task names (HW2) to task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW2");
-    cy.get(".addTaskBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
 
     cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW2");
-    cy.get(".addTaskBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
 
-    cy.on("window:alert", (txt) => {
-      expect(txt).to.contains(
-        "You cannot have the same name as a previous task"
-      );
-    }); */
+    
   });
 
   it("Successfuly deletes the first task from task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW1");
-    cy.get(".addTaskBtn").click();
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
 
     cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW2");
-    cy.get(".addTaskBtn").click(); */
-    //cy.get('#tasks').shadow().first().find('#removeTask').click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+      cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find("#removeTask")
+      .click();
+
+      cy.get("#addBtn").click();
+
   });
 
   it("Successfuly deletes the last task from task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW2");
-    cy.get(".addTaskBtn").click();
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
 
     cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW1");
-    cy.get(".addTaskBtn").click(); */
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+
+      cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#removeTask")
+      .click();
+
+      cy.get("#addBtn").click();
+  });
+
+  it("Successfuly moves a task up 1 in the To-Do list", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+
+  it("Edge case: move task up button on top task does nothing in the To-Do list", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+  
+  it("Successfuly moves a task up 1 in the To-Do list", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+
+  it("Edge case: move task up button on top task does nothing in the To-Do list", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+
+  it("Successfuly moves a task down 1 in the To-Do list", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+
+  it("Edge case: move task down button on bottom task does nothing in the To-Do list", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+
+  it("Successfuly switches a task from To-Do to Done", () => {
+    /* 
+    cy.get("#done").click();
+    */
+  });
+
+  it("Successfuly switches a task from Done to To-Do", () => {
+    /* 
+    cy.get("#done").click();
+    */
   });
 
   it("Successfuly deletes all tasks from task list", () => {
-    /* cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW2");
-    cy.get(".addTaskBtn").click();
-
-    cy.get("#addBtn").click();
-    cy.get("#addModal").should("exist");
-    cy.get("#addTaskInput").clear().type("HW3");
-    cy.get(".addTaskBtn").click(); */
+    /* 
+    cy.get("#done").click();
+    */
   });
 });
 
