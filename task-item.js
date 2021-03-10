@@ -16,6 +16,7 @@ class taskEntry extends HTMLElement {
       <style>
         .object {
           display: flex;
+          justify-content: space-evenly;
           align-items: center;
           border: 1.5px solid #8a8a8a;
           border-radius: 10px;
@@ -28,12 +29,16 @@ class taskEntry extends HTMLElement {
           background-color: #f2f2f2;
         }
         .Name {
-          padding: 20px;
+          font-size: 20px;
+          padding: 10px;
           margin-right: 10px;
-          width: 50%;
-          max-width: 60%;
+          margin-left: 5px;
+          width: 48%;
+          max-width: 48%;
           text-align:left;
           overflow-x: hide;
+          display: block;
+          border-radius: 5px;
         }
         .Session {
           padding: 20px;
@@ -42,127 +47,163 @@ class taskEntry extends HTMLElement {
           transform: rotate(180deg);
         }
         .all-move-btns{
-          padding-left:15px;
-          padding-right: 15px;
-          width: 10%;
-          max-width: 10%;
+          padding-left:2px;
+          padding-right: 2px;
+          width: 15%;
+          max-width: 15%;
           margin: 0px;
           display: flex;
           flex:2;
         }
         .move-btns{
           width: 50%;
+          max-width:50%;
         }
         .move-btns button{
           background:none;
           outline: none;
-          padding: 10px 0px 10px 0px;
+          padding: 0px;
+          margin: auto;
           border: none;
+          display: block;
         }
-        .move-btns button svg{
-          fill: #a3a3a3;
+        .move-btns button img{
+          opacity: 1;
+          width: 100%;
         }
-        .move-btns button svg:hover{
-          fill: #555;
+        .move-btns button img:hover{
+          opacity: 0.7;
         }
         #workTask{
           background:none;
           outline:none;
-          margin: 0px;
+          margin: auto;
           border:none;
-          padding:10px;
+          display: block;
+          padding: 3px;
+          width: 50%;
         }
-        #workTask svg{
-          fill: #919191;
+        #workTask img{
+          opacity: 1;
+          width: 100%;
         }
-        #workTask svg:hover{
-          fill: #444;
+        #workTask img:hover{
+          opacity:0.7;
+        }
+        #taskNum{
+          width:17%;
+          max-width: 17%; 
         }
         .taskNumber{
-          width:20%;
+          width:50%;
+          max-width: 50%; 
+          display: block;
+          margin: auto;
         }
         #taskSessionNumber{
           font-size: 20px;
           text-align: center;
-          padding: 5px;
+          width:90%;
+          padding: 10px;         
+          max-width: 90%;
+          display: block;
         } 
         #moveToNewList{
-          width: 7.5%
+          width: 10%;
           outline: none;
           background: none;
           border:none;
+          display: block;
         }
         #moveToNewList:hover{
           outline: none;
           background: none;
           border:none;
         }
-        #moveToNewList svg{
-          fill: #919191;
+        #moveToNewList img{
+          opacity: 1;
+          width: 60%;
+          margin: auto;
         }
-        #moveToNewList svg:hover{
-          fill: #444;
+        #moveToNewList img:hover{
+          opacity: 0.7;
         }
         #removeTask {
           border: none;
           background: none;
-          width: 7.5%;
+          width: 10%;
           height: 50%;
           outline: none;
+          display: block;
         }
-        #removeTask svg{
-          fill: #919191;
+        #removeTask img{
+          opacity: 1;
+          width: 50%;
+          margin: auto;
         }
-        #removeTask svg:hover{
-          fill: #555;
+        #removeTask img:hover{
+          opacity: 0.7;
         }
         .first{
           border: 1.5px solid #e97878;
         }
+
+        @media (max-width: 900px) {
+          .Name{
+            width: 30%;
+            font-size: 15px;
+          }
+          .all-move-btns{
+            width: 30%;
+            max-width:30%;
+          }
+          .taskNumber{
+            margin: 0px;
+          }
+          #taskSessionNumber{
+            font-size: 15px;
+          }
+          #removeTask{
+            padding: 0px;
+          }
+          #removeTask img{
+            width: 100%;
+          }
+          #moveToNewList img{
+            width: 100%;
+          }
+          #moveToNewList{
+            padding: 0px;
+          }
+        }
         
       </style>
       
-      <li id="element" class="object">
+      <li id="element" class="object" part="object">
         <div class="all-move-btns">
           <div class="move-btns">
             <button class="up-btn" title="Move up" onclick="" id="upTask">
-              <svg xmlns="images/arrow.svg" 
-                height="50" viewBox="0 0 24 14" width="50" 
-                preserveAspectRatio="xMidYMid slice">
-                <path id="arrow" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M7 14l5-5 5 5z"/>
-              </svg>
+              <img src="images/arrow.svg"></img>
             </button>
             <button class="down-btn" title="Move down" onclick="" id="downTask">
-              <svg xmlns="images/arrow.svg" 
-                height="50" viewBox="0 0 24 14" width="50" 
-                preserveAspectRatio="xMidYMid slice">
-                <path id="arrow" d="M0 0h24v24H0z" fill="none" transform="rotate(180)"/>
-                <path d="M7 14l5-5 5 5z"/>
-              </svg>
+              <img src="images/arrow.svg"></img>
             </button>
           </div>
           <button onclick="" title="Work on This Task" id="workTask"> 
-          <svg xmlns="images/top.svg" height="70" viewBox="0 0 24 24" width="50">
-            <path d="M0 0h24v24H0z" fill="none"/><path d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z"/>
-          </svg>
+            <img src="images/top.svg"></img>
           </button>
         </div>
         <input title="Task Name" class="Name" id="name" type="text" value="Insert Task Name" />
+        <div id="taskNum">
         <form class="taskNumber" action="">
           <input title="Number of Pomodoro Sessions" id="taskSessionNumber" name="taskSessionNumber" type="number" min="1" max="10" value="1">
         </form>
+        </div>
         <button onclick="" title="Move to Other List" id="moveToNewList">
-          <svg xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 24 24" width="50">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
-          </svg>
+          <img src="images/swap.svg"></img>
         </button>
         <button title="Delete" onclick="" id="removeTask">
-          <svg xmlns="images/delete.svg" height="35" viewBox="0 0 24 24" width="35">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-          </svg>
+          <img src="images/delete.svg"></img>
         </button>
       </li>
       `;
@@ -219,10 +260,10 @@ class taskEntry extends HTMLElement {
       });
     }
     let buttonSwitch = this.root.getElementById("moveToNewList");
-    let temp = this.root.getElementById("moveToNewList").querySelector("svg");
+    /*let temp = this.root.getElementById("moveToNewList").querySelector("svg");
     if (description.done == true) {
       temp.setAttribute("xmlns", "");
-    }
+    }*/
     buttonSwitch.addEventListener("click", function () {
       switchList(this, taskName.value);
     });
@@ -288,6 +329,7 @@ function updateStorage(originalName, name, newCount) {
       taskList[i].originalName = name;
       taskList[i].name = name;
       taskList[i].sessions = newCount;
+      taskList[i].seshAll = newCount;
       saveList();
       displayList();
       return;
@@ -297,6 +339,7 @@ function updateStorage(originalName, name, newCount) {
     if (originalName == taskList[i].originalName) {
       taskListDone[i].originalName = name;
       taskListDone[i].sessions = newCount;
+      taskList[i].seshAll = newCount;
       taskList[i].name = name;
       saveList();
       displayListDone();
@@ -310,10 +353,24 @@ function updateStorage(originalName, name, newCount) {
  */
 function getCurrentTask() {
   let taskIndicator = document.getElementById("taskIndicator");
+  let seshLeft = document.getElementById("seshLeft");
   if (taskList.length == 0) {
     taskIndicator.textContent = "";
+    seshLeft.textContent = "";
     return null;
   } else {
+    let curMax = localStorage.getItem("numWorkInput");
+    //console.log(taskList[0].seshAll + " " + taskList[0].sessions);
+    if (taskList[0].seshAll > curMax) {
+      seshLeft.textContent =
+        curMax - (taskList[0].seshAll - taskList[0].sessions) + "/" + curMax;
+      if (curMax - (taskList[0].seshAll - taskList[0].sessions) == 0) {
+        taskList[0].seshAll = taskList[0].sessions;
+      }
+    } else {
+      seshLeft.textContent = taskList[0].sessions + "/" + curMax;
+    }
+    // console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
     if (taskList[0].name.length >= 11) {
       taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";
     } else {
@@ -431,6 +488,8 @@ function removeButton(button, name) {
 function Task(name, sessionCount) {
   this.name = name;
   this.sessions = sessionCount;
+  this.seshAll = sessionCount;
+  //console.log(this.sessions + " HERE " + this.seshAll);
   this.done = false;
   this.sessionTotal = 0;
   this.firstTask = false;
@@ -627,6 +686,7 @@ function displayList() {
   }
 }
 /**
+
  * Displays all the task list done on the web page
  */
 function displayListDone() {

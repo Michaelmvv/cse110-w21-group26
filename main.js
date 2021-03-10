@@ -7,17 +7,21 @@ let timerText;
 
 let manualSwitch = document.getElementById("autoSwitch");
 
+/* Keeps track of manual mode sessions */
+let currentSession = "work"; //work, shortBreak, longBreak
+
 /**
  * Users input of how many short breaks before a long break
  */
-let sessionsBeforeLongBreak = 4; // user selection
+let sessionsBeforeLongBreak;
 
 /**
  * Number of sessions until long break
  * Attributed to bone666138 on freesound.com, audio file Analog Alarm Clock
  * https://freesound.org/people/bone666138/sounds/198841/
  */
-let sessionCountDown = sessionsBeforeLongBreak;
+let sessionCountDown;
+//let sound = document.getElementById("soundTag");
 let sound = new Audio("End Work Alarm.mp3");
 
 /**
@@ -59,11 +63,15 @@ window.onload = () => {
     document.getElementById(
       "longBreakTimeInput"
     ).value = window.localStorage.getItem("longInterval");
+  } else {
+    window.localStorage.setItem("longInterval", 15);
   }
   if (window.localStorage.getItem("shortInterval") !== null) {
     document.getElementById(
       "shortBreakTimeInput"
     ).value = window.localStorage.getItem("shortInterval");
+  } else {
+    window.localStorage.setItem("shortInterval", 5);
   }
   if (window.localStorage.getItem("workInterval") !== null) {
     document.getElementById(
@@ -72,6 +80,16 @@ window.onload = () => {
     document.getElementById("timer").textContent = toHuman(
       parseInt(window.localStorage.getItem("workInterval")) * 60 * 1000
     );
+  } else {
+    window.localStorage.setItem("workInterval", 25);
+  }
+  if (window.localStorage.getItem("numWorkInput") !== null) {
+    document.getElementById("numWork").value = window.localStorage.getItem(
+      "numWorkInput"
+    );
+    sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  } else {
+    window.localStorage.setItem("numWorkInput", 4);
   }
   if (window.localStorage.getItem("savedVolume") !== null) {
     document.getElementById("volume").value = window.localStorage.getItem(
@@ -85,33 +103,86 @@ window.onload = () => {
       window.localStorage.getItem("autoOn").charAt(0) == "t";
   }
 
+  if (window.localStorage.getItem("numWorkInput") === null) {
+    sessionsBeforeLongBreak = 4;
+  } else {
+    sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  }
+
+  sessionCountDown = sessionsBeforeLongBreak;
+
   document
     .getElementById("longBreakTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0) {
-        e.target.value = window.localStorage.getItem("longInterval");
+      countingDown = false;
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("longInterval") === null) {
+          e.target.value = 15;
+        } else {
+          e.target.value = window.localStorage.getItem("longInterval");
+        }
+      } else if (e.target.value > 60) {
+        e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("longInterval", e.target.value);
+      if (currentSession === "longBreak") {
+        changeTimerTextString(e.target.value.toString());
+      }
     });
   document
     .getElementById("shortBreakTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0) {
-        e.target.value = window.localStorage.getItem("shortInterval");
+      countingDown = false;
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("shortInterval") === null) {
+          e.target.value = 5;
+        } else {
+          e.target.value = window.localStorage.getItem("shortInterval");
+        }
+      } else if (e.target.value > 60) {
+        e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("shortInterval", e.target.value);
+      if (currentSession === "shortBreak") {
+        changeTimerTextString(e.target.value.toString());
+      }
     });
   document
     .getElementById("workTimeInput")
     .addEventListener("change", function (e) {
-      if (e.target.value == 0) {
-        e.target.value = window.localStorage.getItem("workInterval");
+      countingDown = false;
+      if (e.target.value <= 0) {
+        if (window.localStorage.getItem("workInterval") === null) {
+          e.target.value = 25;
+        } else {
+          e.target.value = window.localStorage.getItem("workInterval");
+        }
+      } else if (e.target.value > 60) {
+        e.target.value = 60;
       }
       e.target.value = Math.floor(e.target.value);
       window.localStorage.setItem("workInterval", e.target.value);
+      if (currentSession === "work") {
+        changeTimerTextString(e.target.value.toString());
+      }
     });
+
+  document.getElementById("numWork").addEventListener("change", function (e) {
+    if (e.target.value <= 0) {
+      if (window.localStorage.getItem("numWorkInput") === null) {
+        e.target.value = 4;
+      } else {
+        e.target.value = window.localStorage.getItem("numWorkInput");
+      }
+    } else if (e.target.value > 60) {
+      e.target.value = 60;
+    }
+    //e.target.value = Math.floor(e.target.value);
+    window.localStorage.setItem("numWorkInput", e.target.value);
+    sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+  });
 
   document.getElementById("volume").addEventListener("change", function () {
     window.localStorage.setItem(
@@ -149,7 +220,7 @@ window.onload = () => {
  */
 function setWorkTime() {
   timerLength = document.getElementById("workTimeInput").value;
-  sessionCountDown = 0;
+  //sessionCountDown = 0;
   officialStart();
 }
 
@@ -158,9 +229,8 @@ function setWorkTime() {
  */
 function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
-  sessionCountDown = 0;
+  //sessionCountDown = 0;
   officialStart();
-
   // Change color scheme
 }
 
@@ -169,7 +239,7 @@ function setLongTime() {
  */
 function setShortTime() {
   timerLength = document.getElementById("shortBreakTimeInput").value;
-  sessionCountDown = 0;
+  //sessionCountDown = 0;
   officialStart();
 
   // Change color scheme
@@ -193,6 +263,7 @@ function startTutorial() {
   let taskListTutorial = document.getElementById("tasks");
   introJs()
     .onchange(function (targetElement) {
+      dropMenu.style.display = "";
       switch (this._currentStep - 1) {
         case 0:
           dropMenu.style.display = "block";
@@ -200,8 +271,10 @@ function startTutorial() {
         case 1:
           addTaskTutorial();
           getCurrentTask();
+          dropMenu.style.display = "block";
           break;
         case 2:
+          dropMenu.style.display = "block";
           break;
         case 3:
           dropMenu.style.display = "";
@@ -215,10 +288,12 @@ function startTutorial() {
         case 7:
           break;
         case 8:
-          displayListDone();
-          //displayList();
+          displayList();
           break;
         case 9:
+          displayListDone();
+          break;
+        case 10:
           displayList();
           break;
       }
@@ -267,6 +342,8 @@ function update() {
     } else {
       updateSession();
     }
+  } else {
+    return;
   }
 }
 /**
@@ -281,13 +358,27 @@ function updateSession() {
   // short break
   //   0        1     0       1      0      1       0      1
   // 25 min, short, 25 min, short, 25 min, short, 25 min, long
+  manualSwitch = document.getElementById("autoSwitch");
   if (breakState == true) {
     console.log("pomo session starting");
     timerLength = document.getElementById("workTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = false;
+
+    sound.src = "End Break Alarm.mp3";
+    sound.load();
+    sound.play();
+
     // add this for changing color scheme
-    seshClicked("workTime");
+    if (!manualSwitch.checked) {
+      // console.log('i really hope this could fix the manual thing');
+      seshClicked("workTime");
+    } else {
+      stopTimer();
+      // console.log('how dare u decrement');
+      //decrementTopTask();
+    }
+
     update();
     return;
   }
@@ -297,51 +388,57 @@ function updateSession() {
     timerLength = document.getElementById("shortBreakTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
+
+    sound.src = "End Work Alarm.mp3";
+    sound.load();
+    sound.play();
+
     // add this for changing color scheme
-    seshClicked("shortBreak");
-    decrementTopTask();
+    if (!manualSwitch.checked) {
+      // console.log('you only click if it is auto bluh');
+      seshClicked("shortBreak");
+      decrementTopTask();
+    } else {
+      stopTimer();
+    }
   }
 
   // long break
-  else if (sessionCountDown === 1) {
+  else if (sessionCountDown == 1) {
     console.log("Long Break starting, hopefully.");
     timerLength = document.getElementById("longBreakTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
+
+    sound.src = "End Work Alarm.mp3";
+    sound.load();
+    sound.play();
+
     // add this for changing color scheme
-    seshClicked("longBreak");
-    decrementTopTask();
+    if (!manualSwitch.checked) {
+      // console.log('long break lalalala');
+      seshClicked("longBreak");
+      decrementTopTask();
+    } else {
+      stopTimer();
+    }
   }
 
   // can just be an else statement
-  else if (sessionCountDown === 0) {
-    manualSwitch = document.getElementById("autoSwitch");
+  else {
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
     } else {
-      sessionCountDown = sessionsBeforeLongBreak;
-    }
-
-    manualSwitch = document.getElementById("autoSwitch");
-    if (manualSwitch.checked) {
-      console.log("DONEEEEE reset plz");
-      stopTimer();
-    } else {
-      sessionCountDown = sessionsBeforeLongBreak;
-    }
-
-    manualSwitch = document.getElementById("autoSwitch");
-    if (manualSwitch.checked) {
-      console.log("DONEEEEE reset plz");
-      stopTimer();
-    } else {
+      // console.log("WHATTTTT HELPPP");
       sessionCountDown = sessionsBeforeLongBreak;
     }
   }
 
-  update();
   sessionCountDown--;
+  console.log("SESH COUNTDOWN: " + sessionCountDown);
+  // console.log('or is it ya');
+  update();
 }
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
@@ -362,8 +459,8 @@ function toHuman(ms) {
 function startTimer() {
   let autoText = document.getElementById("autoText");
   autoText.innerText = "Work Time";
-  officialStart(); // startTimer only calls officialStart(), replace all calls
-  // of startTimer() with officialStar
+  timerLength = document.getElementById("workTimeInput").value;
+  officialStart();
 }
 
 /**
@@ -371,7 +468,6 @@ function startTimer() {
  * be used to start a new session or reset one
  */
 function officialStart() {
-  // timerLength = document.getElementById('workTimeInput').value;
   endAt = Date.now() + 60000 * Number(timerLength); // 60000 min to ms
   countingDown = true;
   updateCircle(timerLength, timerLength);
@@ -390,7 +486,7 @@ function stopTimer() {
   timerText.textContent = "Stopped!";
 
   if (manualSwitch.checked) {
-    document.getElementById("StartButton").style.display = "";
+    // document.getElementById("StartButton").style.display = "";
   } else {
     document.getElementById("StartButton").innerText = "Start Timer";
     document.getElementById("StartButton").style.display = "";
@@ -421,25 +517,19 @@ function seshClicked(seshID) {
     document.body.classList.remove("longBreak", "workTime");
     logo.src = "images/logoShort.svg";
     autoText.innerText = "Short Break";
-    sound.src = "End Work Alarm.mp3";
-    sound.load();
-    sound.play();
+    currentSession = "shortBreak";
   } else if (seshID == "longBreak") {
     document.body.classList.add("longBreak");
     document.body.classList.remove("shortBreak", "workTime");
     logo.src = "images/logoLong.svg";
     autoText.innerText = "Long Break";
-    sound.src = "End Work Alarm.mp3";
-    sound.load();
-    sound.play();
+    currentSession = "longBreak";
   } else {
     document.body.classList.add("workTime");
     document.body.classList.remove("shortBreak", "longBreak");
     logo.src = "images/logo.svg";
     autoText.innerText = "Work Time";
-    sound.src = "End Break Alarm.mp3";
-    sound.load();
-    sound.play();
+    currentSession = "work";
   }
 }
 
@@ -485,14 +575,23 @@ function darkMode() {
  * and the start button state.
  */
 function autoSwitch() {
+  console.log("switch on");
   manualSwitch = document.getElementById("autoSwitch");
   let workTimerButton = document.getElementById("workTime");
   let shortBreakButton = document.getElementById("longBreak");
   let longBreakButton = document.getElementById("shortBreak");
   let startButton = document.getElementById("StartButton");
   let autoText = document.getElementById("currentSessionAuto");
+  let stopButton = document.getElementById("StopButton");
   if (manualSwitch.checked) {
+    //Manual mode is enabled
     //hide start button
+    if (countingDown) {
+      console.log("Timer running");
+      stopButton.style.display = "block";
+    } else {
+      console.log("Timer not running");
+    }
     startButton.style.display = "none";
     autoText.style.display = "none";
 
@@ -504,6 +603,13 @@ function autoSwitch() {
     workTimerButton.style.display = "none";
     shortBreakButton.style.display = "none";
     longBreakButton.style.display = "none";
+
+    if (countingDown) {
+      stopButton.style.display = "block";
+    } else {
+      startButton.style.display = "block";
+      stopButton.style.display = "none";
+    }
 
     // startButton.style.display = "block";
     autoText.style.display = "block";
@@ -533,4 +639,15 @@ function openModal() {
       modal.style.display = "none";
     }
   };
+}
+
+/**
+ * Easily change the timer text by hardcoding the string (for changing initial display)
+ */
+function changeTimerTextString(num) {
+  if (num.length == 1) {
+    timerText.textContent = "0" + num + ":00";
+  } else if (num.length == 2) {
+    timerText.textContent = num + ":00";
+  }
 }
