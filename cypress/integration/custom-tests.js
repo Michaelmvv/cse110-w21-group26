@@ -599,7 +599,7 @@ describe("Testing Stop Button", () => {
   });
 });
 
-describe.only("Testing Task List", () => {
+describe("Testing Task List", () => {
   beforeEach(() => {
     cy.visit("index.html");
   });
@@ -684,7 +684,7 @@ describe.only("Testing Task List", () => {
       .trigger("change", { force: true });
   });
 
-  it("Remove task if only spaces in title, display alert", () => {
+  it("Remove task if spaces in title, display alert", () => {
     cy.get("#addBtn").click();
     cy.get("task-item")
       .shadow()
