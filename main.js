@@ -228,7 +228,6 @@ function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
   sessionCountDown = 0;
   officialStart();
-
   // Change color scheme
 }
 
@@ -322,40 +321,39 @@ function updateTimerText() {
   ) {
     reached0Sec = true;
   }
+  
+  // if (reached1Sec && reached0Sec) {
+  //   // Checks if audio is not playing before playing source:
+  //   /* https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-
+  //   request-was-interrupted-by-a-call-to-pause-error */
+  //   let isPlaying =
+  //     sound.currentTime > 0 &&
+  //     !sound.paused &&
+  //     !sound.ended &&
+  //     sound.readyState > sound.HAVE_CURRENT_DATA;
 
-  if (reached1Sec && reached0Sec) {
-    // Checks if audio is not playing before playing source:
-    /* https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-
-    request-was-interrupted-by-a-call-to-pause-error */
-    let isPlaying =
-      sound.currentTime > 0 &&
-      !sound.paused &&
-      !sound.ended &&
-      sound.readyState > sound.HAVE_CURRENT_DATA;
-
-    if (currentSession === "work") {
-      if (!isPlaying) {
-        sound.src = "End Break Alarm.mp3";
-        sound.load();
-        sound.play();
-      }
-
-      decrementTopTask();
-      reached1Sec = false;
-      reached0Sec = false;
-    } else if (
-      currentSession === "shortBreak" ||
-      currentSession === "longBreak"
-    ) {
-      if (!isPlaying) {
-        sound.src = "End Work Alarm.mp3";
-        sound.load();
-        sound.play();
-      }
-      reached1Sec = false;
-      reached0Sec = false;
-    }
-  }
+  //   if (currentSession === "work") {
+  //     if (!isPlaying) {
+  //       sound.src = "End Break Alarm.mp3";
+  //       sound.load();
+  //       sound.play();
+  //     }
+  //     //decrementTopTask();
+  //     reached1Sec = false;
+  //     reached0Sec = false;
+  //   } else if (
+  //     currentSession === "shortBreak" ||
+  //     currentSession === "longBreak"
+  //   ) {
+  //     if (!isPlaying) {
+  //       sound.src = "End Work Alarm.mp3";
+  //       sound.load();
+  //       sound.play();
+  //     }
+  //     reached1Sec = false;
+  //     reached0Sec = false;
+  //   }
+  // }
   getCurrentTask();
   // CSS for updating circle - sorry Dev team!
   let ms = (endAt - Date.now()) / 60000;
@@ -378,13 +376,12 @@ function updateTimerText() {
 function update() {
   if (countingDown) {
     if (Date.now() < endAt) {
-      // console.log('inside update()');
-      // console.log(Date.now());
-      // console.log(endAt);
       updateTimerText();
     } else {
       updateSession();
     }
+  } else {
+    return;
   }
 }
 /**
@@ -405,25 +402,21 @@ function updateSession() {
     timerLength = document.getElementById("workTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = false;
-    // Sound plays here
-    let isPlaying =
-      sound.currentTime > 0 &&
-      !sound.paused &&
-      !sound.ended &&
-      sound.readyState > sound.HAVE_CURRENT_DATA;
-    if (!isPlaying) {
-      sound.src = "End Break Alarm.mp3";
-      sound.load();
-      sound.play();
-    }
+
+    sound.src = "End Break Alarm.mp3";
+    sound.load();
+    sound.play();
 
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('i really hope this could fix the manual thing');
       seshClicked("workTime");
     } else {
-      stopTimer();
+      stopTimer();  
+      // console.log('how dare u decrement');
+      //decrementTopTask();
     }
+    
     update();
     return;
   }
@@ -433,84 +426,60 @@ function updateSession() {
     timerLength = document.getElementById("shortBreakTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
-    // Sound plays here
-    let isPlaying =
-      sound.currentTime > 0 &&
-      !sound.paused &&
-      !sound.ended &&
-      sound.readyState > sound.HAVE_CURRENT_DATA;
-    if (!isPlaying) {
-      sound.src = "End Work Alarm.mp3";
-      sound.load();
-      sound.play();
-    }
+
+    sound.src = "End Work Alarm.mp3";
+    sound.load();
+    sound.play();
 
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('you only click if it is auto bluh');
       seshClicked("shortBreak");
+      decrementTopTask();
     } else {
       stopTimer();
     }
-    decrementTopTask();
+    
+    
   }
 
   // long break
-  else if (sessionCountDown === 1) {
+  else if (sessionCountDown == 1) {
     console.log("Long Break starting, hopefully.");
     timerLength = document.getElementById("longBreakTimeInput").value;
     endAt = Date.now() + 60000 * Number(timerLength);
     breakState = true;
-    // Sound plays here
-    let isPlaying =
-      sound.currentTime > 0 &&
-      !sound.paused &&
-      !sound.ended &&
-      sound.readyState > sound.HAVE_CURRENT_DATA;
-    if (!isPlaying) {
-      sound.src = "End Work Alarm.mp3";
-      sound.load();
-      sound.play();
-    }
+
+    sound.src = "End Work Alarm.mp3";
+    sound.load();
+    sound.play();
 
     // add this for changing color scheme
     if (!manualSwitch.checked) {
       // console.log('long break lalalala');
       seshClicked("longBreak");
+      decrementTopTask();
     } else {
       stopTimer();
     }
-    decrementTopTask();
+    
   }
 
-  // can just be an else statement
-  else if (sessionCountDown === 0) {
+  // if sessionCountDown is 0, can just be an else statement
+  else{
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
       stopTimer();
     } else {
+      // console.log("WHATTTTT HELPPP");
       sessionCountDown = sessionsBeforeLongBreak;
     }
-
-    // manualSwitch = document.getElementById("autoSwitch");
-    // if (manualSwitch.checked) {
-    //   console.log("DONEEEEE reset plz");
-    //   stopTimer();
-    // } else {
-    //   sessionCountDown = sessionsBeforeLongBreak;
-    // }
-
-    // manualSwitch = document.getElementById("autoSwitch");
-    // if (manualSwitch.checked) {
-    //   console.log("DONEEEEE reset plz");
-    //   stopTimer();
-    // } else {
-    //   sessionCountDown = sessionsBeforeLongBreak;
-    // }
   }
 
-  update();
+  // console.log('or is it ya');
+  // update();
   sessionCountDown--;
+  console.log("SESH COUNTDOWN: " + sessionCountDown);
 }
 // Insperation from
 // https://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
@@ -558,7 +527,7 @@ function stopTimer() {
   timerText.textContent = "Stopped!";
 
   if (manualSwitch.checked) {
-    document.getElementById("StartButton").style.display = "";
+    // document.getElementById("StartButton").style.display = "";
   } else {
     document.getElementById("StartButton").innerText = "Start Timer";
     document.getElementById("StartButton").style.display = "";
@@ -584,33 +553,24 @@ function seshClicked(seshID) {
   session.className = "active";
   let autoText = document.getElementById("autoText");
   // hover effect need to address
-  if (seshID == "shortBreak") {
+  if (seshID == "shortBreak") { 
     document.body.classList.add("shortBreak");
     document.body.classList.remove("longBreak", "workTime");
     logo.src = "images/logoShort.svg";
     autoText.innerText = "Short Break";
     currentSession = "shortBreak";
-    //sound.src = "End Work Alarm.mp3";
-    //sound.load();
-    //sound.play();
   } else if (seshID == "longBreak") {
     document.body.classList.add("longBreak");
     document.body.classList.remove("shortBreak", "workTime");
     logo.src = "images/logoLong.svg";
     autoText.innerText = "Long Break";
     currentSession = "longBreak";
-    //sound.src = "End Work Alarm.mp3";
-    //sound.load();
-    //sound.play();
   } else {
     document.body.classList.add("workTime");
     document.body.classList.remove("shortBreak", "longBreak");
     logo.src = "images/logo.svg";
     autoText.innerText = "Work Time";
     currentSession = "work";
-    //sound.src = "End Break Alarm.mp3";
-    //sound.load();
-    //sound.play();
   }
 }
 
@@ -673,7 +633,7 @@ function autoSwitch() {
     } else {
       console.log("Timer not running");
     }
-    //startButton.style.display = "none";
+    startButton.style.display = "none";
     autoText.style.display = "none";
 
     workTimerButton.style.display = "block";

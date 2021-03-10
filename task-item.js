@@ -329,6 +329,7 @@ function updateStorage(originalName, name, newCount) {
       taskList[i].originalName = name;
       taskList[i].name = name;
       taskList[i].sessions = newCount;
+      taskList[i].seshAll = newCount;
       saveList();
       displayList();
       return;
@@ -338,6 +339,7 @@ function updateStorage(originalName, name, newCount) {
     if (originalName == taskList[i].originalName) {
       taskListDone[i].originalName = name;
       taskListDone[i].sessions = newCount;
+      taskList[i].seshAll = newCount;
       taskList[i].name = name;
       saveList();
       displayListDone();
@@ -357,8 +359,16 @@ function getCurrentTask() {
     seshLeft.textContent = "";
     return null;
   } else {
-    seshLeft.textContent =
-      taskList[0].sessions + "/" + localStorage.getItem("numWorkInput");
+    let curMax = localStorage.getItem("numWorkInput");
+    console.log(taskList[0].seshAll + " " + taskList[0].sessions);
+    if(taskList[0].seshAll > curMax){
+      seshLeft.textContent = curMax - (taskList[0].seshAll-taskList[0].sessions) + "/" + curMax;
+      if(curMax - (taskList[0].seshAll-taskList[0].sessions) == 0){
+        taskList[0].seshAll = taskList[0].sessions;
+      }
+    }else{
+      seshLeft.textContent = taskList[0].sessions + "/" + curMax;
+    }
     // console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
     if (taskList[0].name.length >= 11) {
       taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";
@@ -477,6 +487,8 @@ function removeButton(button, name) {
 function Task(name, sessionCount) {
   this.name = name;
   this.sessions = sessionCount;
+  this.seshAll = sessionCount;
+  console.log(this.sessions + " HERE " + this.seshAll);
   this.done = false;
   this.sessionTotal = 0;
   this.firstTask = false;
