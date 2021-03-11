@@ -111,7 +111,8 @@ window.onload = () => {
 
   sessionCountDown = sessionsBeforeLongBreak;
   let seshLeft = document.getElementById("seshLeft");
-  seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  seshLeft.textContent = 
+    sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
 
   document
     .getElementById("longBreakTimeInput")
