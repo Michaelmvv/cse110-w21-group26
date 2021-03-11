@@ -9,7 +9,8 @@ html * {
 
 head,
 body {
-  background: radial-gradient(
+  background: #f5f5f5;
+  /*background: radial-gradient(
     closest-side at 50% 50%,
     rgba(255, 255, 255),
     rgba(150, 150, 150, 0.15)
@@ -515,12 +516,14 @@ body.dark-mode text {
 /* CSS FOR SHORT BREAK */
 body.shortBreak button {
   background-color: #5883ce;
+  opacity: 0.95;
 }
 body.shortBreak button:hover {
   background-color: #396dc6;
 }
 body.shortBreak #shortBreak {
-  background-color: #c96567;
+  background-color: #3d598a;
+  opacity: 0.95;
 }
 body.shortBreak #addTaskInput {
   border-color: #5883ce;
@@ -533,13 +536,15 @@ body.shortBreak #pointerProgress {
 /* CSS FOR LONG BREAK */
 body.longBreak button {
   background-color: #2947b5;
+  opacity: 0.9;
 }
 body.longBreak button:hover {
   background-color: #213991;
+  opacity: 0.95;
 }
-
 body.longBreak #longBreak {
-  background-color: #c96567;
+  background-color: #213992;
+  opacity: 0.95;
 }
 body.longBreak #addTaskInput {
   border-color: #2947b5;
@@ -580,4 +585,17 @@ body.longBreak .taskTabs button.activeList {
 }
 body.workTime .taskTabs button.activeList {
   background-color: #e97878;
+}
+
+
+body.shortBreak task-item::part(object first){
+  border: #5883ce solid 2px;
+}
+
+body.longBreak task-item::part(object first){
+  border: #2947b5 solid 2px;
+}
+
+body.workTime task-item::part(object first){
+  border: #e97878 solid 2px;
 }

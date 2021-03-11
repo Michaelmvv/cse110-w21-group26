@@ -14,6 +14,15 @@ class taskEntry extends HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `  
       <style>
+        button:hover{
+          cursor: pointer;
+        }
+        button img{
+          opacity: 0.7;
+        }
+        button img:hover{
+          opacity: 1;
+        }
         .object {
           display: flex;
           justify-content: space-evenly;
@@ -68,11 +77,7 @@ class taskEntry extends HTMLElement {
           display: block;
         }
         .move-btns button img{
-          opacity: 1;
           width: 100%;
-        }
-        .move-btns button img:hover{
-          opacity: 0.7;
         }
         #workTask{
           background:none;
@@ -84,11 +89,7 @@ class taskEntry extends HTMLElement {
           width: 50%;
         }
         #workTask img{
-          opacity: 1;
           width: 100%;
-        }
-        #workTask img:hover{
-          opacity:0.7;
         }
         #taskNum{
           width:17%;
@@ -121,12 +122,8 @@ class taskEntry extends HTMLElement {
           border:none;
         }
         #moveToNewList img{
-          opacity: 1;
           width: 60%;
           margin: auto;
-        }
-        #moveToNewList img:hover{
-          opacity: 0.7;
         }
         #removeTask {
           border: none;
@@ -137,12 +134,8 @@ class taskEntry extends HTMLElement {
           display: block;
         }
         #removeTask img{
-          opacity: 1;
           width: 50%;
           margin: auto;
-        }
-        #removeTask img:hover{
-          opacity: 0.7;
         }
         .first{
           border: 1.5px solid #e97878;
@@ -200,7 +193,7 @@ class taskEntry extends HTMLElement {
         </form>
         </div>
         <button onclick="" title="Move to Other List" id="moveToNewList">
-          <img src="images/swap.svg"></img>
+          <img id="swapList" src="images/check.svg"/>
         </button>
         <button title="Delete" onclick="" id="removeTask">
           <img src="images/delete.svg"></img>
@@ -251,9 +244,12 @@ class taskEntry extends HTMLElement {
       removeButton(this, taskName.value);
     });
     let buttonWork = this.root.getElementById("workTask");
+    let swapList = this.root.getElementById("swapList");
     if (description.done == true) {
       buttonWork.style.display = "none";
+      swapList.src = "images/undo.svg";
     } else {
+      swapList.src = "images/check.svg";
       buttonWork.style.display = "block";
       buttonWork.addEventListener("click", function () {
         workOnThisButton(this, taskName.value);
@@ -277,6 +273,7 @@ class taskEntry extends HTMLElement {
     });
     if (description.firstTask === true) {
       this.root.getElementById("element").classList.add("first");
+      this.root.getElementById("element").part.add("first");
     }
     getCurrentTask();
   }
@@ -353,24 +350,12 @@ function updateStorage(originalName, name, newCount) {
  */
 function getCurrentTask() {
   let taskIndicator = document.getElementById("taskIndicator");
-  let seshLeft = document.getElementById("seshLeft");
+  //  let seshLeft = document.getElementById("seshLeft");
   if (taskList.length == 0) {
     taskIndicator.textContent = "";
-    seshLeft.textContent = "";
+    //    seshLeft.textContent = "";
     return null;
   } else {
-    let curMax = localStorage.getItem("numWorkInput");
-    //console.log(taskList[0].seshAll + " " + taskList[0].sessions);
-    if (taskList[0].seshAll > curMax) {
-      seshLeft.textContent =
-        curMax - (taskList[0].seshAll - taskList[0].sessions) + "/" + curMax;
-      if (curMax - (taskList[0].seshAll - taskList[0].sessions) == 0) {
-        taskList[0].seshAll = taskList[0].sessions;
-      }
-    } else {
-      seshLeft.textContent = taskList[0].sessions + "/" + curMax;
-    }
-    // console.log(taskList[0].sessions + " " + taskList[0].sessionTotal);
     if (taskList[0].name.length >= 11) {
       taskIndicator.textContent = taskList[0].name.substring(0, 10) + "...";
     } else {

@@ -213,10 +213,10 @@ describe("Test Long Break Button", () => {
     cy.get("#timer").contains("15:00");
   });
 
-  it("When Long Break is clicked, check if long break button turns dark pink", () => {
+  it("When Long Break is clicked, check if long break button turns active dark blue", () => {
     cy.get("#longBreak").click().should("have.class", "active");
     cy.get("#longBreak").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(201, 101, 103)");
+      expect($el).to.have.css("background-color", "rgb(33, 57, 146)");
     });
   });
 
@@ -394,10 +394,10 @@ describe("Test Short Break Button", () => {
     cy.get("#timer").contains("05:00");
   });
 
-  it("When Short Break is clicked, check if short break button changes to dark pink", () => {
+  it("When Short Break is clicked, check if short break button changes to active light blue", () => {
     cy.get("#shortBreak").click().should("have.class", "active");
     cy.get("#shortBreak").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(201, 101, 103)");
+      expect($el).to.have.css("background-color", "rgb(61, 89, 138)");
     });
   });
 
@@ -574,7 +574,7 @@ describe("Testing Stop Button", () => {
     cy.visit("index.html");
   });
 
-  it("When Stop button is clicked, timer changes to Stopped!", () => {
+  it("When Stop button is clicked, timer changes to Stopped", () => {
     cy.get("#StopButton").should(($el) => {
       expect($el).to.have.css("display", "none");
     });
@@ -595,7 +595,7 @@ describe("Testing Stop Button", () => {
       expect($el).to.have.css("display", "none");
     });
 
-    cy.get("#timer").contains("Stopped!");
+    cy.get("#timer").contains("Stopped");
   });
 });
 
@@ -1198,7 +1198,7 @@ describe("Testing default time passed check from Work to Short Break (automatic)
     cy.tick(1502000); // 25 minutes and 2 seconds
 
     cy.get("#shortBreak").should(($el) => {
-      expect($el).to.have.css("background-color", "rgb(201, 101, 103)");
+      expect($el).to.have.css("background-color", "rgb(61, 89, 138)");
     });
 
     //cy.clock().invoke('restore');
