@@ -247,9 +247,9 @@ class taskEntry extends HTMLElement {
     let swapList = this.root.getElementById("swapList");
     if (description.done == true) {
       buttonWork.style.display = "none";
-      swapList.src="images/undo.svg";
+      swapList.src = "images/undo.svg";
     } else {
-      swapList.src="images/check.svg";
+      swapList.src = "images/check.svg";
       buttonWork.style.display = "block";
       buttonWork.addEventListener("click", function () {
         workOnThisButton(this, taskName.value);
@@ -276,7 +276,6 @@ class taskEntry extends HTMLElement {
       this.root.getElementById("element").part.add("first");
     }
     getCurrentTask();
-
   }
 }
 
@@ -351,10 +350,10 @@ function updateStorage(originalName, name, newCount) {
  */
 function getCurrentTask() {
   let taskIndicator = document.getElementById("taskIndicator");
-//  let seshLeft = document.getElementById("seshLeft");
+  //  let seshLeft = document.getElementById("seshLeft");
   if (taskList.length == 0) {
     taskIndicator.textContent = "";
-//    seshLeft.textContent = "";
+    //    seshLeft.textContent = "";
     return null;
   } else {
     if (taskList[0].name.length >= 11) {

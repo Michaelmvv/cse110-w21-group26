@@ -111,8 +111,8 @@ window.onload = () => {
 
   sessionCountDown = sessionsBeforeLongBreak;
   let seshLeft = document.getElementById("seshLeft");
-  seshLeft.textContent = 
-    sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  seshLeft.textContent =
+    sessionCountDown + "/" + localStorage.getItem("numWorkInput");
 
   document
     .getElementById("longBreakTimeInput")
@@ -226,10 +226,11 @@ function setWorkTime() {
   timerLength = document.getElementById("workTimeInput").value;
   //sessionCountDown = 0;
   let seshLeft = document.getElementById("seshLeft");
-  if(sessionCountDown === 0){
-    sessionCountDown =sessionsBeforeLongBreak;
+  if (sessionCountDown === 0) {
+    sessionCountDown = sessionsBeforeLongBreak;
   }
-  seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  seshLeft.textContent =
+    sessionCountDown + "/" + localStorage.getItem("numWorkInput");
   workTimeManual = true;
   officialStart();
 }
@@ -240,7 +241,7 @@ function setWorkTime() {
 function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
   //sessionCountDown = 0;
-  workTimeManual = false; 
+  workTimeManual = false;
   officialStart();
   // Change color scheme
 }
@@ -251,7 +252,7 @@ function setLongTime() {
 function setShortTime() {
   timerLength = document.getElementById("shortBreakTimeInput").value;
   //sessionCountDown = 0;
-  workTimeManual = false; 
+  workTimeManual = false;
   officialStart();
 
   // Change color scheme
@@ -372,9 +373,13 @@ function updateSession() {
   // 25 min, short, 25 min, short, 25 min, short, 25 min, long
 
   let seshLeft = document.getElementById("seshLeft");
-  if(sessionCountDown === 0 && (!manualSwitch.checked || workTimeManual == true)){
+  if (
+    sessionCountDown === 0 &&
+    (!manualSwitch.checked || workTimeManual == true)
+  ) {
     sessionCountDown = sessionsBeforeLongBreak;
-    seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+    seshLeft.textContent =
+      sessionCountDown + "/" + localStorage.getItem("numWorkInput");
   }
 
   manualSwitch = document.getElementById("autoSwitch");
@@ -394,10 +399,11 @@ function updateSession() {
       seshClicked("workTime");
     } else {
       stopTimer();
-      if(workTimeManual == true){
+      if (workTimeManual == true) {
         sessionCountDown--;
       }
-      seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+      seshLeft.textContent =
+        sessionCountDown + "/" + localStorage.getItem("numWorkInput");
       // console.log('how dare u decrement');
       //decrementTopTask();
     }
@@ -447,9 +453,9 @@ function updateSession() {
   }
 
   // can just be an else statement
-  /* 03/10 - I placed if statment top to catch 0 otherwise it decrements too much 
+  /* 03/10 - I placed if statment top to catch 0 otherwise it decrements too much
    * Is below still needed? IDK. maybe for manual?
-  */
+   */
   else {
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
@@ -460,10 +466,11 @@ function updateSession() {
     }
   }
 
-  if(!manualSwitch.checked || workTimeManual == true){
+  if (!manualSwitch.checked || workTimeManual == true) {
     sessionCountDown--;
   }
-  seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  seshLeft.textContent =
+    sessionCountDown + "/" + localStorage.getItem("numWorkInput");
   // console.log('or is it ya');
   update();
 }
@@ -522,8 +529,8 @@ function stopTimer() {
   document.getElementById("StopButton").style.display = "none";
 
   //sessionCountDown = sessionsBeforeLongBreak;
- // let seshLeft = document.getElementById("seshLeft");
- // seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  // let seshLeft = document.getElementById("seshLeft");
+  // seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput");
 }
 
 /**
