@@ -110,6 +110,8 @@ window.onload = () => {
   }
 
   sessionCountDown = sessionsBeforeLongBreak;
+  let seshLeft = document.getElementById("seshLeft");
+  seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
 
   document
     .getElementById("longBreakTimeInput")
@@ -218,9 +220,16 @@ window.onload = () => {
 /**
  * This is called when the "Work Timer" button is pressed
  */
+let workTimeManual = false;
 function setWorkTime() {
   timerLength = document.getElementById("workTimeInput").value;
   //sessionCountDown = 0;
+  let seshLeft = document.getElementById("seshLeft");
+  if(sessionCountDown === 0){
+    sessionCountDown =sessionsBeforeLongBreak;
+  }
+  seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  workTimeManual = true;
   officialStart();
 }
 
@@ -230,6 +239,7 @@ function setWorkTime() {
 function setLongTime() {
   timerLength = document.getElementById("longBreakTimeInput").value;
   //sessionCountDown = 0;
+  workTimeManual = false; 
   officialStart();
   // Change color scheme
 }
@@ -240,6 +250,7 @@ function setLongTime() {
 function setShortTime() {
   timerLength = document.getElementById("shortBreakTimeInput").value;
   //sessionCountDown = 0;
+  workTimeManual = false; 
   officialStart();
 
   // Change color scheme
@@ -358,6 +369,13 @@ function updateSession() {
   // short break
   //   0        1     0       1      0      1       0      1
   // 25 min, short, 25 min, short, 25 min, short, 25 min, long
+
+  let seshLeft = document.getElementById("seshLeft");
+  if(sessionCountDown === 0 && (!manualSwitch.checked || workTimeManual == true)){
+    sessionCountDown = sessionsBeforeLongBreak;
+    seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
+  }
+
   manualSwitch = document.getElementById("autoSwitch");
   if (breakState == true) {
     console.log("pomo session starting");
@@ -375,10 +393,13 @@ function updateSession() {
       seshClicked("workTime");
     } else {
       stopTimer();
+      if(workTimeManual == true){
+        sessionCountDown--;
+      }
+      seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
       // console.log('how dare u decrement');
       //decrementTopTask();
     }
-
     update();
     return;
   }
@@ -425,6 +446,9 @@ function updateSession() {
   }
 
   // can just be an else statement
+  /* 03/10 - I placed if statment top to catch 0 otherwise it decrements too much 
+   * Is below still needed? IDK. maybe for manual?
+  */
   else {
     if (manualSwitch.checked) {
       console.log("DONEEEEE reset plz");
@@ -435,8 +459,10 @@ function updateSession() {
     }
   }
 
-  sessionCountDown--;
-  console.log("SESH COUNTDOWN: " + sessionCountDown);
+  if(!manualSwitch.checked || workTimeManual == true){
+    sessionCountDown--;
+  }
+  seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
   // console.log('or is it ya');
   update();
 }
@@ -483,7 +509,7 @@ function stopTimer() {
   sound.pause();
   countingDown = false;
   manualSwitch = document.getElementById("autoSwitch");
-  timerText.textContent = "Stopped!";
+  timerText.textContent = "Stopped";
 
   if (manualSwitch.checked) {
     // document.getElementById("StartButton").style.display = "";
@@ -494,7 +520,9 @@ function stopTimer() {
 
   document.getElementById("StopButton").style.display = "none";
 
-  sessionCountDown = sessionsBeforeLongBreak;
+  //sessionCountDown = sessionsBeforeLongBreak;
+ // let seshLeft = document.getElementById("seshLeft");
+ // seshLeft.textContent = sessionCountDown + "/" + localStorage.getItem("numWorkInput"); 
 }
 
 /**

@@ -245,14 +245,20 @@
           <text
             id="taskIndicator"
             text-anchor="middle"
-            y="-55px"
+            y="-50px"
+            font-size="16px"
             data-intro="Here is the name of the current task you are working on!"
           >
             No Task
           </text>
+
+          <text id="timer" text-anchor="middle" alignment-baseline="middle">
+            25:00
+          </text>
+
           <text
             id="seshLeft"
-            y="-40px"
+            y="50px"
             font-size="14px"
             text-anchor="middle"
             alignment-baseline="middle"
@@ -260,9 +266,7 @@
           >
             Holdeer
           </text>
-          <text id="timer" text-anchor="middle" alignment-baseline="middle">
-            25:00
-          </text>
+
           <!-- This rotates where the dot on the progress bar is positioned (if no -90, dot is on 3:00 if circle is clock ) -->
           <g transform="rotate(-90)">
             <circle r="100" id="circleProgress" class="workCircle" />
