@@ -173,16 +173,16 @@ window.onload = () => {
     });
 
   document.getElementById("numWork").addEventListener("change", function (e) {
-    if (e.target.value <= 0) {
+    if (e.target.value <= 4) {
       if (window.localStorage.getItem("numWorkInput") === null) {
         e.target.value = 4;
       } else {
         e.target.value = window.localStorage.getItem("numWorkInput");
       }
-    } else if (e.target.value > 60) {
-      e.target.value = 60;
+    } else if (e.target.value > 10) {
+      e.target.value = 10;
     }
-    //e.target.value = Math.floor(e.target.value);
+    e.target.value = Math.floor(e.target.value);
     window.localStorage.setItem("numWorkInput", e.target.value);
     sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
   });
