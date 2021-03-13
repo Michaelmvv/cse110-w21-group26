@@ -185,6 +185,10 @@ window.onload = () => {
     e.target.value = Math.floor(e.target.value);
     window.localStorage.setItem("numWorkInput", e.target.value);
     sessionsBeforeLongBreak = window.localStorage.getItem("numWorkInput");
+    sessionCountDown = sessionsBeforeLongBreak;
+    let seshLeft = document.getElementById("seshLeft");
+    seshLeft.textContent =
+      sessionCountDown + "/" + localStorage.getItem("numWorkInput");
   });
 
   document.getElementById("volume").addEventListener("change", function () {
