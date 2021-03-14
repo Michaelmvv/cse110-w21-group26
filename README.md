@@ -35,4 +35,6 @@
 
 
 # Sources
- - [Circle Timer](https://www.cssscript.com/circular-countdown-timer-javascript-css3/)
+ - [Circle Timer Reference](https://www.cssscript.com/circular-countdown-timer-javascript-css3/)
+ - [Button Symbols](https://material.io/resources/icons/?style=baseline)
+ - [Sounds](https://freesound.org/people/fennelliott/sounds/379419/)
