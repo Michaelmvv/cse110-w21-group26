@@ -173,7 +173,7 @@ window.onload = () => {
     });
 
   document.getElementById("numWork").addEventListener("change", function (e) {
-    if (e.target.value <= 4) {
+    if (e.target.value < 4) {
       if (window.localStorage.getItem("numWorkInput") === null) {
         e.target.value = 4;
       } else {
