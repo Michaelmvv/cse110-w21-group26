@@ -132,6 +132,10 @@ window.onload = () => {
       if (currentSession === "longBreak") {
         changeTimerTextString(e.target.value.toString());
       }
+      document.getElementById("StopButton").style.display = "none";
+      if (!manualSwitch.checked) {
+        document.getElementById("StartButton").style.display = "block";
+      }
     });
   document
     .getElementById("shortBreakTimeInput")
@@ -151,6 +155,10 @@ window.onload = () => {
       if (currentSession === "shortBreak") {
         changeTimerTextString(e.target.value.toString());
       }
+      document.getElementById("StopButton").style.display = "none";
+      if (!manualSwitch.checked) {
+        document.getElementById("StartButton").style.display = "block";
+      }
     });
   document
     .getElementById("workTimeInput")
@@ -169,6 +177,10 @@ window.onload = () => {
       window.localStorage.setItem("workInterval", e.target.value);
       if (currentSession === "work") {
         changeTimerTextString(e.target.value.toString());
+      }
+      document.getElementById("StopButton").style.display = "none";
+      if (!manualSwitch.checked) {
+        document.getElementById("StartButton").style.display = "block";
       }
     });
 
@@ -375,7 +387,6 @@ function updateSession() {
   // short break
   //   0        1     0       1      0      1       0      1
   // 25 min, short, 25 min, short, 25 min, short, 25 min, long
-
   let seshLeft = document.getElementById("seshLeft");
   if (
     sessionCountDown === 0 &&
@@ -498,6 +509,8 @@ function startTimer() {
   let autoText = document.getElementById("autoText");
   autoText.innerText = "Work Time";
   timerLength = document.getElementById("workTimeInput").value;
+  seshClicked("workTime");
+  breakState = false;
   officialStart();
 }
 
@@ -518,7 +531,9 @@ function officialStart() {
  * Stops timer and resets button text to starting contents
  */
 function stopTimer() {
-  sound.pause();
+  setTimeout(function () {
+    sound.pause();
+  }, 2000);
   countingDown = false;
   manualSwitch = document.getElementById("autoSwitch");
   timerText.textContent = "Stopped";
@@ -640,6 +655,13 @@ function autoSwitch() {
     longBreakButton.style.display = "block";
   } else {
     //hide top buttons
+    if (currentSession == "workBreak") {
+      breakState = false;
+    }
+    if (currentSession == "shortBreak" || currentSession == "longBreak") {
+      breakState = true;
+    }
+
     workTimerButton.style.display = "none";
     shortBreakButton.style.display = "none";
     longBreakButton.style.display = "none";
