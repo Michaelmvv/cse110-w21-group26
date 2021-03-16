@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomo Timer</title>
-    <!-- <script src="main.js"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link href="main.css" rel="stylesheet" />
@@ -17,12 +16,6 @@
       integrity="sha512-NC1GtvckWJQLUHrSQp5+4ydIv6gW8kfP4Ewrwv8Y1xU1h9GTTaXDTnWl+kjHcZNCaX8ySFNSpPmtt/B4SUaDsQ=="
       crossorigin="anonymous"
     ></script>
-    <!-- <link
-      rel="prefetch"
-      href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/introjs.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    /> -->
     <link 
       rel="stylesheet" 
       href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/3.3.1/introjs.min.css" 
@@ -35,7 +28,6 @@
       <h1>Your browser does not support JavaScript.</h1>
       <p>Your Pomodoro Timer will not work without JavaScript.</p>
     </noscript>
-    <!-- <audio id="soundTag" src="End Work Alarm.mp3" preload="auto"></audio> -->
     <!-- logo -->
     <div class="settingAndLogo">
       <div class="logo">
@@ -211,7 +203,6 @@
             </div>
           </div>
         </div>
-        <!-- Will Be in settings Later -->
       </div>
     </div>
 
@@ -232,15 +223,6 @@
         Long Break
       </button>
     </div>
-
-    <!-- <div style="margin: auto; width: 50%; padding: 10px; text-align: center">
-      <text
-        text-anchor="middle"
-        alignment-baseline="middle"
-        style="justify-content: center; text-align: center"
-        >Current Task</text
-      >
-    </div> -->
 
     <div
       class="circle"
@@ -294,7 +276,6 @@
     </div>
 
     <div class="main-timer">
-      <!--<p id="timer">25:00</p>-->
       <p id="sessionsLeftBeforeLongBreak"></p>
       <p id="CurrentActivity"></p>
     </div>
@@ -303,7 +284,6 @@
       <button id="StartButton">Start</button>
       <button id="StopButton">Stop</button>
     </div>
-    <!-- <h2 style="text-align: center">PomoList</h2> -->
     <div class="task-list">
       <div class="taskTabs">
         <button
@@ -361,7 +341,6 @@
                 min="1"
                 max="10"
                 value="1"
-                pattern="^([1-9]|10)$"
               />
             </div>
             <button onclick="addTask()" class="addTaskBtn">Create Task</button>

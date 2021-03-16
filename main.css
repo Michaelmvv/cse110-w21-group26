@@ -10,12 +10,6 @@ html * {
 head,
 body {
   background: #f5f5f5;
-  /*background: radial-gradient(
-    closest-side at 50% 50%,
-    rgba(255, 255, 255),
-    rgba(150, 150, 150, 0.15)
-  );
-  /* width: 85%; */
 }
 
 body.dark-mode {
@@ -42,12 +36,6 @@ body.dark-mode #tutorialBtn svg:hover {
   fill: #d9d9d9;
 }
 
-/*
-linear-gradient(to bottom, #666, #555, #666)
-body.dark-mode #tasks>*::part(.object){
-  background: red;
-}
-*/
 
 h2 {
   margin-top: 50px;
@@ -55,14 +43,12 @@ h2 {
 }
 button {
   background-color: #e97878;
-  /* width: 10%; */
   border: none;
   outline: none;
   color: #ffffff;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  /* font-size: 10; */
   border-radius: 10px;
   font-size: 20px;
   padding: 15px 10px;
@@ -76,7 +62,7 @@ button:hover {
 label {
   margin: 0 10px;
 }
-/* ------------------------------------------- */
+
 /* classes */
 .settingAndLogo {
   display: flex;
@@ -121,9 +107,6 @@ label {
 .dropdown:hover .dropdown-content {
   display: block;
 }
-/* .show {
-  display: block;
-} */
 
 .dropdown-item {
   display: flex;
@@ -136,8 +119,6 @@ label {
 }
 
 .sessions {
-  /* text-align: center; */
-  /* position: static; */
   text-align: center;
   position: static;
   display: flex;
@@ -274,7 +255,6 @@ input:checked + .slider:before {
   text-align: center;
 }
 
-/* ------------------------------------------- */
 /* IDs */
 #tutorialBtn {
   background: none;
@@ -283,10 +263,6 @@ input:checked + .slider:before {
   padding: 0 10px;
   margin: 50px 10px 10px;
 }
-
-/* #tutorialBtn svg {
-  fill: #555;
-} */
 
 #tutorialBtn svg:hover {
   fill: #333;
@@ -422,19 +398,10 @@ body.dark-mode text {
   text-align: center;
   padding: 14px 16px;
   flex: 1;
-  /* transition: 0.3s; */
   margin: auto;
   border-radius: unset;
   font-size: initial;
 }
-
-/* .taskTabs button:hover {
-  background-color: #e9888888;
-}
-
-.taskTabs button.activeList {
-  background-color: #e97878;
-} */
 
 .modal {
   padding-top: 10px;
@@ -449,7 +416,6 @@ body.dark-mode text {
   background-color: #ffffff;
   border: 1px solid #888;
   border-radius: 10px;
-  /* margin-top: -70%; */
 }
 
 .modal button {
@@ -460,9 +426,7 @@ body.dark-mode text {
   color: #6f6f6f;
   width: 90%;
   display: inherit;
-  /* flex: 1; */
   margin: auto;
-  /* overflow-y: initial; */
 }
 
 .modal-content div {
