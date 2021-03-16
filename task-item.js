@@ -1,11 +1,22 @@
 /* global saveList, displayList, decrementTopTask, getList, displayListDone, introJs, getCurrentTask, removeTask, addTaskTutorial */
-/**Variable storing the list of tasks as a JSON object */
+
+/* Variable storing the list of tasks as a JSON object */
 let taskList = [];
+
+/* Variable storing the list of completed tasks as a JSON object */
 let taskListDone = [];
+
+/* Keeps track of if there is a list of tasks in To-Do */
 let listTracker = false;
+
+/**
+ * @class taskEntry
+ * @classdesc taskEntry is an object that holds all the task-list related elements and button functionality
+ * @extends HTMLElement
+ */
 class taskEntry extends HTMLElement {
   /**
-   * Constructor for the taskEntry HTMLElement, containing the name, session
+   * Zero-argument constructor for the taskEntry HTMLElement, containing the name, session
    * count, and removeButton
    * @constructor
    */
@@ -202,17 +213,16 @@ class taskEntry extends HTMLElement {
       `;
     super();
     this.root = this.attachShadow({ mode: "open" });
-    /*var bgStyle = document.createElement( 'bgStyle' );
-    bgStyle.textContent = ':host(.object){background: #ddd;}';
-    this.root.appendChild(bgStyle);*/
     this.root.appendChild(template.content.cloneNode(true));
   }
+
   /**
    * Sync the properties to object
-   * @param {description}  Description - Object that contains the name, session,
-   *     count
+   * @param {description} description - Object that contains the name, session,
+   *  count
    */
   async syncName(description) {
+    // If the name of the task is changed, update it in local storage
     let taskName = this.root.getElementById("name");
     taskName.addEventListener("change", function () {
       updateStorage(
@@ -222,15 +232,21 @@ class taskEntry extends HTMLElement {
       );
     });
     taskName.value = description.name;
+
+    // If the number of pomodoro sessions for a task is changed, update in local storage
     let sessionCount = this.root.getElementById("taskSessionNumber");
     sessionCount.addEventListener("change", function () {
+      // Handles invalid inputs (below minimum will revert to 1, above max will cap at max)
       if (sessionCount.value <= 0) {
         sessionCount.value = 1;
       }
       if (sessionCount.value >= 11) {
         sessionCount.value = 10;
       }
+      // Rounds (down) decimals to the nearest whole integer
       sessionCount.value = Math.floor(sessionCount.value);
+
+      // Saves new input inside local storage
       updateStorage(
         description.originalName,
         taskName.value,
@@ -239,12 +255,18 @@ class taskEntry extends HTMLElement {
       getCurrentTask();
     });
     sessionCount.value = description.sessions;
+
+    // Creates a reference to the trash can button
     let buttonRemove = this.root.getElementById("removeTask");
     buttonRemove.addEventListener("click", function () {
       removeButton(this, taskName.value);
     });
+
+    // Creates references to the buttons that move a task
     let buttonWork = this.root.getElementById("workTask");
     let swapList = this.root.getElementById("swapList");
+
+    // Change the button images for the task if it moves to done/back to To-Do
     if (description.done == true) {
       buttonWork.style.display = "none";
       swapList.src = "images/undo.svg";
@@ -255,22 +277,26 @@ class taskEntry extends HTMLElement {
         workOnThisButton(this, taskName.value);
       });
     }
+
+    // Moves the task in the task list to done
     let buttonSwitch = this.root.getElementById("moveToNewList");
-    /*let temp = this.root.getElementById("moveToNewList").querySelector("svg");
-    if (description.done == true) {
-      temp.setAttribute("xmlns", "");
-    }*/
     buttonSwitch.addEventListener("click", function () {
       switchList(this, taskName.value);
     });
+
+    // Moves a task in the task list up
     let buttonUp = this.root.getElementById("upTask");
     buttonUp.addEventListener("click", function () {
       switchOrder(this, taskName.value, true);
     });
+
+    // Moves a task in the task list down
     let buttonDown = this.root.getElementById("downTask");
     buttonDown.addEventListener("click", function () {
       switchOrder(this, taskName.value, false);
     });
+
+    // Keeps track of the first task
     if (description.firstTask === true) {
       this.root.getElementById("element").classList.add("first");
       this.root.getElementById("element").part.add("first");
@@ -280,13 +306,12 @@ class taskEntry extends HTMLElement {
 }
 
 /**
- *  Updates local storage with new value of remaining sessions count
- *
+ * Updates local storage with new value of remaining sessions count
  * @param {string} name - Name of Task
  * @param {int} newCount - New remaining sessions count
- *
  */
 function updateStorage(originalName, name, newCount) {
+  // Deals with task names that are only spaces
   if (!name.trim().length) {
     alert("You need to enter a valid task name.");
     removeTask("New Task");
@@ -297,6 +322,7 @@ function updateStorage(originalName, name, newCount) {
     }
     return;
   }
+  // Deals with task names that are duplicates in the to-do list
   for (let i = 0; i < taskList.length; i++) {
     if (originalName != name && name == taskList[i].name) {
       alert("You cannot have the same name as a previous task");
@@ -309,6 +335,7 @@ function updateStorage(originalName, name, newCount) {
       return;
     }
   }
+  // Deals with task names that are duplicates in the done list
   for (let i = 0; i < taskListDone.length; i++) {
     if (originalName != name && name == taskListDone[i].name) {
       alert("You cannot have the same name as a previous task");
@@ -346,14 +373,12 @@ function updateStorage(originalName, name, newCount) {
 }
 
 /**
- * Return Current Working task and update text on screen, else return null
+ * @returns Current working task (the task at the top of the list) and updates text on screen, else return null
  */
 function getCurrentTask() {
   let taskIndicator = document.getElementById("taskIndicator");
-  //  let seshLeft = document.getElementById("seshLeft");
   if (taskList.length == 0) {
     taskIndicator.textContent = "";
-    //    seshLeft.textContent = "";
     return null;
   } else {
     if (taskList[0].name.length >= 11) {
@@ -368,10 +393,9 @@ function getCurrentTask() {
 /**
  * Function called to switch order of tasks in task list implementation
  * @param {HTMLElement} button - The HTML button object this function is being
- *     attached to
+ *  attached to
  * @param {string} name - The name of the list entry that is being removed
  * @param {string} upDown - Whether the selected task will be moved up or down
- *
  */
 function switchOrder(button, name, upDown) {
   for (let i = 0; i < taskList.length; i++) {
@@ -462,7 +486,6 @@ function decrementTopTask() {
  */
 function removeButton(button, name) {
   removeTask(name);
-  console.log("Removed " + name);
 }
 
 /**
@@ -474,7 +497,6 @@ function Task(name, sessionCount) {
   this.name = name;
   this.sessions = sessionCount;
   this.seshAll = sessionCount;
-  //console.log(this.sessions + " HERE " + this.seshAll);
   this.done = false;
   this.sessionTotal = 0;
   this.firstTask = false;
@@ -497,7 +519,6 @@ function putTaskInList(name, sessionCount) {
  * @param {button} button - The Button of the item being switched
  * @param {string} name - The  name of the item being switched
  */
-
 function switchList(button, name) {
   for (let i = 0; i < taskList.length; i++) {
     if (name == taskList[i].name) {
@@ -554,44 +575,22 @@ function removeTask(name) {
     }
   }
 }
+
 /**
- * Add an example task for the tutorial menu
+ * Add an example task for the tutorial menu.
+ * Called in index.html
  */
 function addTaskTutorial() {
   if (taskList.length == 0) {
     putTaskInList("Task Name", "5");
   }
 }
+
 /**
- * Add an user entered task into the list
+ * Add a user entered task into the list
+ * Called in index.html
  */
 function addTask() {
-  // var name = document.getElementById("addTaskInput").value;
-  // for (let i = 0; i < taskList.length; i++) {
-  //   if (name == taskList[i].name) {
-  //     alert("You cannot have the same name as a previous task");
-  //     return;
-  //   }
-  // }
-  // for (let i = 0; i < taskListDone.length; i++) {
-  //   if (name == taskListDone[i].name) {
-  //     alert("You cannot have the same name as a previous task");
-  //     return;
-  //   }
-  // }
-  // var sessionCount = document.getElementById("sessionNumber").value;
-  // if (sessionCount < 0) {
-  //   sessionCount.value = 0;
-  //   return;
-  // }
-  // if (sessionCount > 10) {
-  //   sessionCount.value = 10;
-  //   return;
-  // }
-  // if (!name.trim().length) {
-  //   alert("You need to enter a valid task name.");
-  //   return;
-  // }
   for (let i = 0; i < taskList.length; i++) {
     if ("New Task" == taskList[i].name) {
       alert("You already have a New Task waiting to be customized");
@@ -599,18 +598,11 @@ function addTask() {
     }
   }
   putTaskInList("New Task", "1");
-  /*Some styling stuff - resetting form after adding */
-  // let taskBox = document.getElementById("addTaskInput");
-  // taskBox.value = "";
-  // let seshNum = document.getElementById("sessionNumber");
-  // seshNum.value = "1";
-  // // close the modal upon creation
-  // let modal = document.getElementById("addModal");
-  // modal.style.display = "none";
 }
 
 /**
  * Clear the done list and remove all tasks
+ * Called in index.html
  */
 function clearDoneList() {
   taskListDone = [];
@@ -620,6 +612,7 @@ function clearDoneList() {
 
 /**
  * Accesses local storage to populate taskList and sets to empty if not found
+ * Called in index.html
  */
 function getList() {
   if (localStorage.getItem("taskListCurrent-JSON") != null) {
@@ -635,7 +628,7 @@ function getList() {
 }
 
 /**
- * Save taskList in a string version to local storage
+ * Saves taskList as a comma separated string to local storage
  */
 function saveList() {
   getCurrentTask();
@@ -658,11 +651,9 @@ function displayList() {
   getCurrentTask();
   // End of CSS
   var taskFile = document.getElementById("tasks");
-  // console.log(taskList);
   taskFile.innerHTML = "";
   for (let i = 0; i < taskList.length; i++) {
     var currentTask = taskList[i];
-    // currentTask.sessions = currentTask.originalSessions;
     let newTask = new taskEntry(); // So code factor is happy
     currentTask.firstTask = i === 0;
 
@@ -670,9 +661,9 @@ function displayList() {
     taskFile.appendChild(newTask);
   }
 }
-/**
 
- * Displays all the task list done on the web page
+/**
+ * Displays all the task list that are marked done on the web page
  */
 function displayListDone() {
   // Some CSS related thingy
@@ -686,7 +677,6 @@ function displayListDone() {
   getCurrentTask();
   // End of CSS
   var taskFile = document.getElementById("tasks");
-  // console.log(taskList);
   taskFile.innerHTML = "";
   for (let i = 0; i < taskListDone.length; i++) {
     var currentTask = taskListDone[i];
