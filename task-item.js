@@ -140,7 +140,6 @@ class taskEntry extends HTMLElement {
           border: none;
           background: none;
           width: 10%;
-          height: 50%;
           outline: none;
           display: block;
           vertical-align: middle;
