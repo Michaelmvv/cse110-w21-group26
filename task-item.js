@@ -143,9 +143,11 @@ class taskEntry extends HTMLElement {
           height: 50%;
           outline: none;
           display: block;
+          vertical-align: middle;
         }
         #removeTask img{
           width: 50%;
+          vertical-align: middle;
           margin: auto;
         }
         .first{
