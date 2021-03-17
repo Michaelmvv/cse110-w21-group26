@@ -683,7 +683,7 @@ describe("Testing Start Button", () => {
     cy.visit("index.html");
   });
 
-  it("When Start button is clicked, timer changes to 25:00 (automatic mode)", () => {
+  it("When Start button is clicked, timer changes to 25:00 (default input in automatic mode)", () => {
     cy.get("#StopButton").should(($el) => {
       expect($el).to.have.css("display", "none");
     });
@@ -698,6 +698,26 @@ describe("Testing Start Button", () => {
 
     cy.get("#timer").contains("25:00");
   });
+
+  for (let i = 1; i < 10; i++) {
+    it("When Start button is clicked, timer changes to 0" + i + ":00", () => {
+      cy.get("#workTimeInput")
+        .type("{selectall}{backspace}" + i, { force: true })
+        .trigger("change", { force: true });
+      cy.get("#StartButton").click();
+      cy.get("#timer").contains("0" + i + ":00");
+    });
+  }
+
+  for (let i = 10; i < 60; i++) {
+    it("When Start button is clicked, timer changes to " + i + ":00", () => {
+      cy.get("#workTimeInput")
+        .type("{selectall}{backspace}" + i, { force: true })
+        .trigger("change", { force: true });
+      cy.get("#StartButton").click();
+      cy.get("#timer").contains(i + ":00");
+    });
+  }
 });
 
 describe("Testing Stop Button", () => {
@@ -743,6 +763,10 @@ describe("Testing Task List", () => {
       .find("#name")
       .type("{selectall}{backspace}HW1", { force: true })
       .trigger("change", { force: true });
+
+    cy.get("#taskIndicator").then((text) => {
+      assert(text, "HW1");
+    });
   });
 
   it("Successfully add 2 tasks: HW1 and HW2 to task list", () => {
@@ -754,6 +778,10 @@ describe("Testing Task List", () => {
       .type("{selectall}{backspace}HW1", { force: true })
       .trigger("change", { force: true });
 
+    cy.get("#taskIndicator").then((text) => {
+      assert(text, "HW1");
+    });
+
     cy.get("#addBtn").click();
     cy.get("task-item:nth-of-type(2)")
       .shadow()
@@ -761,6 +789,10 @@ describe("Testing Task List", () => {
       .find("#name")
       .type("{selectall}{backspace}HW2", { force: true })
       .trigger("change", { force: true });
+
+    cy.get("#taskIndicator").then((text) => {
+      assert(text, "HW1");
+    });
   });
 
   it("Successfully change number of pomo sessions in HW1 to 4", () => {
@@ -805,6 +837,58 @@ describe("Testing Task List", () => {
       .find("form")
       .find("input")
       .type("{selectall}{backspace}-1", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+  });
+
+  it("Edge Case: Testing 0 pomo number in task list", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#taskNum")
+      .find("form")
+      .find("input")
+      .type("{selectall}{backspace}0", { force: true });
+
+    cy.get("#addBtn").click();
+    cy.get("task-item:nth-of-type(2)")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW2", { force: true })
+      .trigger("change", { force: true });
+  });
+
+  it("Edge Case: Testing decimal input for pomo number in task list, should truncate to the integer", () => {
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#taskNum")
+      .find("form")
+      .find("input")
+      .type("{selectall}{backspace}2.4", { force: true });
 
     cy.get("#addBtn").click();
     cy.get("task-item:nth-of-type(2)")
@@ -1002,6 +1086,12 @@ describe("Testing Task List", () => {
       .find("#name")
       .type("{selectall}{backspace}HW2", { force: true })
       .trigger("change", { force: true });
+
+    cy.get("task-item:nth-of-type(1)")
+      .shadow()
+      .find("li")
+      .find("#moveToNewList")
+      .click();
   });
 
   it("Successfuly deletes the first task from task list", () => {
@@ -1079,6 +1169,10 @@ describe("Testing Task List", () => {
       .find(".all-move-btns")
       .find("#workTask")
       .click();
+
+    cy.get("#taskIndicator").then((text) => {
+      assert(text, "HW2");
+    });
   });
 
   it("Edge case: move task up to the top for the top task does nothing in the To-Do list", () => {
@@ -1171,9 +1265,13 @@ describe("Testing Task List", () => {
       .find(".move-btns")
       .find(".up-btn")
       .click();
+
+    cy.get("#taskIndicator").then((text) => {
+      assert(text, "HW1");
+    });
   });
 
-  it("Successfuly moves a task down 1 in the To-Do list", () => {
+  it("Successfully moves a task down 1 in the To-Do list", () => {
     cy.get("#addBtn").click();
     cy.get("task-item")
       .shadow()
@@ -1331,21 +1429,71 @@ describe("Testing default time passed check from Work to Short Break (automatic)
     cy.get("#shortBreak").should(($el) => {
       expect($el).to.have.css("background-color", "rgb(61, 89, 138)");
     });
-
-    //cy.clock().invoke('restore');
   });
 
   it("time passed check from Short Break to Work (automatic)", () => {
     cy.get("#StartButton").click();
     cy.tick(1500000); // 25 minutes
     cy.tick(5 * 60 * 1000); // 5 minutes
-    cy.tick(3000); // 30 minutes and 2 seconds (Work 25 Minutes, Short 5 Minutse)
+    cy.tick(3000); // 30 minutes and 2 seconds (Work 25 Minutes, Short 5 Minutes)
 
     cy.get("#workTime").should(($el) => {
       expect($el).to.have.css("background-color", "rgb(201, 101, 103)");
     });
+  });
 
-    // cy.clock().invoke('restore');
+  it("Check if current task in task list with 1 pomo moves to done after 1 pomo (automatic)", () => {
+    cy.get("#StartButton").click();
+    cy.get("#addBtn").click();
+    cy.get("task-item")
+      .shadow()
+      .find("li")
+      .find("#name")
+      .type("{selectall}{backspace}HW1", { force: true })
+      .trigger("change", { force: true });
+    cy.tick(1500000); // 25 minutes
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", "rgb(88, 131, 206)");
+    });
+  });
+
+  it("Check if # pomo cycles decreases after 1 work session and resets after 0 (automatic)", () => {
+    cy.get("#StartButton").click();
+    // 4 pomos left
+    cy.tick(1500000); // 25 minutes
+    cy.get("#seshLeft").then((text) => {
+      assert(text, "4/4");
+    });
+    // 3 pomos left
+    cy.tick(5 * 60 * 1000 + 1500000);
+    cy.get("#seshLeft").then((text) => {
+      assert(text, "3/4");
+    });
+    // 2 pomos left
+    cy.tick(5 * 60 * 1000 + 1500000);
+    cy.get("#seshLeft").then((text) => {
+      assert(text, "2/4");
+    });
+    // 1 pomos left
+    cy.tick(5 * 60 * 1000 + 1500000);
+    cy.get("#seshLeft").then((text) => {
+      assert(text, "1/4");
+    });
+    // 0 pomos left
+    cy.tick(5 * 60 * 1000 + 1500000);
+    cy.get("#seshLeft").then((text) => {
+      assert(text, "0/4");
+    });
+    // reset
+    cy.tick(5 * 60 * 1000 + 1500000);
+    cy.get("#seshLeft").then((text) => {
+      assert(text, "4/4");
+    });
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", "rgb(201, 101, 103)");
+    });
   });
 });
 
@@ -1381,7 +1529,6 @@ describe("Testing pomo session to long break (1 min work session in automatic)",
 
   let work = 60000;
   let shortB = 5 * 60000;
-  //let longB = 15 * 60000;
   it("4 one-minute work sessions before long break", () => {
     cy.get("#workTimeInput")
       .type("{selectall}{backspace}1", { force: true })
@@ -1440,11 +1587,341 @@ describe("Testing 4 pomo sessions to long break two times in a row (1 min work s
   });
 });
 
-// Need to test if increasing long break interval works (test 5)
+describe("Testing automatic/manual mode", () => {
+  beforeEach(() => {
+    cy.clock();
+    cy.visit("index.html");
+  });
 
-// Use this as a skeleton
-//describe("Testing description here", () => {
-//  beforeEach(() => {
-//    cy.visit("http://127.0.0.1:5500/index.html");
-//  });
-//});
+  let work = 1500000;
+  let shortB = 5 * 60 * 1000;
+  let longB = 15 * 60 * 1000;
+  let workTheme = "rgb(201, 101, 103)";
+  let shortTheme = "rgb(88, 131, 206)";
+  let longTheme = "rgb(41, 71, 181)";
+  it("Switching from automatic to manual mode when timer is running should continue to run", () => {
+    cy.get("#workTimeInput")
+      .type("{selectall}{backspace}1", { force: true })
+      .trigger("change", { force: true });
+
+    // Automatic mode
+    cy.get("#StartButton").click();
+    cy.get("#timer").contains("01:00");
+    cy.tick(6000);
+    cy.get("#timer").contains("00:54");
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("00:54");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", workTheme);
+    });
+  });
+
+  it("Switching from automatic to manual mode when timer is not running should display 'Stopped'", () => {
+    cy.get("#workTimeInput")
+      .type("{selectall}{backspace}1", { force: true })
+      .trigger("change", { force: true });
+
+    // Automatic mode
+    cy.get("#StartButton").click();
+    cy.get("#timer").contains("01:00");
+    cy.tick(6000);
+    cy.get("#StopButton").click();
+    cy.get("#timer").contains("Stopped");
+
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("Stopped");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", workTheme);
+    });
+  });
+
+  it("Switching from manual to automatic mode when timer is running should continue to run (work session)", () => {
+    cy.get("#workTimeInput")
+      .type("{selectall}{backspace}1", { force: true })
+      .trigger("change", { force: true });
+
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    // Automatic mode
+    cy.get("#workTime").click();
+    cy.get("#timer").contains("01:00");
+    cy.tick(6000);
+    cy.get("#timer").contains("00:54");
+
+    //Switch to automatic mode
+    cy.get("#autoSwitch")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("00:54");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", workTheme);
+    });
+  });
+
+  it("Switching from manual to automatic mode when timer is running should continue to run (short break)", () => {
+    cy.get("#shortBreakTimeInput")
+      .type("{selectall}{backspace}1", { force: true })
+      .trigger("change", { force: true });
+
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    // Automatic mode
+    cy.get("#shortBreak").click();
+    cy.get("#timer").contains("01:00");
+    cy.tick(6000);
+    cy.get("#timer").contains("00:54");
+
+    //Switch to automatic mode
+    cy.get("#autoSwitch")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("00:54");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", shortTheme);
+    });
+  });
+
+  it("Switching from manual to automatic mode when timer is running should continue to run (long break)", () => {
+    cy.get("#longBreakTimeInput")
+      .type("{selectall}{backspace}1", { force: true })
+      .trigger("change", { force: true });
+
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    // Automatic mode
+    cy.get("#longBreak").click();
+    cy.get("#timer").contains("01:00");
+    cy.tick(6000);
+    cy.get("#timer").contains("00:54");
+
+    //Switch to automatic mode
+    cy.get("#autoSwitch")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("00:54");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", longTheme);
+    });
+  });
+
+  it("Switching from manual to automatic mode when timer is not running should display 'Stopped' (long break)", () => {
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    // Automatic mode
+    cy.get("#longBreak").click();
+    cy.get("#timer").contains("15:00");
+    cy.tick(6000);
+    cy.get("#StopButton").click();
+    cy.get("#timer").contains("Stopped");
+
+    //Switch to automatic mode
+    cy.get("#autoSwitch")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("Stopped");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", longTheme);
+    });
+  });
+
+  it("Switching from manual to automatic mode when timer is not running should display 'Stopped' (short break)", () => {
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    // Automatic mode
+    cy.get("#shortBreak").click();
+    cy.get("#timer").contains("05:00");
+    cy.tick(6000);
+    cy.get("#StopButton").click();
+    cy.get("#timer").contains("Stopped");
+
+    //Switch to automatic mode
+    cy.get("#autoSwitch")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("Stopped");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", shortTheme);
+    });
+  });
+
+  it("Switching from manual to automatic mode when timer is not running should display 'Stopped' (work session)", () => {
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    // Automatic mode
+    cy.get("#workTime").click();
+    cy.get("#timer").contains("25:00");
+    cy.tick(6000);
+    cy.get("#StopButton").click();
+    cy.get("#timer").contains("Stopped");
+
+    //Switch to automatic mode
+    cy.get("#autoSwitch")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#timer").contains("Stopped");
+
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", workTheme);
+    });
+  });
+
+  it("Manual mode: work timer correctly runs and ends without moving on to short break", () => {
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#workTime").click();
+    cy.get("#timer").contains("25:00");
+    cy.tick(work);
+    cy.get("#timer").contains("Stopped");
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", workTheme);
+    });
+  });
+
+  it("Manual mode: short break correctly runs and ends without moving on to work session", () => {
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#shortBreak").click();
+    cy.get("#timer").contains("05:00");
+    cy.tick(shortB);
+    cy.get("#timer").contains("Stopped");
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", shortTheme);
+    });
+  });
+
+  it("Manual mode: long break correctly runs and ends without moving on to work session", () => {
+    //Switch to manual mode
+    cy.get("#autoSwitch")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#longBreak").click();
+    cy.get("#timer").contains("15:00");
+    cy.tick(longB);
+    cy.get("#timer").contains("Stopped");
+    cy.get("#workTime").should(($el) => {
+      expect($el).to.have.css("background-color", longTheme);
+    });
+  });
+});
+
+describe("Testing light and dark mode", () => {
+  beforeEach(() => {
+    cy.visit("index.html");
+  });
+
+  it("Switch from light mode to dark mode", () => {
+    //Turn on dark mode
+    cy.get("#darkMode")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#autoText").then((fill) => {
+      assert(fill, "rgb(195, 195, 195)");
+    });
+    cy.get("body").should(($el) => {
+      expect($el).to.have.css("background-color", "rgb(54, 54, 54)");
+    });
+  });
+
+  it("Switch from dark mode to light mode", () => {
+    //Turn on dark mode
+    cy.get("#darkMode")
+      .check({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#autoText").then((fill) => {
+      assert(fill, "rgb(195, 195, 195)");
+    });
+    cy.get("body").should(($el) => {
+      expect($el).to.have.css("background-color", "rgb(54, 54, 54)");
+    });
+
+    //Switch back to light mode
+    cy.get("#darkMode")
+      .uncheck({ force: true })
+      .trigger("click", { force: true });
+
+    cy.get("#autoText").then((fill) => {
+      assert(fill, "rgb(0, 0, 0)");
+    });
+    cy.get("body").should(($el) => {
+      expect($el).to.have.css("background-color", "rgb(245, 245, 245)");
+    });
+  });
+});
+
+describe("Testing # pomo cycles work correctly from 5 pomo cycles to 10", () => {
+  beforeEach(() => {
+    cy.clock();
+    cy.visit("index.html");
+  });
+
+  let work = 1500000;
+  let shortB = 5 * 60 * 1000;
+  let longTheme = "rgb(41, 71, 181)";
+
+  for (let i = 5; i < 11; i++) {
+    it("Test " + i + " pomo cycles before a long break", () => {
+      cy.get("#numWork")
+        .type("{selectall}{backspace}" + i, { force: true })
+        .trigger("change", { force: true });
+
+      cy.get("#numWork").then(($el) => {
+        expect($el).to.have.value(i);
+      });
+
+      cy.get("#StartButton").click();
+      cy.tick(i * work + (i - 1) * shortB);
+
+      cy.get("#workTime").should(($el) => {
+        expect($el).to.have.css("background-color", longTheme);
+      });
+    });
+  }
+});
