@@ -13,9 +13,7 @@
 - Cypress test files are located inside [integration/custom-tests.js](integration/custom-tests.js)
 
 #### What Are We Testing?
-- We mainly use Cypress to test UI. For example, does each button press execute what we want it to do?
-
-- We also use Cypress for unit testing our functions that have a return value.
+- We mainly use Cypress to unit test and e2e test our UI. For example, does each button press execute what we want it to do?
 
 #### How It Works:
 - Each `describe()` block denotes a test suite (group of related tests) and each `it()` block denotes a single test.

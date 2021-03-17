@@ -3,7 +3,7 @@
 
 ### HTML
 - Our main html page and code relevant to what is seen on the webpage is located inside [index.html](index.html)
--If someone tries to access a non-existing webpage on our site, we have a custom 404 page located in [404.html](404.html)
+- If someone tries to access a non-existing webpage on our site, we have a custom 404 page located in [404.html](404.html)
 
 ### CSS
 - Our style definitions for HTML elements are located inside [main.css](main.css)
@@ -17,7 +17,7 @@
 - Most notable dependencies (all of which are easily accessible and free as a VSCode extension):
   - ESLint: Enforce style guidelines
   - Prettier: Define and maintain style guidelines
-  - JSDoc: Create file and method headers with ease
+  - JSDoc: Compile a [list](https://github.com/Michaelmvv/cse110-w21-group26/wiki/API) of descriptions for our functions
 
 ### E2E and Unit Testing
 - For our project, we used [Cypress](https://docs.cypress.io/guides/getting-started/installing-cypress.html#npm-install) for end-to-end and unit testing.
@@ -25,3 +25,4 @@
 
 ## Want to Continue our Project?
 - If you wish to continue our project, after cloning the github-pages branch, please use `npm install` to install the correct dependencies.
+- More instructions can be found here to help [get you started](https://github.com/Michaelmvv/cse110-w21-group26/wiki/Getting-Started)

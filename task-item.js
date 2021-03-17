@@ -463,7 +463,7 @@ function workOnThisButton(button, name) {
 }
 
 /**
- * Decrememnt the Top Task Pomodoro Sessions left, move to done list if necessary
+ * Decrement the Top Task Pomodoro Sessions left, move to done list if necessary
  */
 function decrementTopTask() {
   if (taskList.length != 0) {
@@ -640,7 +640,7 @@ function saveList() {
  * Displays all the task list current on the web page
  */
 function displayList() {
-  // Some CSS related thingy
+  // Handles CSS for to-do list
   document.getElementById("to-do").className = "activeList";
   document.getElementById("done").className = "";
   let addTask = document.getElementById("addBtn");
@@ -654,7 +654,8 @@ function displayList() {
   taskFile.innerHTML = "";
   for (let i = 0; i < taskList.length; i++) {
     var currentTask = taskList[i];
-    let newTask = new taskEntry(); // So code factor is happy
+    // So code factor is happy
+    let newTask = new taskEntry(); 
     currentTask.firstTask = i === 0;
 
     newTask.syncName(currentTask);
@@ -666,7 +667,7 @@ function displayList() {
  * Displays all the task list that are marked done on the web page
  */
 function displayListDone() {
-  // Some CSS related thingy
+  // Handles CSS for done list
   document.getElementById("done").className = "activeList";
   document.getElementById("to-do").className = "";
   let addTask = document.getElementById("addBtn");
