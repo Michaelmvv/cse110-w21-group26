@@ -1,6 +1,8 @@
 # Cypress e2e and Unit testing
 
-### Installation
+### Installation Steps
+- This can take a few minutes to install cypress. In your terminal, navigate to the directory you wish to install Cypress in.
+
 - Make sure your project directory is ready with `npm init -y`
 
 - Install Cypress using `npm install cypress --save-dev` in the root directory of the project.
@@ -32,3 +34,36 @@
 - To open Cypress using their UI, use `npx cypress open` (may take a few minutes to load up) and navigate to the test file (custom-tests.js). A new browser window will open up and you can see the tests run.
 
 - To run Cypress test files in the command line (takes longer than using Cypress's UI), use `npx cypress run`
+
+##### Code Coverage (Not working)
+1. Install the dependencies below:
+- `npm i babel-plugin-istanbul` istanbul is a code instrument tool that is compatible with Cypress.
+- `npm i istanbul-lib-coverage`
+- `npm i nyc` Helps instrument code.
+- `npm i @cypress/code-coverage` This is a Cypress plugin for collecting test coverage during Cypress tests.
+
+2. Import statements inside `cypress/support/index.js` and `cypress/plugins/index.js` files.
+- Inside `cypress/support/index.js`, add `import '@cypress/code-coverage/support'`.
+- Inside `cypress/plugins/index.js`, add
+```
+module.exports = (on, config) => {
+  require('@cypress/code-coverage/task')(on, config)
+  return config
+}
+```
+
+3. Add plugins to the .babelrc file (if you do not have it, go to your terminal and type `touch .babelrc`). This goes inside .babelrc:
+
+```
+{
+  "plugins": ["istanbul"]
+}
+```
+
+4. Instrument the code. Cypress does not instrument your code for you. Basically what instrumenting does is wraps each line of code with a counter so that when Cypress runs the tests, the counter increments when that line of code gets executed.
+
+- Use `npx nyc instrument --compact=false main.js instrumented` to instrument the main.js code into a folder labeled `instrumented`.
+- Use `npx nyc instrument --compact=false task-item.js instrumented` to instrument the task-item.js code into a folder labeled `instrumented`.
+
+5. Run Cypress using `npx cypress open`
+6. Code coverage can be found under `coverage/lcov-report` and you can open the `index.html` file in a browser to see code coverage.

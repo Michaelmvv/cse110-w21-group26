@@ -1869,7 +1869,7 @@ describe("Testing light and dark mode", () => {
     });
   });
 
-  it("Switch from dark mode to light mode", () => {
+  it.only("Switch from dark mode to light mode", () => {
     //Turn on dark mode
     cy.get("#darkMode")
       .check({ force: true })

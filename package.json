@@ -28,5 +28,10 @@
     "jsdoc-to-markdown": "^6.0.1",
     "prettier": "2.2.1"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "babel-plugin-istanbul": "^6.0.0",
+    "istanbul-lib-coverage": "^3.0.0",
+    "nyc": "^15.1.0"
+  }
 }
