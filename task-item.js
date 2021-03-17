@@ -655,7 +655,7 @@ function displayList() {
   for (let i = 0; i < taskList.length; i++) {
     var currentTask = taskList[i];
     // So code factor is happy
-    let newTask = new taskEntry(); 
+    let newTask = new taskEntry();
     currentTask.firstTask = i === 0;
 
     newTask.syncName(currentTask);
