@@ -697,7 +697,7 @@ function darkMode() {
   // If dark mode is activated, change theme to dark mode, otherwise change to light mode
   if (dark.checked) {
     document.body.classList.add("dark-mode");
-    settingsLogo.setAttribute("fill", "#c3c3c3");
+    settingsLogo.setAttribute("fill", "#FFFFFF");;
     helperBtn.setAttribute("fill", "#c3c3c3");
   } else {
     document.body.classList.remove("dark-mode");
