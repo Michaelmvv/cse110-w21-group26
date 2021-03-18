@@ -32,3 +32,6 @@
 - To open Cypress using their UI, use `npx cypress open` (may take a few minutes to load up) and navigate to the test file (custom-tests.js). A new browser window will open up and you can see the tests run.
 
 - To run Cypress test files in the command line (takes longer than using Cypress's UI), use `npx cypress run`
+
+##### Code Coverage (not working)
+- To see our attempt at Cypress code coverage, please navigate to the `code-coverage` branch.
